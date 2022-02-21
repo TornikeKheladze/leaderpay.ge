@@ -1,0 +1,81 @@
+.info_box{
+    width: 50%;
+    margin: 100px auto ;
+}
+.heading{
+    text-align: center;
+    font-size: 16px;
+    border: 1px dashed gray;
+    font-weight: bold;
+    background: #FF8C00;
+    color: white;
+}
+.merchant_btn_box{
+    width: 100%;
+}
+
+.button {
+    background-color: #fff;
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 5px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.enter_sistem{
+    float: left;
+    margin: 15px 0;
+}
+.login_button {
+    background-color: white;
+    color: #4CAF50;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+}
+.login_button:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pay_button{
+    float: right;
+    margin: 15px 0;
+    background-color: white;
+    color: #FF8C00;
+    border: 2px solid #FF8C00;
+    border-radius: 10px;
+}
+.pay_button:hover{
+    background-color: #FF8C00;
+    color: white;
+}
+.registration_button {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+    border-radius: 10px;
+}
+
+.registration_button:hover{
+    background-color: #555555;
+    color: white;
+}
+
+#login_form {
+    display: none;
+}
+
+#registration_form {
+    display: none;
+}
+
+footer {
+    display: none !important;
+}

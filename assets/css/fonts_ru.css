@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'title-bold';
+  	src: url('../fonts/domotika-trial/Domotika-Bold-trial.ttf');
+}
+
+@font-face {
+    font-family: 'title';
+  	src: url('../fonts/domotika-trial/Domotika-Medium-trial.ttf');
+}
+
+@font-face {
+    font-family: 'body';
+    src: url('../fonts/bpg-mrgvlovani-master/bpg-mrgvlovani-webfont.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/bpg-mrgvlovani-master/bpg-mrgvlovani-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/bpg-mrgvlovani-master/bpg-mrgvlovani-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/bpg-mrgvlovani-master/bpg-mrgvlovani-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+         url('../fonts/bpg-mrgvlovani-master/bpg-mrgvlovani-webfont.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/bpg-mrgvlovani-master/bpg-mrgvlovani-webfont.svg#bpg_mrgvlovaniregular') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'gelSymbol';
+    src: url('../fonts/lari/bpg_gel_dejavusans.eot');
+    src: url('../fonts/lari/bpg_gel_dejavusans.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/lari/bpg_gel_dejavusans.woff2') format('woff2'),
+         url('../fonts/lari/bpg_gel_dejavusans.woff') format('woff'),
+         url('../fonts/lari/bpg_gel_dejavusans.ttf') format('truetype'),
+         url('../fonts/lari/bpg_gel_dejavusans.svg#bpg_gel_dejavu_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
