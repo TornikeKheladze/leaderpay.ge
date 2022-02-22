@@ -10,7 +10,7 @@ deploy_to_production:
   script:
     - cd "/var/www/apw_hosts/leaderpay.ge"
     - git pull
-    - echo "Master Branch Deployed"
+    - echo "Master Branch Deployed+"
 
   only:
     - master
