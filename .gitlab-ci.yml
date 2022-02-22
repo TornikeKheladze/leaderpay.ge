@@ -1,0 +1,16 @@
+stages:
+  - deploy
+
+deploy_to_production:
+  stage: deploy
+
+  tags:
+    - leaderpay.ge
+ 
+  script:
+    - cd "/var/www/apw_hosts/leaderpay.ge"
+    - git pull
+    - echo "Master Branch Deployed"
+
+  only:
+    - master
