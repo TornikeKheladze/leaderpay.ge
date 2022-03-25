@@ -348,8 +348,8 @@ if (isset($_GET['action']) && $_GET['action'] == "info") {
                                 "unicdate" => $unicdate,
                                 "balance" => $new_balance,
                                 "description" => $description,
-                                "agent_id" => 2,
-                                "agent" => 1,
+                                "agent_id" => 1,
+                                "agent" => 2,
                             );
                             $insert_details = $db->insert("user_balance_history", $history_params);
                             $pay_params = array();
