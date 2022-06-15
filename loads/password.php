@@ -102,26 +102,19 @@
     // remove +
     $db_mobile = str_replace('+', '', $db_mobile);
 
-
-
     if ($mobile == $db_mobile) {
-
 
       // reset password
       $new_pass = $db->generate_random_string(8);
       $password_hash = hash('sha256', $new_pass);
       $user_id = $data['id'];
 
-      $params = array(
-        "password" => $password_hash,
-        "updated_at" => $db->get_current_date(),
-      );
+      $params = [
+        'password' => $password_hash,
+        'updated_at' => $db->get_current_date(),
+      ];
 
-      $db->update("users", $params, $user_id);
-
-
-      $code = $bulkSms->generateCode();
-      $_SESSION['sms'] = $code;
+      $db->update('users', $params, $user_id);
 
       $mobile = ltrim($data['mobile'], '+');
       $mobile = str_replace(' ', '', $mobile);
@@ -132,12 +125,6 @@
       ];
 
       $send = $bulkSms->Send($smsParams);
-
-      $params = [
-          'sms_code' => $code,
-          'updated_at' => $db->get_current_date(),
-      ];
-      $db->update('users', $params, $data['id']);
 
       if ($send) {
 
