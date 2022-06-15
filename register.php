@@ -336,7 +336,7 @@
 
 <?php
 
-    $page_script = '<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script><script src="http://vinceg.github.io/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script><script src="assets/pages/registration.js?' . time() . '"></script>';
+    $page_script = '<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script><script src="https://vinceg.github.io/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script><script src="assets/pages/registration.js?' . time() . '"></script>';
 
     include 'includes/footer.php';
 ?>
