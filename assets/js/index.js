@@ -639,30 +639,6 @@ $(window).load(function() {
   });
 });
 
-function counter(v) {
-  $.ajax({
-     type: "GET",
-     url: 'loads/counter.php?'+v,
-     data: '',
-     dataType: "text",
-     success: function(data) {
-       // console.log(data);
-       if (v == "operations") {
-         $('.head-elements .item .item.operations').html(data);
-         // $('.head-elements .item .item.operations div').html(data);
-       } else if(v == "users") {
-         $('.head-elements .item .item.users').html(data);
-         // $('.head-elements .item  .item.users div').html(data);
-       }
-    }  // success
-  }); // ajax
-}// counters
-
-setInterval(function(){ counter("operations"); }, 11000);
-setInterval(function(){ counter("users"); }, 11000);
-counter("operations");
-counter("users");
-
 // get curse
 function getcurse() {
   $.ajax({

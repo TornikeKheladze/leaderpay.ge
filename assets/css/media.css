@@ -297,3 +297,12 @@
     bottom: 14px !important;
   }
  }
+ @media screen and (max-width: 500px) {
+
+  .nav-pills li a {
+    padding: 10px 5px !important;
+    font-size: 10px;
+  }
+  
+}
+

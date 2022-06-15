@@ -1,161 +1,379 @@
 <?php
+
     require '../classes/config.php';
     require '../classes/db.php';
+    require '../classes/Identomat.php';
+    require '../classes/Upload.php';
 
     $db = new db();
+    $Identomat = new Identomat($db);
+    $Upload = new Upload();
 
-    if (isset($_POST['submit'])){
-        $personal_number = trim($_POST['personal_number']);
-        $country = trim($_POST['country']);
-        $first_name = trim($_POST['first_name']);
-        $last_name = trim($_POST['last_name']);
-        $mobile = trim("+995".$_POST['phone']);
+    if (isset($post['step']) && $post['step'] == 1) {
 
-        // personal_number rule
-        if (isset($country) AND $country == "GE") {
-            $personal_number_rule = "personal_number";
-            $wallet_number = $personal_number;
-        } else {
-            $wallet_number = $db->get_personal_number();
-        }
-        if ($_POST['birth_day']<10){
-            $_POST['birth_day'] = "0".$_POST['birth_day'];
-        }
-
-        $birth_date = trim($_POST['birth_year']."-".$_POST['birth_month']."-".$_POST['birth_day']);
-        $password = trim($_POST['password']);
-        $password = hash('sha256', $_POST['password']);
-        $repeat_password = trim($_POST['repeat_password']);
-        $gender = trim($_POST['gender']);
-
-        /**
-         *მონიტორინგის აპისთანს შემოწმება
-         */
-
-        $Auth_Username = "apw";
-        $Auth_Password = "apw!user";
-
-        $hash = hash('sha256', md5("2" . "5e8ee8a7815a2"));
-        $postRequest = [
-            'customer_id' => 2,
-            'hash' => $hash,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'country' => $country,
+        $mustParams = [
+            'mobile' => true,
+            'legal_address' => true,
+            'real_address' => true,
+            'password' => true,
+            'repeat_password' => true,
+            'checkbox1' => true,
+            'checkbox' => true,
         ];
-        if (!is_null($personal_number) && $personal_number!=''){
-            $postRequest['personal_no'] = $personal_number;
+
+        foreach($mustParams as $k => $v) {
+
+            if ($v == true) {
+                
+                if (!isset($post[$k])) {
+
+                    $json = [
+                        'errorCode' => 1,
+                        'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
+                    ];
+                    echo json_encode($json);
+                    die();
+                }
+                
+            }
+
         }
-        if (!is_null($birth_date) && $birth_date!=''){
-            $postRequest['birthdate'] = $birth_date;
-        }
-        if (!is_null($mobile) && $mobile!=''){
-            $postRequest['phone'] = $mobile;
-        }
 
-        $ch = curl_init("https://payway.ge/init");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postRequest);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERPWD, "{$Auth_Username}:{$Auth_Password}");
+        $mobile = trim($post['mobile']);
 
-        $apiResponse = curl_exec($ch);
-        curl_close($ch);
-        $data = json_decode($apiResponse);
+        $password = trim($post['password']);
+        $repeat_password = trim($post['repeat_password']);
 
-        $queryResult = $db->insertApiData('registracion_api_log', json_encode($postRequest), $apiResponse);
+        if ($password != $repeat_password) {
 
-        if (!$queryResult) {
-            $json = array(
-                "errorCode" => 50,
-                "errorMessage" => "სერვისზე ტექნიკური შეფერხებაა სცადეთ მოგვიანებით!!",
-            );
-
+            $json = [
+                'errorCode' => 2,
+                'errorMessage' => 'გამეორებული პაროლი არ ემთხვევა!',
+            ];
             echo json_encode($json);
-            header("Location:/register.php");
-        }
-        if ($data->status !== 0) {
-            $json = array(
-                "errorCode" => 50,
-                "errorMessage" => "ტექნიკური პრობლემაა სცადეთ მოგვიანებით!!",
-            );
+            die();
 
+        }
+
+        $user = $db->get_date('users', " mobile = '$mobile' ");
+
+        if ($user) {
+
+            $json = [
+                'errorCode' => 3,
+                'errorMessage' => 'მომხმარებელი მითითებული ტელეფონის ნომრით უკვე რეგისტრირებულია',
+            ];
             echo json_encode($json);
-            header("Location:/register.php");
-        }
-        if ($data->data->user->condition->state == 'UNCHECKED') {
-            $json = array(
-                "errorCode" => 50,
-                "errorMessage" => 'ყურადღება ! მომხმარებლის მაიდენთიფიცირებელი მონაცემები საჭიროებს გადამოწმებას.  გთხოვთ გამოაგზავნოთ  სალაროს  ჩათში მომხმარებლის პირადი ნომერი, დაბადების თარიღი, დაბადების ადგილი. ან გამოაგზავნოთ დასკანერებული პირადობის დოკუმენტი. გადამოწმების დადასტურების მაქსიმალური ვადა 1 სამუშაო დღე.',
-            );
+            die();
 
-            echo json_encode($json);
-            header("Location:/register.php");
-        }
-        if ($data->data->user->condition->state == 'MATCHED' && ($data->data->user->status->terrorist)) {
-            $json = array(
-                "errorCode" => 50,
-                "errorMessage" => 'მომხმარებელი ტერორისტია',
-            );
-
-            echo json_encode($json);
-            header("Location:/register.php");
-        }
-        /**
-         *მონიტორინგის აპისთან შემოწმება END::
-         */
-        $user = $db->get_date("users"," wallet_number = '".$wallet_number."' ");
-
-        if ($user != false ) {
-            $json = array(
-                "errorCode" => 3,
-                "errorMessage" => "მომხმარებელი მითითებული პირადი ნომრით უკვე რეგისტრირებულია",
-            );
-            header("Location:/register.php");
-        }
-            $post_params = array(
-            'wallet_number'   => $wallet_number,
-         /*   'personal_number' => $personal_number,*/
-            'country'         => $country,
-            'first_name'      => $first_name,
-            'last_name'       => $last_name,
-            'mobile'          => $mobile,
-            'birth_date'      => $birth_date,
-            'password'        => $password,
-            'gender'          => $gender,
-            "created_at"      => $db->get_current_date(),
-            "verify_id"       => 1,
-            "verify"          => 1,
-            "user"            => "apw.ge",
-            "confirmation" =>0,
-        );
-
-        if (!is_null($personal_number) && $personal_number!=''){
-            $post_params['personal_number'] = $personal_number;
         }
 
-        $post_status = $db->insert("users",$post_params);
+        $json = [
+            'errorCode' => 10,
+            'errorMessage' => 'წარმატებული',
+            'data' => [
+                'session' => $Identomat->begin(),
+            ],
+        ];
+        echo json_encode($json);
+        die();
 
-        if ($post_status) {
+    }
 
-            // insert not resident users
-            $p = array(
-                'user_id' => $wallet_number,
-            );
-            $db->insert("no_resident_users", $p);
+    if (isset($post['step']) && $post['step'] == '2') {
 
-            $json = array(
-                "errorCode" => 10,
-                "errorMessage" => "რეგისტრაცია წარმატებით დასრულდა",
-                "wallet_number" => $wallet_number,
-            );
+        $mustParams = [
+            'iToken' => true,
+            'mobile' => true,
+            'legal_address' => true,
+            'real_address' => true,
+            'password' => true,
+            'repeat_password' => true,
+            'checkbox1' => true,
+            'checkbox' => true,
+        ];
 
-            header("Location:/login.php");
+        foreach($mustParams as $k => $v) {
+
+            if ($v == true) {
+                
+                if (!isset($post[$k])) {
+
+                    $json = [
+                        'errorCode' => 1,
+                        'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
+                    ];
+                    echo json_encode($json);
+                    die();
+                }
+                
+            }
+
+        }
+
+        $token = trim($post['iToken']);
+
+        $Identomat = new Identomat($db, $token);
+        $result = $Identomat->result();
+
+        if ($result == 'SESSION_NOT_FOUND') {
+
+            $resultStatus = 'SESSION_NOT_FOUND';
+            $rejectReason = 'SESSION_NOT_FOUND';
+
         } else {
-            $json = array(
-                "errorCode" => 9,
-                "errorMessage" => "რეგისტრაცია ვერ განხორციელდა",
-            );
-            header("Location:/register.php");
+
+            $resultStatus = $result['result'];
+            $rejectReason = $result['reject_reason']['value'];
+
         }
+
+        $identomatError = $db->get_date('identomat_errors', " en = '$rejectReason' ");
+
+        if ($resultStatus == 'approved') {
+
+            $personal_number = $result['person']['personal_number'];
+            $document_number = $result['person']['document_number'];
+
+            $mobile = trim($post['mobile']);
+            $password = trim($post['password']);
+            $password = hash('sha256', $password);
+            $legal_address = trim($post['legal_address']);
+            $real_address = trim($post['real_address']);
+
+            $user = $db->get_date('users', " wallet_number = '$personal_number' ");
+
+            if ($user) {
+    
+                $json = [
+                    'errorCode' => 3,
+                    'errorMessage' => 'მომხმარებელი უკვე რეგისტრირებულია!',
+                ];
+                echo json_encode($json);
+                die();
+    
+            }
+
+            if ($result['document_type'] == 'id') {
+
+                $documentFront = 'data:image/jpeg;base64,' . $Identomat->documentFront();
+                $documentBack = 'data:image/jpeg;base64,' . $Identomat->documentBack();
+
+            }
+
+            if ($result['document_type'] == 'passport') {
+
+                $documentFront = 'data:image/jpeg;base64,' . $Identomat->passport();
+
+            }
+
+            $today = date('Y-m-d');
+            $diff = date_diff(date_create($result['person']['birthday']), date_create($today));
+            $age = $diff->format('%y');
+
+            if ($age < 18 ) {
+
+                $json = [
+                    'errorCode' => 4,
+                    'errorMessage' => 'მომხარებელი უნდა იყოს 18 წლის',
+                ];
+                echo json_encode($json);
+                die();
+
+            }
+
+            // upload
+            $document_front_name = $personal_number . '-' . $document_number . '-imageFront';
+            $document_back_name = $personal_number . '-' . $document_number . '-imageRear';
+            $dir = 'files/documents/';
+
+            $document_front = $Upload->file([
+                'file'      => $documentFront,
+                'file_name' => $document_front_name,
+                'dir'       => $dir,
+            ]);
+
+            if ($result['document_type'] == 'id') {
+
+                $document_back = $Upload->file([
+                    'file'      => $documentBack,
+                    'file_name' => $document_back_name,
+                    'dir'       => $dir,
+                ]);
+
+            }
+
+            $userParams = [
+                'wallet_number' => $personal_number,
+                'personal_number' => $personal_number,
+                'mobile' => $mobile,
+                'legal_address' => $legal_address,
+                'real_address' => $real_address,
+                'password' => $password,
+                'country' => substr_replace($result['person']['citizenship'], '', -1),
+                'first_name' => $result['person']['local_first_name'],
+                'last_name' => $result['person']['local_last_name'],
+                'birth_date' => date('Y-m-d', strtotime($result['person']['birthday'])),
+                'birth_place' => ($result['document_type'] == 'id') ? $result['id_card_back']['Place_of_Birth_ka_GE'] : $result['person']['birth_place'],
+                'gender' => ($result['person']['sex'] == 'M') ? 1 : 2,
+                'user' => 'leaderpay.ge',
+            ];
+            $documentParams = [
+                'personal_number' => $personal_number,
+                'document_number' => $document_number,
+                'document_type' => ($result['document_type'] == 'id') ? 2 : 1,
+                'issue_organisation' => ($result['document_type'] == 'id') ? $result['id_card_back']['Authority_ka_GE'] : $result['person']['local_authority'],
+                'issue_date' => date('Y-m-d', strtotime($result['person']['document_issued'])),
+                'expiry_date' => date('Y-m-d', strtotime($result['person']['document_expires'])),
+                'expiry' => 0,
+                'document_front' => $document_front,
+                'document_back' =>  ($result['document_type'] == 'id') ? $document_back : '',
+                'user' => 'leaderpay.ge',
+                'was_done' => 1,
+            ];
+
+            $db->insert('users', $userParams);
+            $db->insert('users_documents', $documentParams);
+
+        } else if ($resultStatus == 'manual_check') {
+
+            $json = [
+                'errorCode' => 5,
+                'errorMessage' => 'მიმდინარეობს მომხმარებლის გადამოწმება გთხოვთ სცადოთ მოგვიანებთ ან დაუკავშირდით “ოლლ ფეი ვეის“',
+            ];
+
+            echo json_encode($json);
+            die();
+
+        } else {
+
+            $json = [
+                'errorCode' => 6,
+                'errorMessage' => ($identomatError) ? $identomatError['ka'] : $rejectReason,
+            ];
+
+            echo json_encode($json);
+            die();
+        }
+
+        $json = [
+            'errorCode' => 10,
+            'errorMessage' => 'წარმატებული',
+            'data' => [
+                'personal_number' => $personal_number,
+            ],
+        ];
+
+        echo json_encode($json);
+        die();
+    }
+
+    if (isset($post['step']) && $post['step'] == '3') {
+
+        $mustParams = [
+            'pNumber' => true,
+            'dual_citizen' => true,
+            'country2' => (@$post['dual_citizen'] == 1) ? true : false,
+            'birth_country' => true,
+            'employee_status' => true,
+            'sfero_id' => (@$post['employee_status'] == 1) ? true : false,
+            'job_title' => (@$post['employee_status'] == 1) ? true : false,
+            'occupied_position' => (@$post['employee_status'] == 1) ? true : false,
+            'self_employed' => (@$post['employee_status'] == 2) ? true : false,
+            'source_of_income' => (@$post['employee_status'] == 3) ? true : false,
+            'monthly_income' => true,
+            'expected_turnover' => true,
+            'purpose_id' => true,
+            'pep_status' => true,
+            'pep' => (@$post['pep_status'] == 1) ? true : false,
+        ];
+
+        foreach($mustParams as $k => $v) {
+
+            if ($v == true) {
+                
+                if (!isset($post[$k])) {
+
+                    $json = [
+                        'errorCode' => 1,
+                        'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
+                    ];
+                    echo json_encode($json);
+                    die();
+                }
+                
+            }
+
+        }
+
+        $pNumber = trim($post['pNumber']);
+        $dual_citizen = (INT) $post['dual_citizen'];
+        $country2 = trim($post['country2']);
+        $birth_country = trim($post['birth_country']);
+        $employee_status = (INT) $post['employee_status'];
+        $sfero_id = (INT) $post['sfero_id'];
+        $job_title = trim($post['job_title']);
+        $occupied_position = trim($post['occupied_position']);
+        $self_employed = (INT) $post['self_employed'];
+        $source_of_income = (INT) $post['source_of_income'];
+        $monthly_income = (INT) $post['monthly_income'];
+        $expected_turnover = (INT) $post['expected_turnover'];
+        $purpose_id = (INT) $post['purpose_id'];
+        $pep_status = (INT) $post['pep_status'];
+        $pep = (INT) $post['pep'];
+
+        $user = $db->get_date('users', " wallet_number = '$pNumber' ");
+
+        if (!$user) {
+
+            $json = [
+                'errorCode' => 3,
+                'errorMessage' => 'ტექნიკური შეფერხება!',
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+        $userParams = [
+            'dual_citizen' => $dual_citizen,
+            'birth_country' => $birth_country,
+            'employee_status' => $employee_status,
+            'monthly_income' => $monthly_income,
+            'expected_turnover' => $expected_turnover,
+            'purpose_id' => $purpose_id,
+            'pep_status' => $pep_status,
+        ];
+
+        if ($dual_citizen == 1) {
+            $userParams['country2'] = $country2;
+        }
+        if ($employee_status == 1) {
+            $userParams['sfero_id'] = $sfero_id;
+            $userParams['job_title'] = $job_title;
+            $userParams['occupied_position'] = $occupied_position;
+        }
+        if ($employee_status == 2) {
+            $userParams['self_employed'] = $self_employed;
+        }
+        if ($employee_status == 3) {
+            $userParams['source_of_income'] = $source_of_income;
+        }
+        if ($pep_status == 1) {
+            $userParams['pep'] = $pep;
+        }
+
+        $db->update('users', $userParams, $user['id']);
+
+        $json = [
+            'errorCode' => 10,
+            'errorMessage' => 'რეგისტრაცია წარმატებით დასრულდა. შეგიძლიათ გაიაროთ ავტორიზაცია',
+            'data' => [
+                'personal_number' => $pNumber,
+            ],
+        ];
+
+        echo json_encode($json);
+        die();
 
     }

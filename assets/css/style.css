@@ -1,4 +1,4 @@
-@import "media.css?223wesws3";
+@import "media.css?12123";
 
 * {
   margin: 0;
@@ -1454,7 +1454,6 @@ input,button {
   z-index: 1;
   /* border: 1px solid #d5c1ec; */
 }
-}
 
  .moneta_cover1 .sub-n .tx {
 
@@ -2780,14 +2779,14 @@ ul.tabs li.active:after {
 }
 .g1-btn {
   background-image: linear-gradient(to right,#00bbd3 0%,#2ecc71 51%,#75ba39 100%);
-  padding: 15px 35px 15px 35px;
+  padding: 15px 35px 15px 35px !important;
   display: inline-block;
   color: #fff !important;
   border: none;
   font-family: 'title';
   letter-spacing: 1px;
   font-size: 12px;
-  border-radius: 25px;
+  border-radius: 25px !important;
   background-size: 200%;
   transition-duration: 0.3s;
 }
@@ -3763,7 +3762,7 @@ select.input {
 }
 .register_form h5 {
   font-size: 11px;
-  color: #525252;`
+  color: #525252;
   font-family: 'title-bold';
   font-family: 'title';
 }
@@ -5423,5 +5422,19 @@ select.input {
 }
 #taked_img {
   display: none;
+}
+.nav-pills {
+  justify-content: center;
+  display: flex;
+  margin-bottom: 40px;
+}
+.nav-pills li a {
+  color: #333;
+  padding: 10px 30px;
+  /* border: 1px solid #8dd3fa; */
+}
+.nav-pills li a.active {
+  background-image: linear-gradient(to right,#00bbd3 0%,#83dcff 100%);
+  color: #fff;
 }
 

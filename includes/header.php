@@ -59,7 +59,7 @@ require_once('head.php');
     <!-- Open Graph data -->
     <meta property="og:title" content="All pay way<?php if (isset($page_title)) {echo " - ".$page_title;} ?>" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.apw.ge/" />
+    <meta property="og:url" content="https://www.leaderpay.ge/" />
     <meta property="og:image" content="assets/img/apw_cover.png" />
     <meta property="og:description" content="კომპანია „ოლ ფეი ვეი“ შეიქმნა 2015 წელს 5 ივნისს, კომპანიის მთავარი მიზანი წარმოადგენს შექმნას სრულყოფილი სერვისი როგორც ელექტრონულ კომერციაში ასევე დანერგოს ახალი სერვისები საგადახდო სისტემებში." />
 
@@ -73,12 +73,12 @@ require_once('head.php');
 
                     <?php if ($db->check_auch() === true) { ?>
 
-                        <a href="https://apw.ge/profile.php" class="logo" style="background-image: url('/assets/img/lp.png?')"></a>
+                        <a href="https://leaderpay.ge/profile.php" class="logo" style="background-image: url('/assets/img/lp.png?')"></a>
 
 
                     <?php } else { ?>
 
-                        <a href="https://apw.ge/" class="logo" style="background-image: url('/assets/img/lp.png?')"></a>
+                        <a href="https://leaderpay.ge/" class="logo" style="background-image: url('/assets/img/lp.png?')"></a>
 
 
                     <?php } ?>
@@ -272,8 +272,3 @@ require_once('head.php');
         </div>
     </div><!-- mob-menu -->
 </header>
-<div class="live-help">
-    <a href="#" onclick="o=window.open('https://tawk.to/chat/5bf51c4f40105007f378f0bd/default','ონლაინ დახმარება','height=450,width=400'); return false;" class="online_chat_btn">
-        <span><?php echo $lang['online_chat']; ?></span>
-    </a>
-</div>

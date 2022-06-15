@@ -100,7 +100,7 @@
 
               setTimeout(function() {
 
-                window.location.replace("https://apw.ge/login.php");
+                window.location.replace("https://leaderpay.ge/login.php");
 
               }, 1000);
 
