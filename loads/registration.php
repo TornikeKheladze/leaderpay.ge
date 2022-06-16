@@ -4,10 +4,12 @@
     require '../classes/db.php';
     require '../classes/Identomat.php';
     require '../classes/Upload.php';
+    require '../classes/Risk.php';
 
     $db = new db();
     $Identomat = new Identomat($db);
     $Upload = new Upload();
+    $Risk = new Risk();
 
     if (isset($post['step']) && $post['step'] == 1) {
 
@@ -364,6 +366,9 @@
         }
 
         $db->update('users', $userParams, $user['id']);
+
+        // detect risk
+        $Risk->Get($user['id']);
 
         $json = [
             'errorCode' => 10,
