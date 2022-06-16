@@ -2,8 +2,10 @@
     require '../classes/config.php';
     require '../classes/db.php';
     require '../classes/pdf/mpdf.php';
+    require '../classes/Upload.php';
 
     $db = new db();
+    $Upload = new Upload();
 
     if (!isset($post['personal_number'])) {
 
@@ -118,7 +120,7 @@
 
         $tbl .= '<tr>';
             $tbl .= '<td style="width:33.33333%;font-size: 8px; padding-bottom: 10px;">დირექტორი; მ. დემეტრაშვილი </td>';
-            $tbl .= '<td style="width:33.33333%;font-size: 8px;">მაიდდენთიფიცირებელი leaderpay.ge</td>';
+            $tbl .= '<td style="width:33.33333%;font-size: 8px;">მაიდენთიფიცირებელი leaderpay.ge</td>';
             $tbl .= '<td style="width:33.33333%;font-size: 8px;">----------------------------------------------------------------------------------------</td>';
         $tbl .= '</tr>';
 
@@ -134,12 +136,40 @@
     @unlink("../files/$filename");
     $pdf->Output("../files/$filename");
 
+    $path = "../files/$filename";
+    $path_info = pathinfo($path);
+    $extension = $path_info['extension'];
+    $data = file_get_contents($path);
+    $base64 = 'data:image/' . $extension . ';base64,' . base64_encode($data);
+
+    // file upload
+    $pdf_dir = 'files/user_contracts/';
+    $filename = $personal_number . '-document';
+
+    $pdf_params = [
+        'file'      => $base64,
+        'file_name' => $filename,
+        'dir'       => $pdf_dir,
+    ];
+
+    $document = $Upload->file($pdf_params);
+
     $params = [
         'user_id' => $user['id'],
         'author' => 'leaderpay.ge',
-        'file' => $filename,
+        'file' => $document,
     ];
 
-    $status = $db->insert('user_files', $params);
+    $file = $db->get_date('user_files', " user_id = '$user[id]'");
+
+    if ($file) {
+
+        $status = $db->update('user_files', $params, $file['id']);
+
+    } else {
+
+        $status = $db->insert('user_files', $params);
+
+    }
 
     return $status;
