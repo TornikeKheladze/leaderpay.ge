@@ -1,4 +1,6 @@
-<?php 
+<?php
+    require_once __DIR__ . '/../vendor/autoload.php';
+
     require '../classes/config.php';
     require '../classes/db.php';
     require '../classes/pdf/mpdf.php';
@@ -31,19 +33,18 @@
     $created_at = date('Y-m-d H:i:s');
 
     $filename = $personal_number . '_user_contract.pdf';
-    //create new PDF document
-    $pdf = new mPDF('utf-8', 'Letter', 0, '', 10, 10, 10, 10, 10, 10);
 
-    $pdf->showImageErrors = true;
+    $mpdf = new \Mpdf\Mpdf(); 
+    $mpdf->AddPage();
     //set document information
-    $pdf->SetAuthor('leaderpay');
-    $pdf->SetTitle('ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ');
-    $pdf->SetSubject('ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ');
+    $mpdf->SetAuthor('leaderpay');
+    $mpdf->SetTitle('ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ');
+    $mpdf->SetSubject('ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ');
     //add a page
-    $pdf->AddPage();
+    $mpdf->AddPage();
 
-    $pdf->SetDefaultBodyCSS('background', "url('https://manager.allpayway.ge/assets/img/document-logo.jpg') no-repeat center center");
-    $pdf->SetDefaultBodyCSS('background-size', '400px');
+    $mpdf->SetDefaultBodyCSS('background', "url('https://manager.allpayway.ge/assets/img/document-logo.jpg') no-repeat center center");
+    $mpdf->SetDefaultBodyCSS('background-size', '400px');
     
     $tbl = "<style>@page {margin: 0px;}body { margin: 40px;font-family: serif; font-size: 7.2px; } h3 {margin: 2px 0 2px 0;} .left{width: 60%;float: left;font-size:12px;} .right{width: 40%;float: right;text-align: right;font-size:11px;} .clear { clear:both; }</style> <div style='color: #e12020;position: absolute; top: 10px; left: 10px; font-size: 12px;'>$created_at</div>";
 
@@ -132,9 +133,9 @@
 
     $tbl .= '</table>';
 
-    $pdf->WriteHTML($tbl);
+    $mpdf->WriteHTML($tbl);
     @unlink("../files/$filename");
-    $pdf->Output("../files/$filename");
+    $mpdf->Output("../files/$filename");
 
     $path = "../files/$filename";
     $path_info = pathinfo($path);
