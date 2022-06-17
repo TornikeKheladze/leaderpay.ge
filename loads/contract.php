@@ -38,7 +38,7 @@
 
     $mpdf->SetDefaultBodyCSS('background', "url('https://manager.allpayway.ge/assets/img/document-logo.jpg') no-repeat center center");
     $mpdf->SetDefaultBodyCSS('background-size', '400px');
-    
+
     $tbl = "<style>@page {margin: 0px;}body { margin: 40px;font-family: serif; font-size: 7px; } h3 {margin: 2px 0 2px 0;} .left{width: 60%;float: left;font-size:12px;} .right{width: 40%;float: right;text-align: right;font-size:11px;} .clear { clear:both; }</style> <div style='color: #e12020;position: absolute; top: 30px; left: 55px; font-size: 12px;'>$created_at</div>";
 
     $tbl .= '<h3 style="text-align: center; font-size: 11px; margin: 0px; color: #333;">ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ</h3>';
@@ -127,14 +127,7 @@
     $tbl .= '</table>';
 
     $mpdf->WriteHTML($tbl);
-    @unlink("../files/$filename");
-    $mpdf->Output("../files/$filename");
-
-    $path = "../files/$filename";
-    $path_info = pathinfo($path);
-    $extension = $path_info['extension'];
-    $data = file_get_contents($path);
-    $base64 = 'data:image/' . $extension . ';base64,' . base64_encode($data);
+    $base64 = 'data:application/pdf;base64,' . base64_encode($mpdf->Output('', 'S'));
 
     // file upload
     $pdf_dir = 'files/user_contracts/';
@@ -167,4 +160,4 @@
 
     }
 
-    return $status;
+    var_dump($status);

@@ -190,12 +190,10 @@ $(document).ready(function() {
                               $.ajax({
                                   type: 'POST',
                                   url: 'loads/contract.php',
-                                  data: {name: 'personal_number', value: data.data.personal_number},
+                                  data: {personal_number: data.data.personal_number},
                                   dataType: 'json',
-                                  success: function(data) {
-                                     
-                                  }  // success
-                              }); // ajax
+                                  success: function(data) {}
+                              });
 
                               var errorMsg = '<div class="msg msg-succses">';
                                   errorMsg += data.errorMessage;
