@@ -1,2 +1,4 @@
 /vendor
 /files
+composer.json
+composer.lock
