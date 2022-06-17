@@ -3,7 +3,6 @@
 
     require '../classes/config.php';
     require '../classes/db.php';
-    require '../classes/pdf/mpdf.php';
     require '../classes/Upload.php';
 
     $db = new db();
@@ -36,17 +35,11 @@
 
     $mpdf = new \Mpdf\Mpdf(); 
     $mpdf->AddPage();
-    //set document information
-    $mpdf->SetAuthor('leaderpay');
-    $mpdf->SetTitle('ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ');
-    $mpdf->SetSubject('ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ');
-    //add a page
-    $mpdf->AddPage();
 
     $mpdf->SetDefaultBodyCSS('background', "url('https://manager.allpayway.ge/assets/img/document-logo.jpg') no-repeat center center");
     $mpdf->SetDefaultBodyCSS('background-size', '400px');
     
-    $tbl = "<style>@page {margin: 0px;}body { margin: 40px;font-family: serif; font-size: 7.2px; } h3 {margin: 2px 0 2px 0;} .left{width: 60%;float: left;font-size:12px;} .right{width: 40%;float: right;text-align: right;font-size:11px;} .clear { clear:both; }</style> <div style='color: #e12020;position: absolute; top: 10px; left: 10px; font-size: 12px;'>$created_at</div>";
+    $tbl = "<style>@page {margin: 0px;}body { margin: 40px;font-family: serif; font-size: 7px; } h3 {margin: 2px 0 2px 0;} .left{width: 60%;float: left;font-size:12px;} .right{width: 40%;float: right;text-align: right;font-size:11px;} .clear { clear:both; }</style> <div style='color: #e12020;position: absolute; top: 30px; left: 55px; font-size: 12px;'>$created_at</div>";
 
     $tbl .= '<h3 style="text-align: center; font-size: 11px; margin: 0px; color: #333;">ხელშეკრულება ელექტრონული საფულის გამოყენების  შესახებ</h3>';
     $tbl .= '<p style="margin: 0px;">აღნიშნული ვებგვერდი <span style="color: #0e0ae1;"> www.leaderpay.ge </span> ასევე <span style="color: #0e0ae1;"> www.leader-pay.com </span> წარმოადგენს შპს „ოლ ფეი ვეი“ სკ 400147211 საკუთრებას.წინამდებარე ვებ გვერდის სარგებლობისას, თქვენ ავტომატურად ეთანხმებით ამ ხელშეკრულების პირობებს და ვალდებული ხართ განუხრელად დაიცვათ ყველა ქვემოთ ხსენებული პირობა.</p>';
@@ -159,6 +152,7 @@
         'user_id' => $user['id'],
         'author' => 'leaderpay.ge',
         'file' => $document,
+        'updated_at' => $created_at,
     ];
 
     $file = $db->get_date('user_files', " user_id = '$user[id]'");
