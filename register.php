@@ -39,9 +39,9 @@
 
                     <div id="rootwizard">
                         <ul>
-                            <li><a href="#tab1" data-toggle="tab">პირველი ნაბიჯი</a></li>
-                            <li><a href="#tab2" data-toggle="tab">მეორე ნაბიჯი</a></li>
-                            <li><a href="#tab3" data-toggle="tab">დასრულება</a></li>
+                            <li><a href="#tab1" data-toggle="tab"><?=$lang['first_step'] ?></a></li>
+                            <li><a href="#tab2" data-toggle="tab"><?=$lang['second_step'] ?></a></li>
+                            <li><a href="#tab3" data-toggle="tab"><?=$lang['finish'] ?></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane" id="tab1">
@@ -108,8 +108,8 @@
                                                 <div class="form-group checkbox">
                                                     <div class="md-checkbox">
                                                         <input id="checkbox" name="checkbox" type="checkbox">
-                                                        <label for="checkbox">მე გავეცანი და ვეთანხმები კონფიდენციალურობისა და უსაფრთხოების 
-                                                            <a href="https://leaderpay.ge/privacy.php" target="_blank">პირობებს </a>
+                                                        <label for="checkbox"><?=$lang['conditions_txt'] ?> 
+                                                            <a href="https://leaderpay.ge/privacy.php" target="_blank"><?=$lang['conditions'] ?> </a>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -138,20 +138,20 @@
                                 <div class="row">
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group req">
-                                            <label for="dual_citizen">ორმაგი მოქალაქე</label>
+                                            <label for="dual_citizen"><?=$lang['dual_citizen'] ?></label>
                                             <select name="dual_citizen" id="dual_citizen" class="input select2-container select2me" onChange="checkDualCitizen(this.value);">
-                                                <option value="">აირჩიეთ</option>
-                                                <option value="1">კი</option>
-                                                <option value="2">არა</option>
+                                                <option value=""><?=$lang['select'] ?></option>
+                                                <option value="1"><?=$lang['yes'] ?></option>
+                                                <option value="2"><?=$lang['no'] ?></option>
                                             </select>
                                         </div>
                                     </div> <!-- end col -->
 
                                     <div class="col-md-4 col-sm-4 country2 none">
                                         <div class="form-group req">
-                                            <label for="country2">მეორე ქვეყანა</label>
+                                            <label for="country2"><?=$lang['second_country'] ?></label>
                                             <select name="country2" id="country2" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
 
                                                 <?php foreach($countries as $c) { ?>
                                                     <option value="<?=$c['ccode'] ?>"><?=$c['country'] ?></option>
@@ -163,9 +163,9 @@
 
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group req">
-                                            <label for="birth_country">დაბადების ქვეყანა</label>
+                                            <label for="birth_country"><?=$lang['country_of_birth'] ?></label>
                                             <select name="birth_country" id="birth_country" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
 
                                                 <?php foreach($countries as $c) { ?>
                                                     <option value="<?=$c['ccode'] ?>"><?=$c['country'] ?></option>
@@ -177,9 +177,9 @@
 
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group req">
-                                            <label for="employee_status">დასაქმებულის სტატუსი</label>
+                                            <label for="employee_status"><?=$lang['employee_status'] ?></label>
                                             <select name="employee_status" id="employee_status" class="input select2-container select2me" onChange="checkEmployeeStatus(this.value);">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
 
                                                 <?php foreach($employee_status as $i) { ?>
                                                     <option value="<?=$i['id'] ?>"><?=$i['name'] ?></option>
@@ -191,9 +191,9 @@
 
                                     <div class="col-md-4 col-sm-4 sferoIdDiv none">
                                         <div class="form-group req">
-                                            <label for="sfero_id">საქმიანობის სფერო</label>
+                                            <label for="sfero_id"><?=$lang['field_of_activity'] ?></label>
                                             <select name="sfero_id" id="sfero_id" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
 
                                                 <?php foreach($sferos as $i) { ?>
                                                     <option value="<?=$i['id'] ?>"><?=$i['name'] ?></option>
@@ -205,9 +205,9 @@
 
                                     <div class="col-md-4 col-sm-4 selfEmployeeDiv none">
                                         <div class="form-group req">
-                                            <label for="self_employed">თვით დასაქმებული</label>
+                                            <label for="self_employed"><?=$lang['self_employed'] ?></label>
                                             <select name="self_employed" id="self_employed" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
                                                 
                                                 <?php foreach($self_employed as $i) { ?>
                                                     <option value="<?=$i['id'] ?>"><?=$i['name'] ?></option>
@@ -219,30 +219,30 @@
 
                                     <div class="col-md-4 col-sm-4 sourceIncomeDiv none">
                                         <div class="form-group req">
-                                            <label for="source_of_income">შემოსავლის წყარო</label>
+                                            <label for="source_of_income"><?=$lang['source_of_income'] ?></label>
                                             <input name="source_of_income" type="text" id="source_of_income" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
                                         </div>
                                     </div> <!-- end col -->
 
                                     <div class="col-md-4 col-sm-4 jobTitleDiv none">
                                         <div class="form-group req">
-                                            <label for="job_title">სამუშაოს დასახელება</label>
+                                            <label for="job_title"><?=$lang['job_title'] ?></label>
                                             <input name="job_title" type="text" id="job_title" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
                                         </div>
                                     </div> <!-- end col -->
 
                                     <div class="col-md-4 col-sm-4 jobTitleDiv none">
                                         <div class="form-group req">
-                                            <label for="occupied_position">დაკავებული თანამდებობა</label>
+                                            <label for="occupied_position"><?=$lang['occupied_position'] ?></label>
                                             <input name="occupied_position" type="text" id="occupied_position" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
                                         </div>
                                     </div> <!-- end col -->
 
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group req">
-                                            <label for="monthly_income">ყოველთვიური შემოსავალი</label>
+                                            <label for="monthly_income"><?=$lang['monthly_income'] ?></label>
                                             <select name="monthly_income" id="monthly_income" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
 
                                                 <?php foreach($monthly_income as $i) { ?>
                                                     <option value="<?=$i['id'] ?>"><?=$i['name'] ?></option>
@@ -254,9 +254,9 @@
 
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group req">
-                                            <label for="expected_turnover">ყოველთვიური სავარაოდო ბრუნვა შემოსავალი</label>
+                                            <label for="expected_turnover"><?=$lang['expected_turnover'] ?></label>
                                             <select name="expected_turnover" id="expected_turnover" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
 
                                                 <?php foreach($expected_turnover as $i) { ?>
                                                     <option value="<?=$i['id'] ?>"><?=$i['name'] ?></option>
@@ -268,9 +268,9 @@
 
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group req">
-                                            <label for="purpose_id">პროვაიდერთან საქმიანი ურთიერთობის მიზანი</label>
+                                            <label for="purpose_id"><?=$lang['purpose_id'] ?></label>
                                             <select name="purpose_id" id="purpose_id" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
                                                 
                                                 <?php foreach($purpose_relationship as $i) { ?>
                                                     <option value="<?=$i['id'] ?>"><?=$i['name'] ?></option>
@@ -282,20 +282,20 @@
 
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group req">
-                                            <label for="pep_status">ხართ თუ არა პოლიტიკურად აქტიური</label>
+                                            <label for="pep_status"><?=$lang['pep_status'] ?></label>
                                             <select name="pep_status" id="pep_status" class="input select2-container select2me" onChange="checkPepStatus(this.value);">
-                                                <option value="">აირჩიეთ</option>
-                                                <option value="1">კი</option>
-                                                <option value="0">არა</option>
+                                                <option value=""><?=$lang['select'] ?></option>
+                                                <option value="1"><?=$lang['yes'] ?></option>
+                                                <option value="0"><?=$lang['no'] ?></option>
                                             </select>
                                         </div>
                                     </div> <!-- end col -->
 
                                     <div class="col-md-4 col-sm-4 pep_div none">
                                         <div class="form-group req">
-                                            <label for="pep">პოლიტიკურად აქტიური</label>
+                                            <label for="pep"><?=$lang['pep'] ?></label>
                                             <select name="pep" id="pep" class="input select2-container select2me">
-                                                <option value="">აირჩიეთ</option>
+                                                <option value=""><?=$lang['select'] ?></option>
 
                                                 <?php foreach($user_pep as $i) { ?>
                                                     <option value="<?=$i['id'] ?>"><?=$i['name'] ?></option>
@@ -320,9 +320,9 @@
 
                             <ul class="pager wizard">
                                 <!-- <li class="previous first" style="display:none;"><a href="#">პირველი</a></li> -->
-                                <li class="previous" style="visibility: hidden;"><a href="#">უკან</a></li> 
-                                <li class="next last" style="display:none;"><a href="#" class="g1-btn"><i class="fa fa-check-circle" aria-hidden="true"></i> დასრულება</a></li>
-                                <li class="next"><a href="#" class="g1-btn">შემდეგ <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                <li class="previous" style="visibility: hidden;"><a href="#"><?=$lang['back'] ?></a></li> 
+                                <li class="next last" style="display:none;"><a href="#" class="g1-btn"><i class="fa fa-check-circle" aria-hidden="true"></i> <?=$lang['finish'] ?></a></li>
+                                <li class="next"><a href="#" class="g1-btn"><?=$lang['next'] ?> <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
                     </div>

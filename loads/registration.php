@@ -1,5 +1,36 @@
 <?php
 
+    require '../classes/static.php';
+
+    $cookie = new cookie();
+
+    if (isset($_GET['lang'])) {
+
+        if ($cookie::set("lang", $_GET['lang'], time()+100000000) == true) {
+
+            $page_uri = explode('lang', $_SERVER['REQUEST_URI']);
+            header('Location:'.$page_uri[0]);
+
+        }
+
+        $lang_id = $cookie::get('lang');
+
+    } else {
+
+        if ($cookie::check('lang') == true) {
+
+            $lang_id = $cookie::get('lang');
+
+        } else {
+
+            $lang_id = "ge";
+
+        }
+
+    }
+
+    include "../language/$lang_id.php";
+
     require '../classes/config.php';
     require '../classes/db.php';
     require '../classes/Identomat.php';
@@ -63,7 +94,7 @@
 
             $json = [
                 'errorCode' => 3,
-                'errorMessage' => 'მომხმარებელი მითითებული ტელეფონის ნომრით უკვე რეგისტრირებულია',
+                'errorMessage' => $lang['unique_phone'],
             ];
             echo json_encode($json);
             die();
@@ -149,7 +180,7 @@
     
                 $json = [
                     'errorCode' => 3,
-                    'errorMessage' => 'მომხმარებელი უკვე რეგისტრირებულია!',
+                    'errorMessage' => $lang['user_exist'],
                 ];
                 echo json_encode($json);
                 die();
@@ -177,7 +208,7 @@
 
                 $json = [
                     'errorCode' => 4,
-                    'errorMessage' => 'მომხარებელი უნდა იყოს 18 წლის',
+                    'errorMessage' => $lang['user_must_18'],
                 ];
                 echo json_encode($json);
                 die();
@@ -241,7 +272,7 @@
 
             $json = [
                 'errorCode' => 5,
-                'errorMessage' => 'მიმდინარეობს მომხმარებლის გადამოწმება გთხოვთ სცადოთ მოგვიანებთ ან დაუკავშირდით “ოლლ ფეი ვეის“',
+                'errorMessage' => $lang['user_checking'],
             ];
 
             echo json_encode($json);
@@ -372,7 +403,7 @@
 
         $json = [
             'errorCode' => 10,
-            'errorMessage' => 'რეგისტრაცია წარმატებით დასრულდა. შეგიძლიათ გაიაროთ ავტორიზაცია',
+            'errorMessage' => $lang['registration_completed'],
             'data' => [
                 'personal_number' => $pNumber,
             ],
