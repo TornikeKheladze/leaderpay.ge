@@ -135,7 +135,6 @@
             'real_address' => true,
             'password' => true,
             'repeat_password' => true,
-            'checkbox1' => true,
             'checkbox' => true,
         ];
 
