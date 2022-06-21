@@ -3,12 +3,12 @@ $(document).ready(function() {
       errorElement: 'span',
       rules: {
           'phone': {minlength: 9, maxlength: 10, required: true},
+          'email': {required: true},
           'legal_address': {required: true, minlength: 5, maxlength: 255},
           'real_address': {required: true, minlength: 5, maxlength: 255},
           'repeat_password': {equalTo: '#password'},
           'password': {minlength: 8, required: true, passwordCheck: true},
           'checkbox': {required: true},
-          'checkbox1': {required: true},
           'dual_citizen': {required: true},
           'country2': {
               required: function(element) {
@@ -300,5 +300,20 @@ addEventListener('message', function (e) {
   if (e.data !== 'DONE') return;
 
   $('.g1-btn').trigger('click');
+
+});
+
+$('.user_contract').on('click', function() {
+
+    if ($('#registracion_form').valid()) {
+
+        var personal_number = $('#pNumber').val();
+        var pep = $('#pep_status').val();
+
+        var url = './loads/contractShow.php?personal_number=' + personal_number + '&pep=' + pep;
+        window.open(url, '_blank');
+    } else {
+        return false;
+    }
 
 });

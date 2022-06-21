@@ -46,12 +46,11 @@
 
         $mustParams = [
             'mobile' => true,
+            'email' => true,
             'legal_address' => true,
             'real_address' => true,
             'password' => true,
             'repeat_password' => true,
-            'checkbox1' => true,
-            'checkbox' => true,
         ];
 
         foreach($mustParams as $k => $v) {
@@ -73,6 +72,7 @@
         }
 
         $mobile = trim($post['mobile']);
+        $email = trim($post['email']);
 
         $password = trim($post['password']);
         $repeat_password = trim($post['repeat_password']);
@@ -88,13 +88,25 @@
 
         }
 
-        $user = $db->get_date('users', " mobile = '$mobile' ");
+        $mobileUser = $db->get_date('users', " mobile = '$mobile' ");
+        $emailUser = $db->get_date('users', " email = '$email' ");
 
-        if ($user) {
+        if ($mobileUser) {
 
             $json = [
                 'errorCode' => 3,
                 'errorMessage' => $lang['unique_phone'],
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+        if ($emailUser) {
+
+            $json = [
+                'errorCode' => 4,
+                'errorMessage' => $lang['unique_email'],
             ];
             echo json_encode($json);
             die();
@@ -118,6 +130,7 @@
         $mustParams = [
             'iToken' => true,
             'mobile' => true,
+            'email' => true,
             'legal_address' => true,
             'real_address' => true,
             'password' => true,
@@ -169,6 +182,7 @@
             $document_number = $result['person']['document_number'];
 
             $mobile = trim($post['mobile']);
+            $email = trim($post['email']);
             $password = trim($post['password']);
             $password = hash('sha256', $password);
             $legal_address = trim($post['legal_address']);
@@ -239,6 +253,7 @@
             $userParams = [
                 'wallet_number' => $personal_number,
                 'personal_number' => $personal_number,
+                'mobile' => $email,
                 'mobile' => $mobile,
                 'legal_address' => $legal_address,
                 'real_address' => $real_address,
@@ -319,6 +334,7 @@
             'purpose_id' => true,
             'pep_status' => true,
             'pep' => (@$post['pep_status'] == 1) ? true : false,
+            'checkbox' => true,
         ];
 
         foreach($mustParams as $k => $v) {

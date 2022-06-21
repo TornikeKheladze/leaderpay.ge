@@ -115,13 +115,7 @@
         $tbl .= '<tr>';
             $tbl .= '<td style="width:33.33333%;font-size: 8px; padding-bottom: 10px;">დირექტორი; მ. დემეტრაშვილი </td>';
             $tbl .= '<td style="width:33.33333%;font-size: 8px;">მაიდენთიფიცირებელი leaderpay.ge</td>';
-            $tbl .= '<td style="width:33.33333%;font-size: 8px;">----------------------------------------------------------------------------------------</td>';
-        $tbl .= '</tr>';
-
-        $tbl .= '<tr>';
-            $tbl .= '<td style="width:33.33333%;font-size: 8px;"></td>';
-            $tbl .= '<td style="width:33.33333%;font-size: 8px;"></td>';
-            $tbl .= '<td style="width:33.33333%;font-size: 8px; padding-top: 10px;"> ხელმოწერა ----------------------------------------------------------------------</td>';
+            $tbl .= "<td style='width:33.33333%;font-size: 8px;'>$first_name $last_name</td>";
         $tbl .= '</tr>';
 
     $tbl .= '</table>';

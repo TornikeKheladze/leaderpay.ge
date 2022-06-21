@@ -50,10 +50,16 @@
                                     <div class="col-md-12 col-sm-12">
 
                                         <div class="row">
-                                            <div class="col-md-12 col-sm-12">
+                                            <div class="col-md-6 col-sm-6">
                                                 <div class="form-group req">
                                                     <label for="phone"><?=$lang['telephone_number'] ?></label>
                                                     <input onkeypress="return isIntKey(event);" name="phone" type="tel" id="phone" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
+                                                </div>
+                                            </div> <!-- end col -->
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group req">
+                                                    <label for="phone"><?=$lang['email'] ?></label>
+                                                    <input name="email" type="email" id="email" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div><!-- end row -->
@@ -90,33 +96,6 @@
                                         
                                     </div><!-- end col-md-6 -->
                                 </div> <!-- end row -->
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group checkbox">
-                                                    <div class="md-checkbox">
-                                                        <input id="checkbox1" name="checkbox1" type="checkbox">
-                                                        <label for="checkbox1"><?=$lang['agree'] ?> <a href="https://leaderpay.ge/assets/pdf/aggrament.pdf" target="_blank" class=""> <?=$lang['agreements'] ?> </a> <?=$lang['agreement'] ?></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group checkbox">
-                                                    <div class="md-checkbox">
-                                                        <input id="checkbox" name="checkbox" type="checkbox">
-                                                        <label for="checkbox"><?=$lang['conditions_txt'] ?> 
-                                                            <a href="https://leaderpay.ge/privacy.php" target="_blank"><?=$lang['conditions'] ?> </a>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> <!-- end col -->
-                                </div><!-- end row div -->
 
                             </div> <!-- end tab 1 -->
                             <div class="tab-pane" id="tab2">
@@ -305,6 +284,21 @@
                                         </div>
                                     </div> <!-- end col -->
                                 </div><!-- end row -->
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group checkbox">
+                                                    <div class="md-checkbox">
+                                                        <input id="checkbox" name="checkbox" type="checkbox">
+                                                        <label for="checkbox"><?=$lang['agree'] ?> <a href="#" target="_blank" class="user_contract"> <?=$lang['agreements'] ?> </a> <?=$lang['agreement'] ?></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div><!-- end row div -->
 
                             </div> <!-- end tab 3 -->
 

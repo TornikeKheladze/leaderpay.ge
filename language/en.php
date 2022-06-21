@@ -257,5 +257,7 @@ $lang = array(
   "user_must_18" => 'The user must be 18 years old',
   "user_checking" => 'User checking please try again later or contact All Fee Way',
   "registration_completed" => 'Registration completed successfully. You can log in',
+  "unique_email" => 'The user is already registered with the specified email',
+
 );
 
