@@ -135,7 +135,6 @@
             'real_address' => true,
             'password' => true,
             'repeat_password' => true,
-            'checkbox' => true,
         ];
 
         foreach($mustParams as $k => $v) {
