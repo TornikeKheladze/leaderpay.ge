@@ -8,6 +8,12 @@ class payment {
 
   public function info($params) {
 
+      if ($this->time_restriction) {
+
+          return json_encode(['errorCode' => 99, 'errorMessage' => '00:01 საათამდე გადახდას ვერ შეძლებთ'], JSON_UNESCAPED_UNICODE);
+
+      }
+
     $service_id = intval($params['service_id']);
 
     $agent_id = $this->agent_id;
@@ -56,8 +62,12 @@ class payment {
   } // end info method
 
   public function pay($params) {
-	  
-	  
+
+      if ($this->time_restriction) {
+
+          return json_encode(['errorCode' => 99, 'errorMessage' => '00:01 საათამდე გადახდას ვერ შეძლებთ'], JSON_UNESCAPED_UNICODE);
+
+      }
 
     $db = new db();
 
@@ -143,5 +153,23 @@ class payment {
     }
 
   } // get_label_names method
+
+    public function time_restriction() {
+
+        $currentDatatime = date('Y-m-d h:i:s');
+        $currentData = date('Y-m-d');
+
+        $minutesToAdd = 31;
+
+        $from = "$currentData 23:30:00";
+
+        $newtimestamp = strtotime("$from  + $minutesToAdd minute");
+        $newtimes = date('Y-m-d H:i:s', $newtimestamp);
+
+        $to = $newtimes;
+
+        return (strtotime($currentDatatime) > strtotime($from) && strtotime($currentDatatime) < strtotime($to)) ? true : false;
+
+    }
 
 } // end pay class
