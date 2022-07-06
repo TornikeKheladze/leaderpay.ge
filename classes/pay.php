@@ -8,7 +8,7 @@ class payment {
 
   public function info($params) {
 
-      if ($this->time_restriction) {
+      if ($this->time_restriction()) {
 
           return json_encode(['errorCode' => 99, 'errorMessage' => '00:01 საათამდე გადახდას ვერ შეძლებთ'], JSON_UNESCAPED_UNICODE);
 
@@ -63,7 +63,7 @@ class payment {
 
   public function pay($params) {
 
-      if ($this->time_restriction) {
+      if ($this->time_restriction()) {
 
           return json_encode(['errorCode' => 99, 'errorMessage' => '00:01 საათამდე გადახდას ვერ შეძლებთ'], JSON_UNESCAPED_UNICODE);
 
