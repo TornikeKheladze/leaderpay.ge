@@ -12,7 +12,7 @@
         $username = $post['username'];
         $password = hash('sha256', trim($post['password']));
 
-        $data = $db->get_date('users', " `wallet_number` = '$username' AND `password` = '$password' AND is_blocked = 0");
+        $data = $db->Login($username, $password);
 
         if ($data == false) {
 

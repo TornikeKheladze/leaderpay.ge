@@ -545,4 +545,16 @@
         return $ip;
 
     }
+
+    public function Login($username, $password) {
+
+        $sth = $this->db->prepare('SELECT * FROM `users` WHERE wallet_number = :wallet_number AND password = :password AND is_blocked = 0 ');
+        $sth->bindParam(':wallet_number', $username, PDO::PARAM_STR);
+        $sth->bindParam(':password', $password, PDO::PARAM_STR);
+        $sth->execute();
+        $data = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return ($sth->errorCode() == PDO::ERR_NONE) ? $data : false;
+
+    }
   }
