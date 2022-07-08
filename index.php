@@ -122,7 +122,7 @@ if(!isset($_GET["lang"])){
                         <div class="txt"><?php echo $lang['Pay']; ?></div>
                     </div>
                 </a>
-                <a href="game.php" target="_blank">
+                <a href="services.php" target="_blank">
                     <div class="sub-n bottom-right" data-url="">
                         <div class="min_logo_bottom_right">
                             <img src="/assets/img/favicon/title_icon.png" alt="LeaderPay">
