@@ -40,7 +40,7 @@
   } // check captcha respons
 
     // check wallet_number
-    $data = $db->get_date("users", " `wallet_number` = '".$wallet_number."' ");
+    $data = $db->Password($wallet_number);
 
     if ($data) {
 
@@ -95,7 +95,7 @@
     $mobile = $post['mobile'];
 
     // check user
-    $data = $db->get_date("users", " `wallet_number` = '".$wallet_number."' ");
+    $data = $db->Password($wallet_number);
 
     // remove spaces
     $db_mobile = str_replace(' ', '', $data['mobile']);
