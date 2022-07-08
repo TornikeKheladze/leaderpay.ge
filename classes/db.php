@@ -567,11 +567,34 @@
 
     }
 
-    public function Password($wallet_number) {
+    public function UserByWalletNumber($wallet_number) {
 
         $sth = $this->db->prepare('SELECT * FROM `users` WHERE wallet_number = :wallet_number AND is_blocked = 0 ');
 
         $sth->bindParam(':wallet_number', $wallet_number, PDO::PARAM_STR);
+        $sth->execute();
+        $data = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return ($sth->errorCode() == PDO::ERR_NONE) ? $data : false;
+
+    }
+
+    public function EmailUser($email) {
+
+        $sth = $this->db->prepare('SELECT * FROM `users` WHERE email = :email ');
+
+        $sth->bindParam(':email', $email, PDO::PARAM_STR);
+        $sth->execute();
+        $data = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return ($sth->errorCode() == PDO::ERR_NONE) ? $data : false;
+
+    }
+    public function MobileUser($mobile) {
+
+        $sth = $this->db->prepare('SELECT * FROM `users` WHERE mobile = :mobile ');
+
+        $sth->bindParam(':mobile', $mobile, PDO::PARAM_STR);
         $sth->execute();
         $data = $sth->fetch(PDO::FETCH_ASSOC);
 
