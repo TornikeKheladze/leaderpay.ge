@@ -546,9 +546,18 @@
 
     }
 
-    public function Login($username, $password) {
+    public function Login($username, $password, $sms = null) {
 
-        $sth = $this->db->prepare('SELECT * FROM `users` WHERE wallet_number = :wallet_number AND password = :password AND is_blocked = 0 ');
+        if ($sms) {
+
+            $sth = $this->db->prepare('SELECT * FROM `users` WHERE wallet_number = :wallet_number AND password = :password AND sms_code = :sms_code AND is_blocked = 0 ');
+            $sth->bindParam(':sms_code', $sms, PDO::PARAM_INT);
+
+        } else {
+
+            $sth = $this->db->prepare('SELECT * FROM `users` WHERE wallet_number = :wallet_number AND password = :password AND is_blocked = 0 ');
+
+        }
         $sth->bindParam(':wallet_number', $username, PDO::PARAM_STR);
         $sth->bindParam(':password', $password, PDO::PARAM_STR);
         $sth->execute();
@@ -557,4 +566,5 @@
         return ($sth->errorCode() == PDO::ERR_NONE) ? $data : false;
 
     }
+
   }

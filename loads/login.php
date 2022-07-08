@@ -31,7 +31,6 @@
             ];
             $db->insert('login_log', $logParams);
 
-
             echo json_encode($json);
             die();
 
@@ -78,12 +77,13 @@
         }
     }
 
-    if (isset($post['username']) && isset($post['sms_code']) && $post['method'] == 'sms') {
+    if (isset($post['username']) && isset($post['sms_code']) && isset($post['password']) && $post['method'] == 'sms') {
 
         $username = $post['username'];
+        $password = hash('sha256', trim($post['password']));
         $sms_code = $post['sms_code'];
 
-        $data = $db->get_date('users', " `wallet_number` = '$username' AND `sms_code` = '$sms_code' AND is_blocked = 0");
+        $data = $db->Login($username, $password, $sms_code);
 
         if ($data == false) {
 
