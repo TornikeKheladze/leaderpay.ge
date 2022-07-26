@@ -156,8 +156,11 @@ class payment {
 
     public function time_restriction() {
 
-        $currentDatatime = date('Y-m-d h:i:s');
-        $currentData = date('Y-m-d');
+        $datetime = new DateTime( 'now', new DateTimeZone( 'Asia/Tbilisi' ) );
+
+        $currentDatatime = $datetime->format('Y-m-d H:i:s');
+
+        $currentData = $datetime->format('Y-m-d');
 
         $minutesToAdd = 31;
 
