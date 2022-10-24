@@ -29,8 +29,8 @@ class Merchant {
 
         $hashString = $this->customer_id . $this->secret;
 
-        $hash = hash('sha256', md5($hashString));
-        //$hash = 'test';
+        //$hash = hash('sha256', md5($hashString));
+        $hash = 'test';
 
         $data = [
             'hash' => $hash,
