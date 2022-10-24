@@ -204,7 +204,7 @@ class Billing {
         $hashstr = $agent_id . $agent_transaction_id . $service_id . $amount . $date . $secret;
         $hash = hash('sha256', $hashstr);
 
-        $this->name = 'testpay.php';
+        $this->name = 'pay.php';
 
         $this->post = [
             'agent_id'              => $agent_id,
