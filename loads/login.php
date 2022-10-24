@@ -170,6 +170,30 @@
 
     }
 
+    if (isset($post['checkAuth'])) {
+
+        if (isset($_SESSION['user_name'])) {
+
+            $json = [
+                'errorCode' => 1,
+                'errorMessage' => 'yes',
+            ];
+            echo json_encode($json);
+            die();
+
+        } else {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => 'no',
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+    }
+
     $json = [
         'errorCode' => 0,
         'errorMessage' => 'საფულის ნომერი ან პაროლი არასწორია',

@@ -3,10 +3,8 @@
     require 'classes/config.php';
     require 'classes/db.php';
     require 'classes/static.php';
-    require 'classes/billing.php';
 
     $db = new db();
-    $billing = new billing();
     // lang cookie
     $cookie = new cookie();
 

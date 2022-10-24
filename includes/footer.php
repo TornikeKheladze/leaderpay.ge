@@ -55,12 +55,9 @@
         <div class="space"></div>
         <div class="row">
           <div class="col-md-7 col-xs-12 text-left">
-            <div class="copyrights">© 2015 - 2020 leaderpay.ge All Rights Reserved.</div>
+            <div class="copyrights">&coppy; 2015 - <?=date('Y') ?> leaderpay.ge All Rights Reserved.</div>
           </div><!-- end col -->
           <div class="col-md-5 col-xs-12">
-          <!--  <div class="breand">
-              <a download="apw.png" href="/assets/img/logo.png"><img src="assets/img/favicon/favicon-32x32.png" alt="apw">ლოგოს გადმოწერა</a>
-            </div>-->
           </div><!-- end col -->
         </div><!-- end row -->
       </div><!-- end container -->

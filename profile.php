@@ -69,7 +69,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="profile.php?action=services" <?php echo (isset($_GET['action']) && $_GET['action'] == 'services') ? "class='active'" : ''; ?>>
+                  <a href="services.php">
                     <img src="assets/img/idea.png" alt="<?php echo $lang['services']; ?>">
                     <span class="image-title"><?php echo $lang['services']; ?></span>
                   </a>
@@ -130,13 +130,9 @@
                 if (isset($_GET['action']) && $_GET['action'] != 'account' &&  $_GET['action'] != '' ) {
                   if ($_GET['action'] == 'transactions') {
                       include 'user/pages/transactions.php';
-                    } elseif ($_GET['action'] == 'services') {
-                      include 'user/pages/services.php';
-                    }  elseif ($_GET['action'] == 'personal_info') {
+                    } elseif ($_GET['action'] == 'personal_info') {
                       include 'user/pages/personal_info.php';
-                    }  elseif ($_GET['action'] == 'favorites') {
-                      include 'user/pages/favorites.php';
-                    }  elseif ($_GET['action'] == 'balance') {
+                    } elseif ($_GET['action'] == 'balance') {
                       include 'user/pages/balance.php';
                     }  elseif ($_GET['action'] == 'payment') {
                       include 'user/pages/payment.php';
@@ -144,8 +140,6 @@
                       include 'user/pages/cashout.php';
                     } elseif ($_GET['action'] == 'settings') {
                       include 'user/pages/settings.php';
-                    } elseif ($_GET['action'] == 'verification') {
-                      include 'user/pages/verification.php';
                     } elseif ($_GET['action'] == 'pay') {
                       include 'user/pages/pay.php';
                     } elseif ($_GET['action'] == 'templates') {

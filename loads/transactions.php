@@ -38,9 +38,7 @@ include '../language/'.$lang_id.'.php';
 
 require '../classes/config.php';
 require '../classes/db.php';
-require '../classes/billing.php';
 
-$billing = new billing();
 $db = new db();
 
 if ($db->check_auch() == true) {
@@ -144,21 +142,6 @@ if ($balance_history != false) {
     }
 
     $amount .= $lang['gel'];
-
-    // status
-    // $status = $billing->get_operation_status($history['operation_id']);
-    // //
-    // if ($status['errorCode'] == 1000) {
-    //
-    //   $operation_status = $status['operation']['status'];
-    //
-    // } else {
-    //
-    //   $operation_status = ".....";
-    //
-    // }
-    // var_dump($status);
-    // tananianur anonce and imfrastruqture invalid
 
     array_push($transactions,
 		    array(

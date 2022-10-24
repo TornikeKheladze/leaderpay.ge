@@ -2793,6 +2793,22 @@ ul.tabs li.active:after {
 .g1-btn:hover {
   background-position: right center;
 }
+.g2-btn {
+  background-image: linear-gradient(to right,#FF4E50 0%,#F9D423 51%,#FF4E50 100%);
+  padding: 15px 35px 15px 35px !important;
+  display: inline-block;
+  color: #fff !important;
+  border: none;
+  font-family: 'title';
+  letter-spacing: 1px;
+  font-size: 12px;
+  border-radius: 25px !important;
+  background-size: 200%;
+  transition-duration: 0.3s;
+}
+.g2-btn:hover {
+  background-position: right center;
+}
 select.input {
   font-size: 10px;
 }
@@ -4980,7 +4996,7 @@ select.input {
   left: 0;
   z-index: 100;
   top: 0;
-  background: rgba(0,0,0,.3);
+  background: rgb(0 0 0 / 83%);
 }
 .pupup-content {
   max-width: 400px;

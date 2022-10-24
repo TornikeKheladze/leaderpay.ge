@@ -13,16 +13,6 @@
     require_once('includes/header.php');
 ?>
 
-<!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <script src="https://kit.fontawesome.com/2855080169.js" crossorigin="anonymous"></script>
-</head>
-<body>
 <div class="container page">
     <div class="row">
         <div class="col-md-12">

@@ -602,4 +602,23 @@
 
     }
 
-  }
+    public function getListSql($sql){
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        $row = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        return ($sth->errorCode() == PDO::ERR_NONE) ? $row : false;
+
+    }
+
+    public function getSql($sql){
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        $row = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return ($sth->errorCode() == PDO::ERR_NONE) ? $row : false;
+
+    }
+
+
+}

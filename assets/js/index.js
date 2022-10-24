@@ -233,21 +233,6 @@ if (cat) {
     }});
   });
 
-  $(document).on("click", ".check_uath",function(e) {
-
-    e.preventDefault();
-    var url = $(this).attr("href");
-
-    // check if user logined
-    $.ajax({url: "./user/session.php", success: function(data){
-         if( data == 1){
-           $(location).attr('href', url);
-         } else{
-           popup("გაიარეთ ავტორიზაცია");
-         }
-    }});
-  });
-
   // service list searchs
 $(document).ready(function(e) {
   $(document).click(function() {
@@ -651,7 +636,7 @@ function getcurse() {
     });
 // console.log($test.text(users));
 }
-getcurse();
+// getcurse();
 
 // calculation percents
 function calc1() {
@@ -940,69 +925,105 @@ function load_infos(form,confirm) {
       }); // ajax
   } //
 }
+function sendRequestToPay() {
 
-// pay popup
-function pay_popup() {
-  var service = $('.pay-service-t').text();
-  var user = $('.user_input ').val();
-  var amount = $('#amount').val();
-  var percent = $('#procent').val();
-  var genamount =$('#generated').val();
+    $.ajax({
+        type: 'POST',
+        url: 'loads/payByWallet.php?action=pay',
+        data: $('#service_form').serialize(),
+        dataType: 'json',
+        success: function (json) {
 
-  var output = '<div class="popup" style="">';
-      output +=   '<div class="pupup-content">';
-      output +=      '<div class="remove"></div>';
-      output +=       '<h5 class="text-center" style="margin-bottom: 30px;font-family: title;">გადარიცხვის დადასტურება</h5>';
-      output +=       '<ul class="list">';
-      output +=       '<li class="clear">';
-      output +=       '<div class="col-md-5 li-block">';
-      output +=       'სერვისი';
-      output +=       '</div>';
-      output +=       '<div class="col-md-7 li-block">';
-      output +=       service;
-      output +=       '</div>';
-      output +=       '</li>';
-      output +=       '<li class="clear">';
-      output +=       '<div class="col-md-5 li-block">';
-      output +=       'აბონენტი';
-      output +=       '</div>';
-      output +=       '<div class="col-md-7 li-block">';
-      output +=       user;
-      output +=       '</div>';
-      output +=       '</li>';
-      output +=       '<li class="clear">';
-      output +=       '<div class="col-md-5 li-block">';
-      output +=       'ჩასარიცხი თანხა';
-      output +=       '</div>';
-      output +=       '<div class="col-md-7 li-block">';
-      output +=       amount;
-      output +=       '</div>';
-      output +=       '</li>';
-      output +=       '<li class="clear">';
-      output +=       '<div class="col-md-5 li-block">';
-      output +=       'საკომისიო';
-      output +=       '</div>';
-      output +=       '<div class="col-md-7 li-block">';
-      output +=       percent;
-      output +=       '</div>';
-      output +=       '</li>';
-      output +=       '<li class="clear">';
-      output +=       '<div class="col-md-5 li-block">';
-      output +=       'ჩამოგეჭრებათ';
-      output +=       '</div>';
-      output +=       '<div class="col-md-7 li-block">';
-      output +=       genamount;
-      output +=       '</div>';
-      output +=       '</li>';
-      output +=       '</ul>';
-      output +=       '<button type="submit" class="g1-btn btn-b confirm_pay" name="submit"><i class="fa fa-check"></i> დადასტურება</button>';
-      output +=    '</div>';
-      output += '</div>';
+            if (json.errorCode == 100) {
 
-      $('.sub-page-body').append(output);
-      $('.confirm_pay').click(function() {
+                $('.msg-area').html('<div class="msg msg-succses" role="alert">' + json.errorMessage + '</div>');
+                $('.payForm').css('opacity', '0');
+
+            } else {
+
+                $('.msg-area').html('<div class="msg msg-error" role="alert">' + json.errorMessage + '</div>');
+
+            }
+
+        },
+
+    });
+}
+function payPopup(by) {
+    var service = $('.pay-service-t').text();
+    var user = $('.user_input ').val();
+    var amount = $('#amount').val();
+    var percent = $('#procent').val();
+    var genamount =$('#generated').val();
+
+    var output = '<div class="popup" style="">';
+    output += '<div class="pupup-content">';
+    output += '<div class="remove"></div>';
+    output += '<h5 class="text-center" style="margin-bottom: 30px;font-family: title;">გადახდის დადასტურება</h5>';
+    output += '<ul class="list">';
+    output += '<li class="clear">';
+    output += '<div class="col-md-5 li-block">';
+    output += 'სერვისი';
+    output += '</div>';
+    output += '<div class="col-md-7 li-block">';
+    output += service;
+    output += '</div>';
+    output += '</li>';
+    output += '<li class="clear">';
+    output += '<div class="col-md-5 li-block">';
+    output += 'აბონენტი';
+    output += '</div>';
+    output += '<div class="col-md-7 li-block">';
+    output += user;
+    output += '</div>';
+    output += '</li>';
+    output += '<li class="clear">';
+    output += '<div class="col-md-5 li-block">';
+    output += 'ჩასარიცხი თანხა';
+    output += '</div>';
+    output += '<div class="col-md-7 li-block">';
+    output += amount;
+    output += '</div>';
+    output += '</li>';
+    output += '<li class="clear">';
+    output += '<div class="col-md-5 li-block">';
+    output += 'საკომისიო';
+    output += '</div>';
+    output += '<div class="col-md-7 li-block">';
+    output += percent;
+    output += '</div>';
+    output += '</li>';
+    output += '<li class="clear">';
+    output += '<div class="col-md-5 li-block">';
+    output += 'ჩამოგეჭრებათ';
+    output += '</div>';
+    output += '<div class="col-md-7 li-block">';
+    output += genamount;
+    output += '</div>';
+    output += '</li>';
+    output += '</ul>';
+    output += '<button type="submit" class="g1-btn btn-b confirm_pay" name="submit"><i class="fa fa-check"></i> დადასტურება</button>';
+    output += '</div>';
+    output += '</div>';
+
+    $('body').append(output);
+    $('.confirm_pay').click(function() {
         $(this).parent().parent().remove();
-      });
+
+        if (by == 'card') {
+
+            $('.payForm').attr('action', 'loads/payByMerchant.php');
+            $('.payForm').submit();
+
+        }
+
+        if (by == 'wallet') {
+
+            sendRequestToPay();
+
+        }
+
+    });
 }
 // pay popup
 
