@@ -8,7 +8,7 @@
 
     $db = new db();
     $Payway = new Payway($db, 'PayServiceByWallet');
-    $Billing = new Billing($db, 'Merchant');
+    $Billing = new Billing($db, 'Wallet');
     $bulkSms = new bulkSms();
     $Limit = new Limit($db);
 
