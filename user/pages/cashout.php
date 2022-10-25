@@ -1,4 +1,8 @@
+<?php
 
+    require 'classes/Billing.php';
+    $Billing = new Billing($db, 'Wallet');
+?>
 <div class="title clear-after">
   <?php echo $lang['cash_withdrawal']; ?>
 </div>
@@ -59,7 +63,7 @@
 
       <?php
 
-          $services_lst = $billing->get("services",null);
+          $services_lst = $Billing->services();
 
           // to uppercase lang id for service
           $langs = strtoupper($lang_id);
@@ -78,7 +82,7 @@
                 ?>
 
                 <div class="p-list clear">
-                  <a href="profile.php?action=pay&id=<?php echo $service['id']; ?>">
+                  <a href="pay.php?step=1&id=<?php echo $service['id']; ?>">
                     <div class="col-md-1">
                       <div class="c-image" style="background: url('https://uploads.allpayway.ge/files/services/<?php echo $service['image']; ?>') no-repeat center center"></div>
                     </div>
@@ -90,7 +94,7 @@
                       <!-- <span>0%</span> -->
                     </div>
                     <div class="col-md-3 text-right">
-                      <a href="profile.php?action=pay&id=<?php echo $service['id']; ?>" class="btn btn-gradiet"><?php echo $lang['check']; ?></a>
+                      <a href="pay.php?step=1&id=<?php echo $service['id']; ?>" class="btn btn-gradiet"><?php echo $lang['check']; ?></a>
                     </div>
                   </a>
                 </div> <!-- End p-list -->
@@ -113,7 +117,7 @@
 
           <?php
 
-              $services_lst = $billing->get("services",null);
+              $services_lst = $Billing->services();
 
               // to uppercase lang id for service
               $langs = strtoupper($lang_id);
@@ -133,7 +137,7 @@
                     ?>
 
                     <div class="p-list clear">
-                      <a href="profile.php?action=pay&id=<?php echo $service['id']; ?>">
+                      <a href="pay.php?step=1&id=<?php echo $service['id']; ?>">
                         <div class="col-md-1">
                           <div class="c-image" style="background: url('https://uploads.allpayway.ge/files/services/<?php echo $service['image']; ?>') no-repeat center center"></div>
                         </div>
@@ -145,7 +149,7 @@
                           <!-- <span>0%</span> -->
                         </div>
                         <div class="col-md-3 text-right">
-                          <a href="profile.php?action=pay&id=<?php echo $service['id']; ?>" class="btn btn-gradiet"><?php echo $lang['check']; ?></a>
+                          <a href="pay.php?step=1&id=<?php echo $service['id']; ?>" class="btn btn-gradiet"><?php echo $lang['check']; ?></a>
                         </div>
                       </a>
                     </div> <!-- End p-list -->
