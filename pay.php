@@ -274,14 +274,8 @@
                                                 // if need sms validate
                                                 $type = $db->get_date('service_options', " `service_id` = '$service_id' ");
                                                 if (isset($type['sms']) AND $type['sms'] == 1) { ?>
-                                                    <div class="form-group text-left smsDiv" style="display: none">
-                                                        <label for="code">SMS-ით მიღებული კოდი</label>
-                                                        <div class="send_btn" style="display: none">
-                                                            <span> <img src="assets/img/sms.png" alt="send"> გაგზავნა</span>
-                                                        </div>
-                                                        <input onkeypress="return isIntKey(event);"  data-rule-required="true" maxlength="6" minlength="6" name="code" type="txt" id="code" class="input" autocomplete="off">
-                                                    </div>
-                                            <?php }
+                                                    <input name="code" type="hidden" id="code" class="input" autocomplete="off">
+                                        <?php }
                                         }
                                     } ?>
                                 </div>
@@ -420,7 +414,7 @@
                                     });
                                 }
 
-                                $('.send_btn').on('click', function() {
+                                $(document).on('click', '.send_btn', function(e) {
 
                                     sendSms();
                                     $('.send_btn').hide();
@@ -442,13 +436,19 @@
                                                 if (json.errorCode == 1) {
 
                                                     <?php  if (isset($type['sms']) AND $type['sms'] == 1) { ?>
+
                                                         sendSms();
+                                                        payPopup('wallet', 1);
+
                                                         setTimeout(function() {
                                                             deleteSmsSession();
                                                         }, 300000);
-                                                    <?php } ?>
 
-                                                    payPopup('wallet');
+                                                    <?php } else { ?>
+
+                                                        payPopup('wallet', 0);
+
+                                                    <?php } ?>
 
                                                 } else {
                                                     $('#loginPay').modal('show');
@@ -471,7 +471,7 @@
 
                                     if (service_form.valid()) {
 
-                                        payPopup('card');
+                                        payPopup('card', 0);
 
                                     }
 

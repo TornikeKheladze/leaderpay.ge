@@ -949,7 +949,7 @@ function sendRequestToPay() {
 
     });
 }
-function payPopup(by) {
+function payPopup(by, sms) {
     var service = $('.pay-service-t').text();
     var user = $('.user_input ').val();
     var amount = $('#amount').val();
@@ -1008,13 +1008,25 @@ function payPopup(by) {
             }
 
             output += '</ul>';
+
+            if (sms == 1) {
+
+                output += '<div class="form-group text-left">';
+                    output += '<label for="code">SMS-ით მიღებული კოდი</label>';
+                    output += '<div class="send_btn" style="display: none">';
+                        output += '<span> <img src="assets/img/sms.png" alt="send"> გაგზავნა</span>';
+                    output += '</div>';
+                    output += '<input onKeyPress="return isIntKey(event);" data-rule-required="true" maxLength="6" minLength="6" type="txt" id="smsCode" class="input" autoComplete="off" required>';
+                output += '</div>';
+
+            }
+
             output += '<button type="submit" class="g1-btn btn-b confirm_pay" name="submit"><i class="fa fa-check"></i> დადასტურება</button>';
         output += '</div>';
     output += '</div>';
 
     $('body').append(output);
     $('.confirm_pay').click(function() {
-        $(this).parent().parent().remove();
 
         if (by == 'card') {
 
@@ -1025,9 +1037,19 @@ function payPopup(by) {
 
         if (by == 'wallet') {
 
+            if (sms == 1) {
+
+                var smsCode = $('#smsCode').val();
+
+                $('#code').val(smsCode);
+
+            }
+
             sendRequestToPay();
 
         }
+
+        $(this).parent().parent().remove();
 
     });
 }
