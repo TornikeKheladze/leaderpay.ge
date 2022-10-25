@@ -957,53 +957,59 @@ function payPopup(by) {
     var genamount =$('#generated').val();
 
     var output = '<div class="popup" style="">';
-    output += '<div class="pupup-content">';
-    output += '<div class="remove"></div>';
-    output += '<h5 class="text-center" style="margin-bottom: 30px;font-family: title;">გადახდის დადასტურება</h5>';
-    output += '<ul class="list">';
-    output += '<li class="clear">';
-    output += '<div class="col-md-5 li-block">';
-    output += 'სერვისი';
-    output += '</div>';
-    output += '<div class="col-md-7 li-block">';
-    output += service;
-    output += '</div>';
-    output += '</li>';
-    output += '<li class="clear">';
-    output += '<div class="col-md-5 li-block">';
-    output += 'აბონენტი';
-    output += '</div>';
-    output += '<div class="col-md-7 li-block">';
-    output += user;
-    output += '</div>';
-    output += '</li>';
-    output += '<li class="clear">';
-    output += '<div class="col-md-5 li-block">';
-    output += 'ჩასარიცხი თანხა';
-    output += '</div>';
-    output += '<div class="col-md-7 li-block">';
-    output += amount;
-    output += '</div>';
-    output += '</li>';
-    output += '<li class="clear">';
-    output += '<div class="col-md-5 li-block">';
-    output += 'საკომისიო';
-    output += '</div>';
-    output += '<div class="col-md-7 li-block">';
-    output += percent;
-    output += '</div>';
-    output += '</li>';
-    output += '<li class="clear">';
-    output += '<div class="col-md-5 li-block">';
-    output += 'ჩამოგეჭრებათ';
-    output += '</div>';
-    output += '<div class="col-md-7 li-block">';
-    output += genamount;
-    output += '</div>';
-    output += '</li>';
-    output += '</ul>';
-    output += '<button type="submit" class="g1-btn btn-b confirm_pay" name="submit"><i class="fa fa-check"></i> დადასტურება</button>';
-    output += '</div>';
+        output += '<div class="pupup-content">';
+            output += '<div class="remove"></div>';
+            output += '<h5 class="text-center" style="margin-bottom: 30px;font-family: title;">გადახდის დადასტურება</h5>';
+            output += '<ul class="list">';
+            output += '<li class="clear">';
+                output += '<div class="col-md-5 li-block">';
+                    output += 'სერვისი';
+                output += '</div>';
+                output += '<div class="col-md-7 li-block">';
+                    output += service;
+                output += '</div>';
+            output += '</li>';
+            output += '<li class="clear">';
+                output += '<div class="col-md-5 li-block">';
+                    output += 'აბონენტი';
+                output += '</div>';
+                output += '<div class="col-md-7 li-block">';
+                    output += user;
+                output += '</div>';
+            output += '</li>';
+
+            if (by == 'wallet') {
+
+                output += '<li class="clear">';
+                    output += '<div class="col-md-5 li-block">';
+                        output += 'ჩასარიცხი თანხა';
+                    output += '</div>';
+                    output += '<div class="col-md-7 li-block">';
+                        output += amount;
+                    output += '</div>';
+                output += '</li>';
+                output += '<li class="clear">';
+                    output += '<div class="col-md-5 li-block">';
+                        output += 'საკომისიო';
+                    output += '</div>';
+                    output += '<div class="col-md-7 li-block">';
+                        output += percent;
+                    output += '</div>';
+                output += '</li>';
+                output += '<li class="clear">';
+                    output += '<div class="col-md-5 li-block">';
+                        output += 'ჩამოგეჭრებათ';
+                    output += '</div>';
+                    output += '<div class="col-md-7 li-block">';
+                        output += genamount;
+                    output += '</div>';
+                output += '</li>';
+
+            }
+
+            output += '</ul>';
+            output += '<button type="submit" class="g1-btn btn-b confirm_pay" name="submit"><i class="fa fa-check"></i> დადასტურება</button>';
+        output += '</div>';
     output += '</div>';
 
     $('body').append(output);
@@ -1026,6 +1032,7 @@ function payPopup(by) {
     });
 }
 // pay popup
+
 
 // pay popup by params
 function pay_popup_by_params(service, user, amount, percent, genamount, sms) {

@@ -265,9 +265,9 @@
 
                                             if ($service_id != 114) { ?>
 
-                                                <div class="form-group text-left"><label for="amount">ჩასარიცხი თანხა</label><input name="amount" type="text" id="amount" class="input float" autocomplete="off"></div>
-                                                <div class="form-group text-left"><label for="procent">საკომისიო</label><input name="procent" type="text" disabled="" id="procent" class="input" autocomplete="off"></div>
-                                                <div class="form-group text-left"><label for="generated">ჩამოგეჭრებათ</label><input name="generated" type="text" id="generated" class="input" autocomplete="off"></div>
+                                                <div class="form-group text-left"><label for="amount">თანხა</label><input name="amount" type="text" id="amount" class="input float" autocomplete="off"></div>
+                                                <input name="procent" type="hidden" disabled="" id="procent" class="input" autocomplete="off">
+                                                <input name="generated" type="hidden" id="generated" class="input" autocomplete="off">
 
                                             <?php }
 
@@ -481,7 +481,23 @@
 
                                     $('.loginIframe').attr('src', 'https://leaderpay.ge/loginPay.php?1');
 
-                                    $('.pay_by_wallet').trigger('click');
+                                    // check auth
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'loads/login.php',
+                                        data: { checkAuth: 1},
+                                        dataType: 'json',
+                                        success: function (json) {
+
+                                            if (json.errorCode == 1) {
+
+                                                $('.pay_by_wallet').trigger('click');
+
+                                            }
+
+                                        },
+
+                                    });
 
                                 });
 
@@ -531,7 +547,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">ავტორიზაცია</h5>
+                <h5 class="modal-title" id="exampleModalLabel">ავტორიზაცია
+                    <button type="button" style="border: none;background: transparent;float: right;" data-dismiss="modal"><i style="font-size: 2em;color: #e71f1f;" class="fa fa-times-circle" aria-hidden="true"></i></button>
+                </h5>
             </div>
             <div class="modal-body">
                 <iframe src="https://leaderpay.ge/loginPay.php" width="100%" height="310" frameborder="0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation" allowtransparency="true" scrolling="no" class="loginIframe"></iframe>
