@@ -6,9 +6,38 @@
 
         $service_id = (INT) $_GET['id'];
 
+        if ($service_id == 90) {
+
+            if ($db->check_auch() != true) {
+                header('Location: login.php');
+            }
+
+        }
+
     } else {
 
         header('Location: services.php');
+    }
+
+    if ($service_id == 90 && $db->check_auch() == true && $get['step'] == 1) {
+
+        $pin = $user['pin_code'];
+        if (strlen($pin) > 3) {
+
+            header("Location: pay.php?step=2&id=90&rdu=$pin");
+
+        } else {
+            header("Location: pay.php?step=2&id=90&error=სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'");
+        }
+    }
+    if ($service_id == 90 && $db->check_auch() == true && $get['step'] == 2 && isset($get['rdu'])) {
+        $pin = $user['pin_code'];
+        if ($pin != $get['rdu']) {
+
+            header("Location: pay.php?step=2&id=90&error=სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'");
+
+        }
+
     }
 
     require 'classes/Billing.php';
@@ -62,7 +91,10 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div style="background: #fff; border-radius: 2px; box-shadow: 0 1px 1px #dad2d2; padding: 30px;">
+                    <?php if (isset($get['error'])) { ?>
+                        <div class="msg msg-error"><?=$get['error'] ?></div>
+                    <?php } ?>
+                    <div style="background: #fff; border-radius: 2px; box-shadow: 0 1px 1px #dad2d2; padding: 30px; <?=(isset($get['error'])) ? 'display: none' : '' ?>">
 
                     <?php if (is_array($service) AND $service['id'] != 46) { ?>
 
