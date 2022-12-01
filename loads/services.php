@@ -17,7 +17,7 @@
         }
         if (isset($get['lang_id'])) {
 
-            $lang_id = mb_strtoupper($get['lang_id']);
+            $lang_id = htmlspecialchars(mb_strtoupper($get['lang_id']), ENT_QUOTES);
 
         }
         $services = $Billing->byCategory($id); ?>
@@ -35,7 +35,7 @@
 
                         $s_l_i = strtolower($lang_id); ?>
 
-                        <div class="sub_cat_item clear <?=($get['subcat'] == $subcat['id']) ? 'active' : '' ?>" rel="<?=$subcat['id'] ?>" parent="<?=$get['id'] ?>">
+                        <div class="sub_cat_item clear <?=($sub_id == $subcat['id']) ? 'active' : '' ?>" rel="<?=$subcat['id'] ?>" parent="<?=$id ?>">
                             <img src="http://uploads.allpayway.ge/files/categories/<?=$subcat['image'] ?>" alt="sub-cat">
                             <h5><?=$subcat['name_'.$s_l_i] ?></h5>
                         </div>

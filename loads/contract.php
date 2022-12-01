@@ -14,7 +14,7 @@
 
     }
 
-    $personal_number = trim($post['personal_number']);
+    $personal_number = htmlspecialchars(trim($post['personal_number']), ENT_QUOTES);
 
     $user = $db->get_date('users', " personal_number = '$personal_number'");
 

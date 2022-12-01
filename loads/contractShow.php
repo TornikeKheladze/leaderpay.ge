@@ -10,8 +10,8 @@
 
     }
 
-    $personal_number = trim($get['personal_number']);
-    $pep_status = trim($get['pep']);
+    $personal_number = htmlspecialchars(trim($get['personal_number']), ENT_QUOTES);
+    $pep_status = htmlspecialchars(trim($get['pep']), ENT_QUOTES);
 
     $user = $db->get_date('users', " personal_number = '$personal_number'");
 

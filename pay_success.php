@@ -4,8 +4,8 @@
 
     if (isset($get['operation_id']) && isset($get['hash'])) {
 
-        $token = trim($get['operation_id']);
-        $operation_id = trim($get['hash']);
+        $token = htmlspecialchars(trim($get['operation_id']), ENT_QUOTES);
+        $operation_id = htmlspecialchars(trim($get['hash']), ENT_QUOTES);
 
     } else {
 

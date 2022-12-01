@@ -28,7 +28,7 @@ if ($user['is_blocked'] == 0) {
 
     if (isset($get['method']) AND $get['method'] == 'info') {
 
-        $wallet_number = $post['to'];
+        $wallet_number = htmlspecialchars($post['to'], ENT_QUOTES);
 
         $params = array(
           "from" => $username,
@@ -84,7 +84,7 @@ if ($user['is_blocked'] == 0) {
 
     if (isset($get['method']) AND $get['method'] == 'pay') {
 
-      $wallet_number = $post['to'];
+      $wallet_number = htmlspecialchars($post['to'], ENT_QUOTES);
       $amount        = floatval($post['amount']);
       $currency_id   = intval($post['currency_id']);
 

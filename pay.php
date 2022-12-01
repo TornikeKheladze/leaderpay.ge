@@ -4,7 +4,8 @@
 
     if (isset($get['id']) && $get['id'] != '' && isset($get['step']) ) {
 
-        $service_id = (INT) $_GET['id'];
+        $service_id = (INT) $get['id'];
+        $step = (INT) $get['step'];
 
         if ($service_id == 90) {
 
@@ -19,7 +20,7 @@
         header('Location: services.php');
     }
 
-    if ($service_id == 90 && $db->check_auch() == true && $get['step'] == 1) {
+    if ($service_id == 90 && $db->check_auch() == true && $step == 1) {
 
         $pin = $user['pin_code'];
         if (strlen($pin) > 3) {
@@ -31,14 +32,19 @@
         }
     }
     if ($service_id == 90 && $db->check_auch() == true && $get['step'] == 2 && isset($get['rdu'])) {
+
+        $rdu = htmlspecialchars($get['rdu'], ENT_QUOTES);
         $pin = $user['pin_code'];
-        if ($pin != $get['rdu']) {
+        if ($pin != $rdu) {
 
             header("Location: pay.php?step=2&id=90&error=სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'");
 
         }
 
     }
+
+    $rdu2 = (isset($get['rdu2'])) ? htmlspecialchars($get['rdu2'], ENT_QUOTES) : null;
+    $error = (isset($get['error'])) ? htmlspecialchars($get['error'], ENT_QUOTES) : null;
 
     require 'classes/Billing.php';
     $Billing = new Billing($db, 'Wallet');
@@ -91,10 +97,10 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <?php if (isset($get['error'])) { ?>
-                        <div class="msg msg-error"><?=$get['error'] ?></div>
+                    <?php if (isset($error)) { ?>
+                        <div class="msg msg-error"><?=$error ?></div>
                     <?php } ?>
-                    <div style="background: #fff; border-radius: 2px; box-shadow: 0 1px 1px #dad2d2; padding: 30px; <?=(isset($get['error'])) ? 'display: none' : '' ?>">
+                    <div style="background: #fff; border-radius: 2px; box-shadow: 0 1px 1px #dad2d2; padding: 30px; <?=(isset($error)) ? 'display: none' : '' ?>">
 
                     <?php if (is_array($service) AND $service['id'] != 46) { ?>
 
@@ -107,7 +113,7 @@
                         </div><!-- end col-md-4 div -->
                         <div class="col-md-8 b-left">
                             <div class="msg-area"></div>
-                            <form class="payForm" id="service_form" action="<?=($get['step'] == 1) ? "pay.php?step=2&id=$service_id" : "" ?>" method="post">
+                            <form class="payForm" id="service_form" action="<?=($step == 1) ? "pay.php?step=2&id=$service_id" : "" ?>" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="msg msg-error" style="display: none"><?=$lang['required'] ?></div>
@@ -134,7 +140,7 @@
                                                                 <?php continue; ?>
                                                             <?php } ?>
 
-                                                            <option value="<?=$year ?>" <?=($get['step'] == 2 && isset($post['year']) && $post['year'] == $year) ? 'selected readonly' : '' ?>><?=$year ?></option>
+                                                            <option value="<?=$year ?>" <?=($step == 2 && isset($post['year']) && $post['year'] == $year) ? 'selected readonly' : '' ?>><?=$year ?></option>
 
                                                         <?php } ?>
 
@@ -146,7 +152,7 @@
 
                                                         <?php foreach ($month_array as $key  => $value) { ?>
 
-                                                            <option value="<?=$key ?>" <?=($get['step'] == 2 && isset($post['month']) && $post['month'] == $key) ? 'selected readonly' : '' ?>><?=$value[$lang_id] ?></option>
+                                                            <option value="<?=$key ?>" <?=($step == 2 && isset($post['month']) && $post['month'] == $key) ? 'selected readonly' : '' ?>><?=$value[$lang_id] ?></option>
 
                                                         <?php } ?>
 
@@ -158,7 +164,7 @@
 
                                                         <?php foreach ($day_array as $key  => $value) { ?>
 
-                                                            <option value="<?=$key ?>" <?=($get['step'] == 2 && isset($post['day']) && $post['day'] == $key) ? 'selected readonly' : '' ?>><?=$value ?></option>
+                                                            <option value="<?=$key ?>" <?=($step == 2 && isset($post['day']) && $post['day'] == $key) ? 'selected readonly' : '' ?>><?=$value ?></option>
 
                                                         <?php } ?>
 
@@ -171,7 +177,7 @@
 
                                         <div class="form-group text-left">
                                             <label for="<?=$key['name'] ?>"><?=$key['description'] ?></label>
-                                            <input name="<?=$key['name'] ?>" type="text" id="<?=$key['name'] ?>" value="<?=($get['step'] == 2 && isset($post)) ? $post[$key['name']] : '' ?>" <?=($get['step'] == 2 && isset($post)) ? 'readonly' : '' ?> class="input user_input" autocomplete="off">
+                                            <input name="<?=$key['name'] ?>" type="text" id="<?=$key['name'] ?>" value="<?=($step == 2 && isset($post)) ? $post[$key['name']] : '' ?>" <?=($get['step'] == 2 && isset($post)) ? 'readonly' : '' ?> class="input user_input" autocomplete="off">
                                             <div class="input-icon-right">
                                                 <img src="assets/img/warning.png?1" alt="example">
                                             </div>
@@ -183,7 +189,7 @@
                                     <?php }
                                 } ?>
                                 <div class="loads">
-                                    <?php if ($get['step'] == 2 && isset($post)) {
+                                    <?php if ($step == 2 && isset($post)) {
 
                                         $params = $post;
                                         if (isset($params['year']) && isset($params['month']) && isset($params['day'])) {
@@ -317,10 +323,10 @@
                                 <input name="min_client_commission" type="hidden" id="min_client_commission" value="<?=$service['commission']['min_client_commission'] ?>" disabled>
                                 <input name="rate" type="hidden" id="rate" value="<?=$service['commission']['rate'] ?>" disabled>
                                 <input name="rate_percent" type="hidden" id="rate_percent" value="<?=$service['commission']['rate_percent'] ?>" disabled>
-                                <input name="step" type="hidden" value="<?=$get['step'] ?>">
+                                <input name="step" type="hidden" value="<?=$step ?>">
                                 <div class="form-group text-right">
                                     <br>
-                                    <?php if ($get['step'] == 2 && isset($post) && $service_id != 114 && $info['errorCode'] == 1000) { ?>
+                                    <?php if ($step == 2 && isset($post) && $service_id != 114 && $info['errorCode'] == 1000) { ?>
 
                                         <div class="row">
                                             <?php if ($service['category_id'] != 30) { ?>
@@ -538,16 +544,16 @@
                                 };
 
                                 <?php
-                                    if (isset($get['rdu'])) {
+                                    if (isset($rdu)) {
                                         ?>
-                                            $('.user_input').val('<?=$get['rdu'] ?>');
+                                            $('.user_input').val('<?=$rdu ?>');
                                             $('.g1-btn').trigger('click');
                                         <?php
                                     }
-                                    if (isset($get['rdu']) && isset($get['rdu2'])) {
+                                    if (isset($rdu) && isset($rdu2)) {
                                         ?>
-                                            $('#loan').val('<?=$get['rdu'] ?>');
-                                            $('#personal_number').val('<?=$get['rdu2'] ?>');
+                                            $('#loan').val('<?=$rdu ?>');
+                                            $('#personal_number').val('<?=$rdu2 ?>');
                                             $('.g1-btn').trigger('click');
                                         <?php
                                     }

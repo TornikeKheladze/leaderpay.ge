@@ -9,8 +9,8 @@
 
     if (isset($post['username']) && isset($post['password']) && $post['method'] == 'user') {
 
-        $username = $post['username'];
-        $password = hash('sha256', trim($post['password']));
+        $username = htmlspecialchars(trim($post['username']), ENT_QUOTES);
+        $password = hash('sha256', htmlspecialchars(trim($post['password']), ENT_QUOTES));
 
         $data = $db->Login($username, $password);
 
@@ -79,9 +79,9 @@
 
     if (isset($post['username']) && isset($post['sms_code']) && isset($post['password']) && $post['method'] == 'sms') {
 
-        $username = $post['username'];
-        $password = hash('sha256', trim($post['password']));
-        $sms_code = $post['sms_code'];
+        $username = htmlspecialchars(trim($post['username']), ENT_QUOTES);
+        $password = hash('sha256', htmlspecialchars(trim($post['password']), ENT_QUOTES));
+        $sms_code = htmlspecialchars(trim($post['sms_code']), ENT_QUOTES);
 
         $data = $db->Login($username, $password, $sms_code);
 
