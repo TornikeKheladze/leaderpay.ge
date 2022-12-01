@@ -28,12 +28,13 @@ require_once('head.php');
 
     <?php } ?>
 
-    <!-- <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script> -->
-    <script src='assets/js/jquery.js?<?php echo time(); ?>">'></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
-    <!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
-
 
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/title_icon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/title_icon.png">
@@ -41,7 +42,6 @@ require_once('head.php');
     <link rel="mask-icon" href="assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-
 
     <!-- page style -->
     <?php

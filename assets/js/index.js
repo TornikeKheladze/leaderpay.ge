@@ -615,7 +615,7 @@ function redirect_to(url,d) {
 }
 
 // post
-$(window).load(function() {
+$(window).on('load', function() {
   $('.post-module').hover(function() {
     $(this).find('.description').stop().animate({
       height: "toggle",

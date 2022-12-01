@@ -55,7 +55,7 @@
         <div class="space"></div>
         <div class="row">
           <div class="col-md-7 col-xs-12 text-left">
-            <div class="copyrights">&coppy; 2015 - <?=date('Y') ?> leaderpay.ge All Rights Reserved.</div>
+            <div class="copyrights">&copy; 2015 - <?=date('Y') ?> leaderpay.ge All Rights Reserved.</div>
           </div><!-- end col -->
           <div class="col-md-5 col-xs-12">
           </div><!-- end col -->
@@ -64,9 +64,9 @@
     </div><!-- end footbar -->
   </footer>
   <!-- validation -->
-  <script type="text/javascript" src="./assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-  <script type="text/javascript" src="./assets/plugins/jquery-validation/js/localization/messages_<?=$lang_id ?>.js"></script>
-  <script type="text/javascript" src="./assets/plugins/jquery-validation/js/additional-methods.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/localization/messages_<?=$lang_id ?>.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
 
     <!-- input masks -->
   <script type="text/javascript" src="./assets/plugins/inputmask/jquery.inputmask.bundle.js"></script>
