@@ -38,7 +38,7 @@
                 'errorCode' => 0,
                 'errorMessage' => 'დროებითი შეფერხებ კიდევ სცადეთ!',
             ];
-            echo json_encode($json);
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
             die();
 
         }
@@ -51,7 +51,7 @@
                 'errorCode' => 0,
                 'errorMessage' => 'ბარათით ტოტალიზატორის გადახდა არ არის შესაძლებელი!',
             ];
-            echo json_encode($json);
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
             die();
 
         }
@@ -62,7 +62,7 @@
                 'errorCode' => 0,
                 'errorMessage' => 'თანხა ნაკლებია მინიმალურ ჩასარიცხ თანხაზე!',
             ];
-            echo json_encode($json);
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
             die();
 
         }
@@ -72,10 +72,59 @@
                 'errorCode' => 0,
                 'errorMessage' => 'თანხა მეტია მაქსიმალურ ჩასარიცხ თანხაზე!',
             ];
-            echo json_encode($json);
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
             die();
 
         }
+
+        if (!preg_match('/^[a-zA-Zა-ჰ]{2,20}$/', $post['firstName'])) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => 'სახელი არასწორია!',
+            ];
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
+            die();
+
+        }
+
+        if (!preg_match('/^[a-zA-Zა-ჰ]{2,20}$/', $post['lastName'])) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => 'გვარი არასწორია!',
+            ];
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
+            die();
+
+        }
+
+        if (!preg_match('/^[a-zA-Z0-9]{5,15}$/', $post['personal_no'])) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => 'პირადი ან საბუთის ნომერი არასწორია!',
+            ];
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
+            die();
+
+        }
+
+        if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $post['birthdate'])) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => 'დაბადების თარიღი არასწორია!',
+            ];
+            echo json_encode($json, JSON_UNESCAPED_UNICODE);
+            die();
+
+        }
+
+        $Merchant->firstName = $post['firstName'];
+        $Merchant->lastName = $post['lastName'];
+        $Merchant->personal_no = $post['personal_no'];
+        $Merchant->birthdate = $post['birthdate'];
 
         $pay_params = [];
 

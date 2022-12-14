@@ -317,6 +317,42 @@
                                         }
                                     } ?>
                                 </div>
+
+                                <div class="forCard" style="display: none">
+                                    <div class="form-group text-left">
+                                        <label for="firstName"><?=$lang['first_name'] ?></label>
+                                        <input minlength="2" maxlength="20" type="text" name="firstName" id="firstName" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <div class="input-icon-right">
+                                            <img src="assets/img/warning.png?1" alt="example">
+                                        </div>
+                                        <div class="input-example">მაგალითი: <?=$lang['first_name'] ?></div>
+                                    </div>
+                                    <div class="form-group text-left">
+                                        <label for="lastName"><?=$lang['last_name'] ?></label>
+                                        <input minlength="2" maxlength="20" type="text" name="lastName" id="lastName" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <div class="input-icon-right">
+                                            <img src="assets/img/warning.png?1" alt="example">
+                                        </div>
+                                        <div class="input-example">მაგალითი: <?=$lang['last_name'] ?></div>
+                                    </div>
+                                    <div class="form-group text-left">
+                                        <label for="personal_no"><?=$lang['personal_number'] ?></label>
+                                        <input minlength="5" maxlength="15" type="text" name="personal_no" id="personal_no" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <div class="input-icon-right">
+                                            <img src="assets/img/warning.png?1" alt="example">
+                                        </div>
+                                        <div class="input-example">მაგალითი: 01001010112</div>
+                                    </div>
+                                    <div class="form-group text-left">
+                                        <label for="birthdate"><?=$lang['date_of_birth'] ?></label>
+                                        <input type="text" name="birthdate" id="birthdate" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <div class="input-icon-right">
+                                            <img src="assets/img/warning.png?1" alt="example">
+                                        </div>
+                                        <div class="input-example">მაგალითი: 1999-09-19</div>
+                                    </div>
+                                </div>
+
                                 <input name="service_id" type="hidden" id="service_id" value="<?=$service_id ?>">
                                 <input name="client_commission_percent" type="hidden" id="client_commission_percent" value="<?=$service['commission']['client_commission_percent'] ?>" disabled>
                                 <input name="client_commission_fixed" type="hidden" id="client_commission_fixed" value="<?=$service['commission']['client_commission_fixed'] ?>" disabled>
@@ -357,10 +393,6 @@
                             </form>
                         </div><!-- end col-md-8 div -->
 
-                        <!-- validation -->
-                        <script type="text/javascript" src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-                        <script type="text/javascript" src="assets/plugins/jquery-validation/js/additional-methods.min.js"></script>
-                        <script type="text/javascript" src="./assets/plugins/jquery-validation/js/localization/messages_<?=$lang_id ?>.js"></script>
                         <script>
 
                             if ($('.msg-error')[0]) {
@@ -404,8 +436,12 @@
                                             echo $key['name'] . ": {required: true, pattern: ".$key['regexp']."},";
 
                                         } ?>
-                                        amount: {required: true,min: <?=$service['commission']['min_amount'] ?>,max: <?=$service['commission']['max_amount'] ?>,},
-                                        generated: {required: true,min: <?=$service['commission']['min_amount'] ?>,max: <?=$service['commission']['max_amount'] ?>,},
+                                        amount: {required: true, min: <?=$service['commission']['min_amount'] ?>,max: <?=$service['commission']['max_amount'] ?>,},
+                                        generated: {required: true, min: <?=$service['commission']['min_amount'] ?>,max: <?=$service['commission']['max_amount'] ?>,},
+                                        firstName: {required: true,  pattern: '^[a-zA-Zა-ჰ]{2,20}$'},
+                                        lastName: {required: true, pattern: '^[a-zA-Zა-ჰ]{2,20}$'},
+                                        personal_no: {required: true, pattern: '^[a-zA-Z0-9]{5,15}$'},
+                                        birthdate: {required: true, pattern: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$'},
 
                                     },
 
@@ -461,6 +497,8 @@
 
                                 $('.pay_by_wallet').on('click', function() {
 
+                                    $('.forCard').hide();
+
                                     if (service_form.valid()) {
 
                                         // check auth
@@ -509,7 +547,16 @@
 
                                     if (service_form.valid()) {
 
-                                        payPopup('card', 0);
+                                        if ($('.forCard').is(':visible')) {
+
+                                            payPopup('card', 0);
+
+                                        }
+                                        if ($('.forCard').css('display') == 'none') {
+
+                                            $('.forCard').show();
+
+                                        }
 
                                     }
 

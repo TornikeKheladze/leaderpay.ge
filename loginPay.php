@@ -11,7 +11,11 @@
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
     <link rel="stylesheet" href="assets/css/style.css?<?=time() ?>">
     <link rel="stylesheet" href="assets/css/fonts_ge.css?<?=time() ?>">
-    <script src='assets/js/jquery.js?<?=time() ?>'></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous">
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>

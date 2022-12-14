@@ -6,10 +6,10 @@ class Merchant {
     private $service_id = 1;
     private $customer_id = 102;
     private $lang = 'ge';
-    private $firstName = 'firstName';
-    private $lastName = 'lastName';
-    private $personal_no = 99999999999;
-    private $birthdate = '1999-09-09';
+    public $firstName;
+    public $lastName;
+    public $personal_no;
+    public $birthdate;
     private $currency_id = 1;
     private $url = 'https://apw.ge/bank';
     public $db;
