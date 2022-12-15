@@ -620,5 +620,33 @@
 
     }
 
+    public function checkPassword($password) {
+
+        $personalNumber = $_SESSION['user_name'];
+
+        $sth = $this->db->prepare('SELECT 1 FROM `users` WHERE personal_number = :personal_number AND password = :password');
+
+        $sth->bindParam(':personal_number', $personalNumber, PDO::PARAM_STR);
+        $sth->bindParam(':password', $password, PDO::PARAM_STR);
+        $sth->execute();
+        $data = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return ($sth->errorCode() == PDO::ERR_NONE) ? $data : false;
+
+    }
+
+    public function updatePassword($password) {
+
+        $personalNumber = $_SESSION['user_name'];
+
+        $sth = $this->db->prepare('UPDATE `users` SET `password` = :password WHERE `personal_number` = :personal_number');
+
+        $sth->bindParam(':personal_number', $personalNumber, PDO::PARAM_STR);
+        $sth->bindParam(':password', $password, PDO::PARAM_STR);
+        $sth->execute();
+
+        return ($sth->errorCode() == PDO::ERR_NONE) ? true : false;
+
+    }
 
 }

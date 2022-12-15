@@ -61,6 +61,11 @@ $(document).ready(function() {
           },
 
       },
+      messages: {
+          'password': {
+              'passwordCheck': 'პაროლი ძალიან სუსტია. პაროლი უნდა შეიცავდეს მინიმუმ 1 ციფრს 1 სიმბოლოს 1 uppercase!'
+          }
+      }
   });
 
   $('#rootwizard').bootstrapWizard({

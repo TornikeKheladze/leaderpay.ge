@@ -1,44 +1,71 @@
-<div class="title"><?=$lang['settings'] ?></div>
-<div class="sub-page-body col-md-12">
-  <div class="col-md-12 setting">
-    <input id='google_authenticator' name="google_authenticator" class='ios-switch' type='checkbox'>
-    <label for='google_authenticator' class='ios-switch-label'></label>
-    <span>ავტორიზება Google Authenticator-ით</span>
-  </div>
-  <div class="col-md-12 setting">
-    <input id='sms_authenticator' checked name="sms_authenticator" class='ios-switch' type='checkbox'>
-    <label for='sms_authenticator' class='ios-switch-label'></label>
-    <span>ავტორიზება SMS-ით</span>
-  </div>
-  <div class="col-md-12" style="border-top: 1px solid #d3d3d3;padding-top: 20px;">
-    <a href="#" onclick="iframe_popup('.popup','user/update.php?action=change_password');" style="color: #707070;border: 1px solid #b8b8b8;border-radius: 4px;padding: 6px;"><i class="fa fa-key" aria-hidden="true"></i> <?php echo $lang['change_password']; ?></a>
-  </div>
-</div>
+<?php
 
-<script>
+    if (isset($post)) {
 
-  function iframeLoaded() {
-    var iFrameID = document.getElementById('if');
-    if(iFrameID) {
-          // here you can make the height, I delete it first, then I make it again
-          iFrameID.height = "";
-          iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight +50+ "px";
-      }
-  }
+        $currentPassword = htmlspecialchars(trim($post['currentPassword']), ENT_QUOTES);
+        $currentPassword = hash('sha256', $currentPassword);
+        $newPassword = htmlspecialchars(trim($post['newPassword']), ENT_QUOTES);
+        $newPassword = hash('sha256', $newPassword);
+        $repeatPassword = htmlspecialchars(trim($post['repeatPassword']), ENT_QUOTES);
+        $repeatPassword = hash('sha256', $repeatPassword);
 
-</script>
-<!-- main popup -->
-<div class="popup" style="display: none;">
-  <div class="pupup-content">
-    <div class="close-p"></div>
-    <div id="iframe" style="display: block;"><iframe id="if" onload="iframeLoaded()" frameborder="none" src=""></iframe></div>
-  </div>
-</div>
-<!-- End main popup -->
-<script>
+        if ($db->checkPassword($currentPassword) == false) {
 
-  $('.close-p').click(function() {
-    location.reload();
-  })
+            $error = 'მიმდინარე პაროლი არასწორია!';
 
-</script>
+        } else if ($newPassword != $repeatPassword) {
+
+            $error = 'გამეორებული პაროლი არ ემთხვევა!';
+
+        } else {
+
+            if ($db->updatePassword($repeatPassword) != false) {
+
+                $success = 'პაროლი წარმატებით შეიცვალა';
+
+            }
+        }
+
+    }
+
+?>
+    <div class="title"><?=$lang['change_password'] ?></div>
+    <div class="sub-page-body col-md-12">
+        <!--<div class="col-md-12 setting">
+            <input id='google_authenticator' name="google_authenticator" class='ios-switch' type='checkbox'>
+            <label for='google_authenticator' class='ios-switch-label'></label>
+            <span>ავტორიზება Google Authenticator-ით</span>
+        </div>
+        <div class="col-md-12 setting">
+            <input id='sms_authenticator' checked name="sms_authenticator" class='ios-switch' type='checkbox'>
+            <label for='sms_authenticator' class='ios-switch-label'></label>
+            <span>ავტორიზება SMS-ით</span>
+        </div> -->
+        <?php if (isset($error)) { ?>
+            <div class="msg msg-error"><?=$error ?></div>
+        <?php } ?>
+        <?php if (isset($success)) { ?>
+            <div class="msg msg-succses"><?=$success ?></div>
+        <?php } ?>
+        <div class="col-md-12">
+            <form action="" id="password" method="post">
+                <div class="form-group text-left">
+                    <label for="currentPassword"><?=$lang['current_password'] ?></label>
+                    <input type="password" name="currentPassword" id="currentPassword" class="input" autocomplete="off" required>
+                </div>
+                <div class="form-group text-left">
+                    <label for="newPassword"><?=$lang['new_password'] ?></label>
+                    <input minlength="8" type="password" name="newPassword" id="newPassword" class="input" autocomplete="off" required>
+                </div>
+                <div class="form-group text-left">
+                    <label for="repeatPassword"><?=$lang['repeat_password'] ?></label>
+                    <input minlength="8" type="password" name="repeatPassword" id="repeatPassword" class="input" autocomplete="off" required>
+                </div>
+                <div class="col-md-12 text-left" style="padding-left: 0;">
+                    <button type="submit" class="g1-btn"><span><?=$lang['send'] ?></span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<?php $page_script = '<script src="assets/pages/password.js?' . time() . '"></script>'; ?>
