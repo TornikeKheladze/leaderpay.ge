@@ -19,7 +19,7 @@
         $currentDate = $db->get_current_date();
 
         $db->update('apw_operations', ['status_id' => 2, 'merchant_opeartion_id' => $operation_id, 'canceled_at' => $currentDate, 'updated_at' => $currentDate], $operation['id']);
-        $db->getSql("UPDATE `user_payments` SET `status_id` = '3', `updated_at` = '$currentDate'  WHERE `operation_id` = '$operation[id]'");
+        // $db->getSql("UPDATE `user_payments` SET `status_id` = '3', `updated_at` = '$currentDate'  WHERE `operation_id` = '$operation[id]'");
 
         // insert log
         $params = [
