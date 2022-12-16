@@ -77,7 +77,7 @@
 
         }
 
-        if (!preg_match('/^[a-zA-Zა-ჰ]{2,20}$/', $post['firstName'])) {
+        if (!preg_match('/^[a-zA-Zა-ჰ]{2,20}$/', $post['mFirstName'])) {
 
             $json = [
                 'errorCode' => 0,
@@ -88,7 +88,7 @@
 
         }
 
-        if (!preg_match('/^[a-zA-Zა-ჰ]{2,20}$/', $post['lastName'])) {
+        if (!preg_match('/^[a-zA-Zა-ჰ]{2,20}$/', $post['mLastName'])) {
 
             $json = [
                 'errorCode' => 0,
@@ -99,7 +99,7 @@
 
         }
 
-        if (!preg_match('/^[a-zA-Z0-9]{5,15}$/', $post['personal_no'])) {
+        if (!preg_match('/^[a-zA-Z0-9]{5,15}$/', $post['mPersonal_no'])) {
 
             $json = [
                 'errorCode' => 0,
@@ -110,7 +110,7 @@
 
         }
 
-        if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $post['birthdate'])) {
+        if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $post['mBirthDate'])) {
 
             $json = [
                 'errorCode' => 0,
