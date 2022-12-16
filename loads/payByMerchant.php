@@ -121,10 +121,10 @@
 
         }
 
-        $Merchant->firstName = $post['firstName'];
-        $Merchant->lastName = $post['lastName'];
-        $Merchant->personal_no = $post['personal_no'];
-        $Merchant->birthdate = $post['birthdate'];
+        $Merchant->firstName = $post['mFirstName'];
+        $Merchant->lastName = $post['mLastName'];
+        $Merchant->personal_no = $post['mPersonal_no'];
+        $Merchant->birthdate = $post['mBirthDate'];
 
         $pay_params = [];
 

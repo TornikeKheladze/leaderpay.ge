@@ -320,32 +320,32 @@
 
                                 <div class="forCard" style="display: none">
                                     <div class="form-group text-left">
-                                        <label for="firstName"><?=$lang['first_name'] ?></label>
-                                        <input minlength="2" maxlength="20" type="text" name="firstName" id="firstName" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <label for="mFirstName"><?=$lang['first_name'] ?></label>
+                                        <input minlength="2" maxlength="20" type="text" name="mFirstName" id="mFirstName" class="input" autocomplete="off" required style="padding-left: 15px">
                                         <div class="input-icon-right">
                                             <img src="assets/img/warning.png?1" alt="example">
                                         </div>
                                         <div class="input-example">მაგალითი: <?=$lang['first_name'] ?></div>
                                     </div>
                                     <div class="form-group text-left">
-                                        <label for="lastName"><?=$lang['last_name'] ?></label>
-                                        <input minlength="2" maxlength="20" type="text" name="lastName" id="lastName" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <label for="mLastName"><?=$lang['last_name'] ?></label>
+                                        <input minlength="2" maxlength="20" type="text" name="mLastName" id="mLastName" class="input" autocomplete="off" required style="padding-left: 15px">
                                         <div class="input-icon-right">
                                             <img src="assets/img/warning.png?1" alt="example">
                                         </div>
                                         <div class="input-example">მაგალითი: <?=$lang['last_name'] ?></div>
                                     </div>
                                     <div class="form-group text-left">
-                                        <label for="personal_no"><?=$lang['personal_number'] ?></label>
-                                        <input minlength="5" maxlength="15" type="text" name="personal_no" id="personal_no" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <label for="mPersonal_no"><?=$lang['personal_number'] ?></label>
+                                        <input minlength="5" maxlength="15" type="text" name="mPersonal_no" id="mPersonal_no" class="input" autocomplete="off" required style="padding-left: 15px">
                                         <div class="input-icon-right">
                                             <img src="assets/img/warning.png?1" alt="example">
                                         </div>
                                         <div class="input-example">მაგალითი: 01001010112</div>
                                     </div>
                                     <div class="form-group text-left">
-                                        <label for="birthdate"><?=$lang['date_of_birth'] ?></label>
-                                        <input type="text" name="birthdate" id="birthdate" class="input" autocomplete="off" required style="padding-left: 15px">
+                                        <label for="mBirthDate"><?=$lang['date_of_birth'] ?></label>
+                                        <input type="text" name="mBirthDate" id="mBirthDate" class="input" autocomplete="off" required style="padding-left: 15px">
                                         <div class="input-icon-right">
                                             <img src="assets/img/warning.png?1" alt="example">
                                         </div>
@@ -438,10 +438,10 @@
                                         } ?>
                                         amount: {required: true, min: <?=$service['commission']['min_amount'] ?>,max: <?=$service['commission']['max_amount'] ?>,},
                                         generated: {required: true, min: <?=$service['commission']['min_amount'] ?>,max: <?=$service['commission']['max_amount'] ?>,},
-                                        firstName: {required: true,  pattern: '^[a-zA-Zა-ჰ]{2,20}$'},
-                                        lastName: {required: true, pattern: '^[a-zA-Zა-ჰ]{2,20}$'},
-                                        personal_no: {required: true, pattern: '^[a-zA-Z0-9]{5,15}$'},
-                                        birthdate: {required: true, pattern: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$'},
+                                        mFirstName: {required: true,  pattern: '^[a-zA-Zა-ჰ]{2,20}$'},
+                                        mLastName: {required: true, pattern: '^[a-zA-Zა-ჰ]{2,20}$'},
+                                        mPersonal_no: {required: true, pattern: '^[a-zA-Z0-9]{5,15}$'},
+                                        mBirthDate: {required: true, pattern: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$'},
 
                                     },
 
