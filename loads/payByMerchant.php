@@ -156,10 +156,8 @@
         ];
 
         $id = $db->insert('apw_operations', $operationParams);
-
-        //$db->insert('user_payments', ['operation_id' => $id, 'service_id' => $service_id, 'amount' => $amount, 'status_id' => 1, 'currency' => 981, 'ip' => $db->getClientIp()]);
-
-        $description = 'სერვისი ' . $service['lang']['GE'] . '-ის გადახდა';
+        
+        $description = $service['lang']['EN'];
 
         $Merchant->Init($amount, $description, $token);
 
