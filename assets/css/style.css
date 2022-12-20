@@ -2809,6 +2809,17 @@ ul.tabs li.active:after {
 .g2-btn:hover {
   background-position: right center;
 }
+.s-btn {
+  padding: 10px 20px 10px 20px !important;
+  font-size: 10px;
+  background: #fff;
+  color: #9d9d9d !important;
+  border: 1px solid #9d9d9d;
+}
+.s-btn:hover {
+  color: #444 !important;
+  border: 1px solid #444;
+}
 select.input {
   font-size: 10px;
 }

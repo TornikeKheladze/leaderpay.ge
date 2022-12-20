@@ -316,6 +316,162 @@
 
     }
 
+    if (isset($get['action']) && $get['action'] == 'info') {
+
+        if ($db->check_auch() == false) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => '0',
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+        $params = $post;
+        if (isset($params['year']) && isset($params['month']) && isset($params['day'])) {
+            $birthdate = $params['year'] . '-' . $params['month'] . '-' . $params['day'];
+            $birthdate = ['birthdate' => $birthdate];
+
+            unset($params['year']);
+            unset($params['month']);
+            unset($params['day']);
+
+            $params = array_merge($params, $birthdate);
+        }
+
+        $service_id = (INT) $params['service_id'];
+
+        $service = $Billing->service($service_id);
+        $service = $service['service'];
+
+        // get payment params
+        $params_info = $service['params_info'];
+        $info_params = [];
+        foreach ($params_info as $param) {
+            $info_params[$param['name']] = urlencode($params[$param['name']]);
+            $info_params['service_id'] = $service_id;
+        }
+
+        $info = $Billing->info($info_params);
+
+        if ($info['errorCode'] != 1000) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => 'შეცდომა!',
+                'debt' => 0,
+                'credit' => 0,
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+        $debt = 0;
+        $credit = 0;
+        foreach ($info['data'] as $key => $value) {
+
+            if ($key == 'debt') {
+                $debt = $value;
+            }
+
+            if ($key == 'balance') {
+                $credit = $value;
+            }
+
+        }
+
+        $json = [
+            'errorCode' => 1,
+            'errorMessage' => 'წარმატებული!',
+            'debt' => $debt,
+            'credit' => $credit,
+        ];
+        echo json_encode($json);
+        die();
+
+    }
+
+    if (isset($get['action']) && $get['action'] == 'saveService') {
+
+        if ($db->check_auch() == false) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => '0',
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+        $service_id = (INT) $post['service_id'];
+
+        $service = $Billing->service($service_id);
+        $service = $service['service'];
+
+        // get payment params
+        $params_info = $service['params_info'];
+        $data = [];
+        foreach ($params_info as $param) {
+
+            if ($param['name'] == 'birthdate') {
+
+                $data['year'] = (!preg_match('/^[0-9]{4}$/', $post['year'])) ? '' : $post['year'];
+                $data['month'] = (!preg_match('/^(0[1-9]|1[0-2])$/', $post['month'])) ? '' : $post['month'];
+                $data['day'] = (!preg_match('/^(0[1-9]|[1-2][0-9]|3[0-1])$/', $post['day'])) ? '' : $post['day'];
+
+            } else {
+
+                $regexp = $param['regexp'];
+
+                $data[$param['name']] = (!preg_match("$regexp", $post[$param['name']])) ? '' : $post[$param['name']];
+                $data['service_id'] = $service_id;
+
+            }
+
+        }
+
+        $db->insert('save_service', ['service_id' => $service_id, 'user_id' => $username, 'json' => json_encode($data)]);
+
+        $json = [
+            'errorCode' => 1,
+            'errorMessage' => 'შენახვა წარმატებით დასრულდა!',
+        ];
+        echo json_encode($json);
+        die();
+
+    }
+
+    if (isset($get['action']) && $get['action'] == 'deleteService') {
+
+        if ($db->check_auch() == false) {
+
+            $json = [
+                'errorCode' => 0,
+                'errorMessage' => '0',
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+        $id = (INT) $post['id'];
+
+        $db->delete('save_service', "id = $id AND user_id = $username");
+
+        $json = [
+            'errorCode' => 1,
+            'errorMessage' => 'წაშლა წარმატებით დასრულდა!',
+        ];
+        echo json_encode($json);
+        die();
+
+    }
+
+
     $json = [
         'errorCode' => 0,
         'errorMessage' => 'დროებით ტექნიკური შეფერხება!',

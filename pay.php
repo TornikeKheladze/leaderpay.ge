@@ -61,6 +61,10 @@
     $active = '';
     unset($_SESSION['smsCode']);
 
+    if ($db->check_auch() == true) {
+        $saveSrv = $db->get_date('save_service', "service_id = $service_id AND user_id = $username");
+    }
+
     include 'includes/header.php';
 
 ?>
@@ -110,6 +114,19 @@
                             <div class="pay_service-logo">
                                 <img src="https://uploads.allpayway.ge/files/services/<?=$service['image'] ?>" class="img-responsive" alt="<?=$service['lang'][$lng] ?>">
                             </div>
+                            <div class="save-service">
+
+                                <?php if ($db->check_auch() == true) { ?>
+
+                                    <?php if ($saveSrv == false) { ?>
+                                        <button type="submit" class="g1-btn s-btn save_srv"><i class="fa fa-floppy-o" aria-hidden="true"></i> <span>შაბლონად შენახვა</span></button>
+                                    <?php } else { ?>
+                                        <button type="submit" class="g1-btn s-btn save_srv" disabled="disabled"><i class="fa fa-check-circle" aria-hidden="true"></i> <span>დამატებულია შაბლონებში</span></button>
+                                    <?php }  ?>
+
+                                <?php }  ?>
+
+                            </div>
                         </div><!-- end col-md-4 div -->
                         <div class="col-md-8 b-left">
                             <div class="msg-area"></div>
@@ -131,7 +148,7 @@
 
                                             <div class="row date-row">
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <select name="year" id="year" class="input select2-container select2me">
+                                                    <select name="year" id="year" class="input select2-container select2me for_save">
                                                         <option value=""><?=$lang['year'] ?></option>
 
                                                         <?php foreach ($year_array as $year) { ?>
@@ -147,7 +164,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <select name="month" id="month" class="input select2-container select2me">
+                                                    <select name="month" id="month" class="input select2-container select2me for_save">
                                                         <option value=""><?=$lang['month'] ?></option>
 
                                                         <?php foreach ($month_array as $key  => $value) { ?>
@@ -159,7 +176,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <select name="day" id="day" class="input select2-container select2me">
+                                                    <select name="day" id="day" class="input select2-container select2me for_save">
                                                         <option value=""><?=$lang['day'] ?></option>
 
                                                         <?php foreach ($day_array as $key  => $value) { ?>
@@ -177,7 +194,7 @@
 
                                         <div class="form-group text-left">
                                             <label for="<?=$key['name'] ?>"><?=$key['description'] ?></label>
-                                            <input name="<?=$key['name'] ?>" type="text" id="<?=$key['name'] ?>" value="<?=($step == 2 && isset($post)) ? $post[$key['name']] : '' ?>" <?=($get['step'] == 2 && isset($post)) ? 'readonly' : '' ?> class="input user_input" autocomplete="off">
+                                            <input name="<?=$key['name'] ?>" type="text" id="<?=$key['name'] ?>" value="<?=($step == 2 && isset($post)) ? $post[$key['name']] : '' ?>" <?=($get['step'] == 2 && isset($post)) ? 'readonly' : '' ?> class="input user_input for_save" autocomplete="off">
                                             <div class="input-icon-right">
                                                 <img src="assets/img/warning.png?1" alt="example">
                                             </div>
@@ -643,6 +660,41 @@
     </div>
 </div>
 
+<script>
+    $(document).on('click', '.save_srv', function(e) {
+
+        if($('#service_form').valid()) {
+
+            json = {};
+
+            $('.for_save').each(function(index, data) {
+                var value = $(this).val();
+                var name = $(this).attr('name');
+
+                json[name] = value;
+
+            });
+
+            json['service_id'] = <?=$service_id  ?>;
+
+            $.ajax({
+                type: 'POST',
+                url: 'loads/payByWallet.php?action=saveService',
+                data: json,
+                dataType: 'json',
+                success: function(data) {
+
+                    $('.save_srv').prop('disabled', true);
+                    $('.save_srv').html('<i class="fa fa-check-circle" aria-hidden="true"></i> <span>დამატებულია შაბლონებში</span>');
+
+                }
+
+            });
+
+        }
+
+    });
+</script>
 <?php
     include 'includes/footer.php';
 ?>
