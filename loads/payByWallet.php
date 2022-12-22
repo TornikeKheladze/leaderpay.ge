@@ -81,10 +81,46 @@
 
     if (isset($get['action']) && $get['action'] == 'pay') {
 
+        if ($post['service_id'] == 2) {
+
+            if (!isset($post['personal_number']) || $post['personal_number'] != $user['personal_number']) {
+                $json = [
+                    'errorCode' => 0,
+                    'errorMessage' => "სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'"
+                ];
+                echo json_encode($json);
+                die();
+            }
+        }
+
+        if ($post['service_id'] == 90) {
+            if ($user['pin_code'] == '' || $user['pin_code'] == null) {
+                $json = [
+                    'errorCode' => 0,
+                    'errorMessage' => "სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'"
+                ];
+                echo json_encode($json);
+                die();
+            }
+            if (!isset($post['account']) || $post['account'] != $user['pin_code']) {
+                $json = [
+                    'errorCode' => 0,
+                    'errorMessage' => "სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'"
+                ];
+                echo json_encode($json);
+                die();
+            }
+        }
+
         $params = $post;
 
         if (isset($params['year']) && isset($params['month']) && isset($params['day'])) {
-            $birthdate = $params['year'] . '-' . $params['month'] . '-' . $params['day'];
+
+            $year = (!@preg_match('/^[0-9]{4}$/', $params['year'])) ? '' : $params['year'];
+            $month = (!@preg_match('/^(0[1-9]|1[0-2])$/', $params['month'])) ? '' : $params['month'];
+            $day = (!@preg_match('/^(0[1-9]|[1-2][0-9]|3[0-1])$/', $params['day'])) ? '' : $params['day'];
+
+            $birthdate = $year . '-' . $month . '-' . $day;
             $birthdate = ['birthdate' => $birthdate];
 
             unset($params['year']);

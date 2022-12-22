@@ -7,7 +7,7 @@
         $service_id = (INT) $get['id'];
         $step = (INT) $get['step'];
 
-        if ($service_id == 90) {
+        if ($service_id == 90 || $service_id == 2) {
 
             if ($db->check_auch() != true) {
                 header('Location: login.php');
@@ -20,31 +20,7 @@
         header('Location: services.php');
     }
 
-    if ($service_id == 90 && $db->check_auch() == true && $step == 1) {
-
-        $pin = $user['pin_code'];
-        if (strlen($pin) > 3) {
-
-            header("Location: pay.php?step=2&id=90&rdu=$pin");
-
-        } else {
-            header("Location: pay.php?step=2&id=90&error=სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'");
-        }
-    }
-    if ($service_id == 90 && $db->check_auch() == true && $get['step'] == 2 && isset($get['rdu'])) {
-
-        $rdu = htmlspecialchars($get['rdu'], ENT_QUOTES);
-        $pin = $user['pin_code'];
-        if ($pin != $rdu) {
-
-            header("Location: pay.php?step=2&id=90&error=სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'");
-
-        }
-
-    }
-
     $rdu2 = (isset($get['rdu2'])) ? htmlspecialchars($get['rdu2'], ENT_QUOTES) : null;
-    $error = (isset($get['error'])) ? htmlspecialchars($get['error'], ENT_QUOTES) : null;
 
     require 'classes/Billing.php';
     $Billing = new Billing($db, 'Wallet');
@@ -65,7 +41,60 @@
         $saveSrv = $db->get_date('save_service', "service_id = $service_id AND user_id = $username");
     }
 
-    include 'includes/header.php';
+    if ($step == 1 && $service['id'] == 2 && $db->check_auch() == true) {
+
+        $serviceId = $service['id'];
+        $personalNumber = $user['personal_number'];
+        list($year, $month, $day) = explode('-', $user['birth_date']);
+
+        echo "<form id='myForm' method='POST' action='pay.php?step=2&id=$serviceId' style='display: none'>
+                    <input name='personal_number' value='$personalNumber'>
+                    <input name='year' value='$year'>
+                    <input name='month' value='$month'>
+                    <input name='day' value='$day'>
+                    <input name='service_id' value='$serviceId'>
+                </form>
+                <script type='text/javascript'>
+                    document.getElementById('myForm').submit();
+                </script>";
+
+    }
+
+    if ($service['id'] == 2 && $db->check_auch() == true) {
+        if ($user['personal_number'] == '' || $user['personal_number'] == null) {
+            $error = "სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'";
+        }
+        if (!isset($post['personal_number']) || $post['personal_number'] != $user['personal_number']) {
+            $error = "სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'";
+        }
+    }
+
+    if ($step == 1 && $service['id'] == 90 && $db->check_auch() == true) {
+
+        $serviceId = $service['id'];
+        $account = $user['pin_code'];
+
+        echo "<form id='myForm' method='POST' action='pay.php?step=2&id=$serviceId' style='display: none'>
+                    <input name='account' value='$account'>
+                    <input name='service_id' value='$serviceId'>
+                </form>
+                <script type='text/javascript'>
+                    document.getElementById('myForm').submit();
+                </script>";
+
+    }
+
+    if ($service['id'] == 90 && $db->check_auch() == true) {
+        if ($user['pin_code'] == '' || $user['pin_code'] == null) {
+            $error = "სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'";
+        }
+        if (!isset($post['account']) || $post['account'] != $user['pin_code']) {
+            $error = "სერვისი თქვენთვის მიუწვდომელია, გთხოვთ დაუკავშირდით 'ოლლ ფეი ვეის'";
+        }
+    }
+
+
+include 'includes/header.php';
 
 ?>
     <div class="service_list service-page" id="services">
@@ -132,63 +161,71 @@
                             <div class="msg-area"></div>
                             <form class="payForm" id="service_form" action="<?=($step == 1) ? "pay.php?step=2&id=$service_id" : "" ?>" method="post">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                         <div class="msg msg-error" style="display: none"><?=$lang['required'] ?></div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <?php
 
                                 foreach ($service['params_info'] as $key) {
 
                                     // if is birthdate
-                                    if ($key['name'] == 'birthdate') { ?>
+                                    if ($key['name'] == 'birthdate') {
+                                        if ($service_id == 2) { ?>
 
-                                        <div class="form-group text-left">
-                                            <label for="<?=$key['name'] ?>"><?=$key['description'] ?></label>
+                                            <input name="year" type="hidden" id="year" value="<?=$post['year'] ?>" readonly>
+                                            <input name="month" type="hidden" id="month" value="<?=$post['month'] ?>" readonly>
+                                            <input name="day" type="hidden" id="day" value="<?=$post['day'] ?>" readonly>
 
-                                            <div class="row date-row">
-                                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <select name="year" id="year" class="input select2-container select2me for_save">
-                                                        <option value=""><?=$lang['year'] ?></option>
+                                        <?php } else { ?>
 
-                                                        <?php foreach ($year_array as $year) { ?>
+                                            <div class="form-group text-left">
+                                                <label for="<?=$key['name'] ?>"><?=$key['description'] ?></label>
 
-                                                            <?php if ($year > 2010 ) { ?>
-                                                                <?php continue; ?>
+                                                <div class="row date-row">
+                                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                                        <select name="year" id="year" class="input select2-container select2me for_save" readonly>
+                                                            <option value=""><?=$lang['year'] ?></option>
+
+                                                            <?php foreach ($year_array as $year) { ?>
+
+                                                                <?php if ($year > 2010 ) { ?>
+                                                                    <?php continue; ?>
+                                                                <?php } ?>
+
+                                                                <option value="<?=$year ?>" <?=($step == 2 && isset($post['year']) && $post['year'] == $year) ? 'selected' : '' ?>><?=$year ?></option>
+
                                                             <?php } ?>
 
-                                                            <option value="<?=$year ?>" <?=($step == 2 && isset($post['year']) && $post['year'] == $year) ? 'selected readonly' : '' ?>><?=$year ?></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                                        <select name="month" id="month" class="input select2-container select2me for_save">
+                                                            <option value=""><?=$lang['month'] ?></option>
 
-                                                        <?php } ?>
+                                                            <?php foreach ($month_array as $key  => $value) { ?>
 
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <select name="month" id="month" class="input select2-container select2me for_save">
-                                                        <option value=""><?=$lang['month'] ?></option>
+                                                                <option value="<?=$key ?>" <?=($step == 2 && isset($post['month']) && $post['month'] == $key) ? 'selected' : '' ?>><?=$value[$lang_id] ?></option>
 
-                                                        <?php foreach ($month_array as $key  => $value) { ?>
+                                                            <?php } ?>
 
-                                                            <option value="<?=$key ?>" <?=($step == 2 && isset($post['month']) && $post['month'] == $key) ? 'selected readonly' : '' ?>><?=$value[$lang_id] ?></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                                        <select name="day" id="day" class="input select2-container select2me for_save">
+                                                            <option value=""><?=$lang['day'] ?></option>
 
-                                                        <?php } ?>
+                                                            <?php foreach ($day_array as $key  => $value) { ?>
 
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <select name="day" id="day" class="input select2-container select2me for_save">
-                                                        <option value=""><?=$lang['day'] ?></option>
+                                                                <option value="<?=$key ?>" <?=($step== 2 && isset($post['day']) && $post['day'] == $key) ? 'selected' : '' ?>><?=$value ?></option>
 
-                                                        <?php foreach ($day_array as $key  => $value) { ?>
+                                                            <?php } ?>
 
-                                                            <option value="<?=$key ?>" <?=($step == 2 && isset($post['day']) && $post['day'] == $key) ? 'selected readonly' : '' ?>><?=$value ?></option>
-
-                                                        <?php } ?>
-
-                                                    </select>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php } ?>
 
                                     <?php } else { ?>
 
@@ -660,6 +697,10 @@
     </div>
 </div>
 
+<?php
+    include 'includes/footer.php';
+?>
+
 <script>
     $(document).on('click', '.save_srv', function(e) {
 
@@ -695,6 +736,3 @@
 
     });
 </script>
-<?php
-    include 'includes/footer.php';
-?>
