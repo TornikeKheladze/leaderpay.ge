@@ -52,6 +52,17 @@
         die();
     }
 
+    // check user aml_block
+    if ($user['aml_block'] == 1) {
+
+        $json = [
+            'errorCode' => 0,
+            'errorMessage' => 'მომსახურება შეზღუდულია დაუკავშირდით AML დეპარტამენტს!',
+        ];
+        echo json_encode($json);
+        die();
+    }
+    
     //payway
     $paywayPost = [
         'birthdate' => $user['birth_date'],
