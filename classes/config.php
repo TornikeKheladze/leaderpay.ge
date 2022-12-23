@@ -14,7 +14,7 @@ date_default_timezone_set('Asia/Tbilisi');
 define("DB_HOST", "localhost");
 define("DB_NAME", "db_apw");
 define("DB_USER", "user_apw");
-define("DB_PASS", "KI134JY3P7PvI084");
+define("DB_PASS", "G1f4VDarcVxA6hjO");
 define("CARSET", "utf8");
 
 
