@@ -2,6 +2,9 @@ $(document).ready(function() {
   var $validator = $('#registracion_form').validate({
       errorElement: 'span',
       rules: {
+          'first_name1': {required: true, minlength: 2},
+          'last_name1': {required: true, minlength: 2},
+          'personal_number1': {required: true},
           'phone': {minlength: 9, maxlength: 10, required: true},
           'email': {required: true},
           'legal_address': {required: true, minlength: 5, maxlength: 255},
@@ -84,8 +87,12 @@ $(document).ready(function() {
               var mobile = $('#phone').intlTelInput('getNumber');
               var data = form.serializeArray();
 
-              data[data.length] = { name: 'mobile', value: mobile};
-              data[data.length + 1] = { name: 'step', value: 1};
+              // data[data.length] = { name: 'mobile', value: mobile};
+              // data[data.length + 1] = { name: 'step', value: 1};
+
+              data.push({name: "mobile", value: mobile});
+              data.push({name: "step", value: 1});
+
 
               $('.reg_loader').show();
               $('.msg').remove();
@@ -131,8 +138,11 @@ $(document).ready(function() {
               var mobile = $('#phone').intlTelInput('getNumber');
               var data = form.serializeArray();
 
-              data[data.length] = { name: 'mobile', value: mobile};
-              data[data.length + 1] = { name: 'step', value: 2};
+              // data[data.length] = { name: 'mobile', value: mobile};
+              // data[data.length + 1] = { name: 'step', value: 2};
+
+              data.push({name: "mobile", value: mobile});
+              data.push({name: "step", value: 2});
               
               $('.reg_loader').show();
               $('.msg').remove();
@@ -174,7 +184,10 @@ $(document).ready(function() {
               var mobile = $('#phone').intlTelInput('getNumber');
               var data = form.serializeArray();
 
-              data[data.length] = { name: 'step', value: 3};
+              // data[data.length] = { name: 'step', value: 3};
+
+              // data.push({name: "mobile", value: mobile});
+              data.push({name: "step", value: 3});
 
               $('.reg_loader').show();
               $('.msg').remove();

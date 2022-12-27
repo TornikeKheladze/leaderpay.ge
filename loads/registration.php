@@ -36,15 +36,22 @@ require '../classes/db.php';
 require '../classes/Identomat.php';
 require '../classes/Upload.php';
 require '../classes/Risk.php';
+require '../classes/Payway.php';
 
 $db = new db();
 $Identomat = new Identomat($db);
 $Upload = new Upload();
 $Risk = new Risk();
 
+$Payway = new Payway($db, 'WalletRegistration');
+
 if (isset($post['step']) && $post['step'] == 1) {
 
     $mustParams = [
+        'first_name1' => true,
+        'last_name1' => true,
+        'personal_number1' => true,
+
         'mobile' => true,
         'email' => true,
         'legal_address' => true,
@@ -68,6 +75,28 @@ if (isset($post['step']) && $post['step'] == 1) {
             }
 
         }
+
+    }
+
+    //payway
+    $paywayPost = [
+        'first_name' => $post['first_name1'],
+        'last_name' => $post['last_name1'],
+        'personal_no' => $post['personal_number1'],
+        'mobile' => $post['mobile'],
+    ];
+
+    $Payway->post = $paywayPost;
+    $paywayCheck = $Payway->check();
+
+    if ($paywayCheck['errorCode'] != 100) {
+
+        $json = [
+            'errorCode' => 1,
+            'errorMessage' => $paywayCheck['errorMessage']
+        ];
+        echo json_encode($json);
+        die();
 
     }
 

@@ -52,6 +52,30 @@
                                         <div class="row">
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="form-group req">
+                                                    <label for="first_name1">სახელი</label>
+                                                    <input name="first_name1" type="text" id="first_name1" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
+                                                </div>
+                                            </div> <!-- end col -->
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group req">
+                                                    <label for="last_name1">გვარი</label>
+                                                    <input name="last_name1" type="text" id="last_name1" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
+                                                </div>
+                                            </div> <!-- end col -->
+                                        </div><!-- end row -->
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group req">
+                                                    <label for="personal_number1">პირადი ნომერი</label>
+                                                    <input name="personal_number1" type="text" id="personal_number1" minlength="11" maxlength="11" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
+                                                </div>
+                                            </div> <!-- end col -->
+                                        </div><!-- end row -->
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group req">
                                                     <label for="phone"><?=$lang['telephone_number'] ?></label>
                                                     <input onkeypress="return isIntKey(event);" name="phone" type="tel" id="phone" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
                                                 </div>
