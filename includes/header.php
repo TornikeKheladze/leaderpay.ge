@@ -226,10 +226,10 @@ require_once('head.php');
         <div class="block">
             <i class="star drop" rel="top_fav"  title="საყვარელი სერვისები"></i>
         </div>
-        <div class="m-langs">
-            <a href="?<?php echo $get_url;  ?>lang=ge" class="<?php echo ($lang_id == 'ge') ? 'active' : '' ; ?>">GEO</a>
-            <a href="?<?php echo $get_url;  ?>lang=en" class="<?php echo ($lang_id == 'en') ? 'active' : '' ; ?>">ENG</a>
-            <a href="?<?php echo $get_url;  ?>lang=ru" class="<?php echo ($lang_id == 'ru') ? 'active' : '' ; ?>">RUS</a>
+        <div class="langs">
+            <a href="?<?=htmlspecialchars(urlencode($get_url), ENT_QUOTES)  ?>lang=ge" class="<?=($lang_id == 'ge') ? 'active': '' ?>">GEO</a>
+            <a href="?<?=htmlspecialchars(urlencode($get_url), ENT_QUOTES)  ?>lang=en" class="<?=($lang_id == 'en') ? 'active': '' ?>">ENG</a>
+            <a href="?<?=htmlspecialchars(urlencode($get_url), ENT_QUOTES)  ?>lang=ru" class="<?=($lang_id == 'ru') ? 'active': '' ?>">RUS</a>
         </div>
         <br>
         <div class="relative">

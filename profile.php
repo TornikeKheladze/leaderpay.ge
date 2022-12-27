@@ -14,7 +14,7 @@
         header('Location: index.php');
     }
 
-    $action = (isset($get['action'])) ? htmlspecialchars($get['action'], ENT_QUOTES) : '';
+    $action = (isset($get['action'])) ? htmlspecialchars(urlencode($get['action']), ENT_QUOTES) : '';
 
     include 'includes/header.php';
 ?>

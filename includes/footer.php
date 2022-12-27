@@ -21,9 +21,9 @@
               <a href="skype:live:7f73d893582483c7?add" class="sk"></a>
             </div>
             <div class="langs">
-              <a href="?<?php echo htmlspecialchars($get_url, ENT_QUOTES);  ?>lang=ge" class="<?php echo ($lang_id == 'ge') ? 'active': ''; ?>">GEO</a>
-              <a href="?<?php echo htmlspecialchars($get_url, ENT_QUOTES);  ?>lang=en" class="<?php echo ($lang_id == 'en') ? 'active': ''; ?>">ENG</a>
-              <a href="?<?php echo htmlspecialchars($get_url, ENT_QUOTES);  ?>lang=ru" class="<?php echo ($lang_id == 'ru') ? 'active': ''; ?>">RUS</a>
+                <a href="?<?=htmlspecialchars(urlencode($get_url), ENT_QUOTES)  ?>lang=ge" class="<?=($lang_id == 'ge') ? 'active': '' ?>">GEO</a>
+                <a href="?<?=htmlspecialchars(urlencode($get_url), ENT_QUOTES)  ?>lang=en" class="<?=($lang_id == 'en') ? 'active': '' ?>">ENG</a>
+                <a href="?<?=htmlspecialchars(urlencode($get_url), ENT_QUOTES)  ?>lang=ru" class="<?=($lang_id == 'ru') ? 'active': '' ?>">RUS</a>
             </div>
           </div><!-- end col -->
           <div class="col-md-9 col-sm-12 text-right">
