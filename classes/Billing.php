@@ -246,7 +246,7 @@ class Billing {
         $params = [
             'method' => $this->name,
             'operation_id' => 0,
-            'error_code' => $result['errorCode'],
+            'error_code' => @$result['errorCode'],
             'request' => json_encode($params, JSON_UNESCAPED_UNICODE),
             'response' => json_encode($result, JSON_UNESCAPED_UNICODE),
             'date' => $this->db->get_current_date(),

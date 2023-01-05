@@ -269,7 +269,11 @@ include 'includes/header.php';
 
                                         if ($info['errorCode'] != 1000) { ?>
 
-                                            <div class="msg msg-error" role="alert"><?=$info['errorMessage'] ?></div>
+                                            <?php if (isset($info['errorCode'])) { ?>
+                                                <div class="msg msg-error" role="alert"><?=$info['errorMessage'] ?></div>
+                                            <?php } else { ?>
+                                                <div class="msg msg-error" role="alert">კიდევ სცადეთ!</div>
+                                            <?php } ?>
 
                                         <?php } else {
 
@@ -406,6 +410,49 @@ include 'includes/header.php';
                                         <div class="input-example">მაგალითი: 1999-09-19</div>
                                     </div>
                                 </div>
+
+                                <!-- sender/reciver -->
+                                <?php
+
+                                if ($db->check_auch() == true) {
+
+                                    $document = $db->get_date('users_documents', "personal_number = $username");
+                                    $document = @$document['document_number'];
+
+                                    if (isset($info['person']['required']['sender_firstname']) && $info['person']['required']['sender_firstname'] == 1) { ?>
+                                        <input name="sender_firstname" type="hidden" id="sender_firstname" value="<?=$user['first_name'] ?>">
+                                    <?php }
+                                    if (isset($info['person']['required']['sender_lastname']) && $info['person']['required']['sender_lastname'] == 1) { ?>
+                                        <input name="sender_lastname" type="hidden" id="sender_lastname" value="<?=$user['last_name'] ?>">
+                                    <?php }
+                                    if (isset($info['person']['required']['sender_document_number']) && $info['person']['required']['sender_document_number'] == 1) { ?>
+                                        <input name="sender_document_number" type="hidden" id="sender_document_number" value="<?=$document ?>">
+                                    <?php }
+                                } else {
+
+                                    if (isset($info['person']['required']['sender_firstname']) && $info['person']['required']['sender_firstname'] == 1) { ?>
+                                        <input name="sender_firstname" type="hidden" id="sender_firstname" value="1">
+                                    <?php }
+                                    if (isset($info['person']['required']['sender_lastname']) && $info['person']['required']['sender_lastname'] == 1) { ?>
+                                        <input name="sender_lastname" type="hidden" id="sender_lastname" value="1">
+                                    <?php }
+                                    if (isset($info['person']['required']['sender_document_number']) && $info['person']['required']['sender_document_number'] == 1) { ?>
+                                        <input name="sender_document_number" type="hidden" id="sender_document_number" value="1">
+                                    <?php }
+
+                                }
+
+                                if (isset($info['person']['required']['receiver_firstname']) && $info['person']['required']['receiver_firstname'] == 1) { ?>
+                                    <input name="receiver_firstname" type="hidden" id="receiver_firstname" value="<?=$info['person']['receiver']['firstname'] ?>">
+                                <?php }
+                                if (isset($info['person']['required']['receiver_lastname']) && $info['person']['required']['receiver_lastname'] == 1) { ?>
+                                    <input name="receiver_lastname" type="hidden" id="receiver_lastname" value="<?=$info['person']['receiver']['lastname'] ?>">
+                                <?php }
+                                if (isset($info['person']['required']['receiver_type']) && $info['person']['required']['receiver_type'] == 1) { ?>
+                                    <input name="receiver_type" type="hidden" id="receiver_type" value="<?=$info['person']['receiver']['type'] ?>">
+                                <?php }
+
+                                ?>
 
                                 <input name="service_id" type="hidden" id="service_id" value="<?=$service_id ?>">
                                 <input name="client_commission_percent" type="hidden" id="client_commission_percent" value="<?=$service['commission']['client_commission_percent'] ?>" disabled>

@@ -422,6 +422,7 @@ if (isset($post['step']) && $post['step'] == '3') {
         'expected_turnover' => $expected_turnover,
         'purpose_id' => $purpose_id,
         'pep_status' => $pep_status,
+        'confirmation' => 0,
     ];
 
     if ($dual_citizen == 1) {

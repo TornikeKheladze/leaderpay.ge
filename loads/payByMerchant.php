@@ -141,6 +141,26 @@
 
         $pay_user = array_values($pay_params)[0];
 
+        if (isset($params['sender_firstname'])) {
+            $pay_params['sender_firstname'] = $post['mFirstName'];
+        }
+        if (isset($params['sender_lastname'])) {
+            $pay_params['sender_lastname'] = $post['mLastName'];
+        }
+        if (isset($params['sender_document_number'])) {
+            $pay_params['sender_document_number'] = $post['mPersonal_no'];
+        }
+
+        if (isset($params['receiver_firstname'])) {
+            $pay_params['receiver_firstname'] = $params['receiver_firstname'];
+        }
+        if (isset($params['receiver_lastname'])) {
+            $pay_params['receiver_lastname'] = $params['receiver_lastname'];
+        }
+        if (isset($params['receiver_type'])) {
+            $pay_params['receiver_type'] = $params['receiver_type'];
+        }
+
         $token = $Merchant->Token();
 
         // payments
