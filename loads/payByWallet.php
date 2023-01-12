@@ -5,12 +5,14 @@
     require '../classes/Payway.php';
     require '../classes/bulkSms.php';
     require '../classes/Limit.php';
+    require '../classes/Risk.php';
 
     $db = new db();
     $Payway = new Payway($db, 'PayServiceByWallet');
     $Billing = new Billing($db, 'Wallet');
     $bulkSms = new bulkSms();
     $Limit = new Limit($db);
+    $Risk = new Risk();
 
     // check auch
     if ($db->check_auch() === false) {
@@ -310,6 +312,11 @@
             $db->insert('payment_details', $detail_params);
         }
         unset($_SESSION['smsCode']);
+
+        if ($service_id == 90) {
+            // detect risk
+            $Risk->Change($user['id']);
+        }
 
         $json = [
             'errorCode' => 100,
