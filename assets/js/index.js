@@ -656,6 +656,24 @@ function calc1() {
     rate_percent = parseFloat(rate_percent);
     amount = parseFloat(amount);
 
+    if (isNaN(client_commission_percent)) {
+      client_commission_percent = 0;
+    }
+    if (isNaN(client_commission_fixed)) {
+      client_commission_fixed = 0;
+    }
+    if (isNaN(min_client_commission)) {
+      min_client_commission = 0;
+    }
+    if (isNaN(max_client_commission)) {
+      max_client_commission = 0;
+    }
+    if (isNaN(rate)) {
+      rate = 0;
+    }
+    if (isNaN(rate_percent)) {
+      rate_percent = 0;
+    }
     if (isNaN(amount)) {
       amount = 0;
     }
@@ -710,6 +728,24 @@ function re_calc() {
     rate_percent = parseFloat(rate_percent);
     amount = parseFloat(amount);
 
+    if (isNaN(client_commission_percent)) {
+      client_commission_percent = 0;
+    }
+    if (isNaN(client_commission_fixed)) {
+      client_commission_fixed = 0;
+    }
+    if (isNaN(min_client_commission)) {
+      min_client_commission = 0;
+    }
+    if (isNaN(max_client_commission)) {
+      max_client_commission = 0;
+    }
+    if (isNaN(rate)) {
+      rate = 0;
+    }
+    if (isNaN(rate_percent)) {
+      rate_percent = 0;
+    }
     if (isNaN(amount)) {
       amount = 0;
     }
