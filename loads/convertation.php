@@ -32,7 +32,7 @@
             'amount' => $amount,
         ];
 
-        $convert = $Convertation->convertation($params);
+        $convert = $Convertation->exchange($params);
 
         $json = [
             'errorCode' => $convert['errorCode'],

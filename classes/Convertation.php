@@ -7,7 +7,7 @@ class Convertation {
     public $file = '';
     public $params = [];
 
-    public function convertation($params) {
+    public function exchange($params) {
 
         $hashStr = $params['id'] . $params['from'] . $params['to'] . $params['amount'] . $this->secret;
         $hash = hash('sha256', $hashStr);
