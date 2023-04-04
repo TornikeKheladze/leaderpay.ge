@@ -86,7 +86,6 @@
                 data: {method: 'rate', from: from, to: to, amount: amount},
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data);
 
                     setTimeout(function() {
 
@@ -120,6 +119,7 @@
         $("#exchange").submit(function(e){
             e.preventDefault();
             convertation();
+            $(this).find("button[type='submit']").prop('disabled', true);
         });
 
         function convertation() {
@@ -145,6 +145,9 @@
                         if (data.errorCode == 10) {
 
                             $('.error-span').html("<div class='msg msg-succses' role='alert'>" + data.errorMessage + "</div>");
+                            setTimeout(function() {
+                                location.reload();
+                            }, 3000);
 
                         } else {
 
