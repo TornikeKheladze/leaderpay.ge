@@ -43,6 +43,7 @@ input,button {
 }
 .select2-container {
   width: 100% !important;
+  max-width: 500px;
 }
 /* Top Clessses */
 .block {
@@ -5463,5 +5464,54 @@ select.input {
 .nav-pills li a.active {
   background-image: linear-gradient(to right,#00bbd3 0%,#83dcff 100%);
   color: #fff;
+}
+.end-c {
+  position: absolute;
+  top: -34px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 50px;
+  height: 50px;
+  background: #2ecc71;
+  border-radius: 50px;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+}
+.convert-loader {
+  position: absolute;
+  top: -42px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 65px;
+  height: 65px;
+  background: transparent;
+  border: 4px solid #2ecc71;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: border-size 1s linear infinite;
+}
+@keyframes border-size {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.currency-span {
+  font-size: 10px;
+  display: block;
+  margin: 10px 0 0 10px;
+}
+
+.error-span {
+  font-size: 10px;
+  display: block;
+  color: #fd1818;
 }
 

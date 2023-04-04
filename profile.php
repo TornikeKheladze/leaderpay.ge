@@ -2,7 +2,7 @@
     require_once('includes/head.php');
 
     $active = 'profile';
-    $page_title = $lang['my_wallet'];
+    $page_title = $lang['my_wallet']
     //check user
     if ($db->check_auch() === false) {
         header('Location: index.php');
@@ -15,6 +15,7 @@
     }
 
     $action = (isset($get['action'])) ? htmlspecialchars(urlencode($get['action']), ENT_QUOTES) : '';
+    $personal_number = $user['personal_number'];
 
     include 'includes/header.php';
 ?>
@@ -28,30 +29,46 @@
                         <button type="button" name="button" class="drop menu-btn" rel="slide-toggle"></button>
                     </div>
                     <div class="hidden-xs">
-                        <div class="search p-h-item">
-                            <form class="" action="" method="post" id="search">
-                                <input type="search" name="" placeholder="<?php echo $lang['search_wallet']; ?>" class="input">
-                                <button type="submit" class="search-btn">
-                                    <img src="assets/img/search.png" alt="search">
-                                </button>
-                            </form>
-                        </div><!-- end p-h-item -->
                         <div class="p-h-item">
-                            <h5><?php echo $lang['wallet_number']; ?> <span><?php echo $user['personal_number']; ?></span></h5>
+                            <h5><?=$lang['wallet_number'] ?> <span><?=$personal_number ?></span></h5>
                         </div>
                         <div class="p-h-item">
                             <h5>
-                                <?php echo $lang['balance']; ?>
-                                <span class="user_balance "><?php echo $user['balance']; ?>
-                                    <span class="lari" style="float: right; padding-top: 0;">¢</span>
-                                </span>
+                                <?=$lang['balance'] ?>
+                                <span class="user_balance "><?=$user['balance_rub'] ?>
+                                        <span class="lari" style="float: right; padding-top: 0;">₽</span>
+                                    </span>
+                            </h5>
+                        </div>
+                        <div class="p-h-item">
+                            <h5>
+                                <?=$lang['balance'] ?>
+                                <span class="user_balance "><?=$user['balance_eur'] ?>
+                                        <span class="lari" style="float: right; padding-top: 0;">€</span>
+                                    </span>
+                            </h5>
+                        </div>
+                        <div class="p-h-item">
+                            <h5>
+                                <?=$lang['balance'] ?>
+                                <span class="user_balance "><?=$user['balance_usd'] ?>
+                                        <span class="lari" style="float: right; padding-top: 0;">$</span>
+                                    </span>
+                            </h5>
+                        </div>
+                        <div class="p-h-item">
+                            <h5>
+                                <?=$lang['balance'] ?>
+                                <span class="user_balance "><?=$user['balance'] ?>
+                                        <span class="lari" style="float: right; padding-top: 0;">¢</span>
+                                    </span>
                             </h5>
                         </div>
                         <div class="p-h-item">
                             <a href="?action=templates" class="btn btn-c saves_services_btn">
                                 <div class="cart">
                                     <img src="assets/img/shopping-cart.png?" alt="">
-                                    <span class="count" rel="<?php echo $db->table_count("save_service", " user_id = '".$user['personal_number']."' "); ?>"><?php echo $db->table_count("save_service", " user_id = '".$user['personal_number']."' "); ?></span>
+                                    <span class="count" rel="<?=$db->table_count('save_service', " user_id = '$personal_number' ") ?>"><?=$db->table_count('save_service', " user_id = '$personal_number' ") ?></span>
                                 </div>
                                 <span class="t">ჩემი შაბლონები</span>
                             </a>
@@ -71,6 +88,12 @@
                                 <a href="services.php">
                                     <img src="assets/img/idea.png" alt="<?=$lang['services'] ?>">
                                     <span class="image-title"><?=$lang['services'] ?></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="profile.php?action=convertation" <?=($action == 'convertation') ? "class='active'" : '' ?>>
+                                    <img src="assets/img/exchange.png" alt="<?=$lang['convertation'] ?>">
+                                    <span class="image-title"><?=$lang['convertation'] ?></span>
                                 </a>
                             </li>
                             <li>
@@ -117,6 +140,8 @@
                     if ($action != 'account' &&  $action != '' ) {
                         if ($action == 'transactions') {
                             include 'user/pages/transactions.php';
+                        } elseif ($action == 'convertation') {
+                            include 'user/pages/convertation.php';
                         } elseif ($action == 'personal_info') {
                             include 'user/pages/personal_info.php';
                         } elseif ($action == 'balance') {
