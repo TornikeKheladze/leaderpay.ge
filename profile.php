@@ -2,7 +2,7 @@
     require_once('includes/head.php');
 
     $active = 'profile';
-    $page_title = $lang['my_wallet']
+    $page_title = $lang['my_wallet'];
     //check user
     if ($db->check_auch() === false) {
         header('Location: index.php');
