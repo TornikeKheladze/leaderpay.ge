@@ -89,7 +89,7 @@
     $start = $end * $iDisplayLength;
     $start = $start - $iDisplayLength;
 
-    $rows = $db->getListSql("SELECT date, description, IF(credit > 0, credit, debt) AS amount, IF(credit > 0, 1, 0) AS type, balance, c.title AS currency FROM user_balance_history b INNER JOIN currencies c ON b.currency_id = c.id AS currency WHERE $where ORDER BY $sortColum $sort LIMIT $start,$iDisplayLength");
+    $rows = $db->getListSql("SELECT date, description, IF(credit > 0, credit, debt) AS amount, IF(credit > 0, 1, 0) AS type, balance, c.title AS currency FROM user_balance_history b INNER JOIN currencies c ON b.currency_id = c.id WHERE $where ORDER BY $sortColum $sort LIMIT $start,$iDisplayLength");
 
     foreach($rows as $r) {
 
