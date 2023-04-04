@@ -15,9 +15,9 @@
     }
 
     $action = (isset($get['action'])) ? htmlspecialchars(urlencode($get['action']), ENT_QUOTES) : '';
-    $personal_number = $user['personal_number'];
 
     include 'includes/header.php';
+
 ?>
 
 <div class="container page">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="hidden-xs">
                         <div class="p-h-item">
-                            <h5><?=$lang['wallet_number'] ?> <span><?=$personal_number ?></span></h5>
+                            <h5><?=$lang['wallet_number'] ?> <span><?=$username ?></span></h5>
                         </div>
                         <div class="p-h-item">
                             <h5>
@@ -68,7 +68,7 @@
                             <a href="?action=templates" class="btn btn-c saves_services_btn">
                                 <div class="cart">
                                     <img src="assets/img/shopping-cart.png?" alt="">
-                                    <span class="count" rel="<?=$db->table_count('save_service', " user_id = '$personal_number' ") ?>"><?=$db->table_count('save_service', " user_id = '$personal_number' ") ?></span>
+                                    <span class="count" rel="<?=$db->table_count('save_service', " user_id = '$username' ") ?>"><?=$db->table_count('save_service', " user_id = '$username' ") ?></span>
                                 </div>
                                 <span class="t">ჩემი შაბლონები</span>
                             </a>
