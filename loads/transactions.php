@@ -89,14 +89,14 @@
     $start = $end * $iDisplayLength;
     $start = $start - $iDisplayLength;
 
-    $rows = $db->getListSql("SELECT date, description, IF(credit > 0, credit, debt) AS amount, IF(credit > 0, 1, 0) AS type, balance FROM user_balance_history WHERE $where ORDER BY $sortColum $sort LIMIT $start,$iDisplayLength");
+    $rows = $db->getListSql("SELECT date, description, IF(credit > 0, credit, debt) AS amount, IF(credit > 0, 1, 0) AS type, balance, c.title FROM user_balance_history b INNER JOIN currencies c ON b.currency_id = c.id AS currency WHERE $where ORDER BY $sortColum $sort LIMIT $start,$iDisplayLength");
 
     foreach($rows as $r) {
 
         $records['data'][] = [
             $r['date'],
             $r['description'],
-            ($r['type'] == 1) ? '<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i> ' . $r['amount'] . ' ' . $lang['gel'] .'</span>' :  '<span class="minus"><i class="fa fa-minus" aria-hidden="true"></i> ' . $r['amount'] . ' ' . $lang['gel'] .'</span>',
+            ($r['type'] == 1) ? '<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i> ' . $r['amount'] . ' ' . $r['currency'] .'</span>' :  '<span class="minus"><i class="fa fa-minus" aria-hidden="true"></i> ' . $r['amount'] . ' ' . $r['currency'] .'</span>',
             $r['balance'],
         ];
     }
