@@ -388,7 +388,9 @@ if (isset($post['step']) && $post['step'] == '3') {
         'purpose_id' => true,
         'pep_status' => true,
         'pep' => (@$post['pep_status'] == 1) ? true : false,
-        'checkbox' => true,
+        'limits' => true,
+        'privacy_policy' => true,
+        'contract' => true,
     ];
 
     foreach($mustParams as $k => $v) {
