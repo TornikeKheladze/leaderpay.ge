@@ -316,7 +316,7 @@
                                                 <div class="form-group checkbox">
                                                     <div class="md-checkbox">
                                                         <input id="limits" name="limits" type="checkbox">
-                                                        <label for="limits">გავეცანი და ვეთანხმები <a href="files/limits.pdf" target="_blank">ტარიფებს და საოპერაციო ლიმიტებს</a></label>
+                                                        <label for="limits">გავეცანი და ვეთანხმები <a href="assets/files/limits.pdf" target="_blank">ტარიფებს და საოპერაციო ლიმიტებს</a></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -331,7 +331,7 @@
                                                 <div class="form-group checkbox">
                                                     <div class="md-checkbox">
                                                         <input id="privacy_policy" name="privacy_policy" type="checkbox">
-                                                        <label for="privacy_policy">გავეცანი და ვეთანხმები <a href="files/privacy_policy.pdf" target="_blank">პერსონალური ინფორმაცია და კონფიდენციალურობის პოლიტიკას</a></label>
+                                                        <label for="privacy_policy">გავეცანი და ვეთანხმები <a href="assets/files/privacy_policy.pdf" target="_blank">პერსონალური ინფორმაცია და კონფიდენციალურობის პოლიტიკას</a></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -346,7 +346,7 @@
                                                 <div class="form-group checkbox">
                                                     <div class="md-checkbox">
                                                         <input id="contract" name="contract" type="checkbox">
-                                                        <label for="contract">გავეცანი და ვეთანხმები <a href="files/contract.pdf" target="_blank"> ხელშეკრულებას ელექტრონული საფულეში რეგისტრაციასა და მის სარგებლობასთან დაკავშირებით</a></label>
+                                                        <label for="contract">გავეცანი და ვეთანხმები <a href="assets/files/contract.pdf" target="_blank"> ხელშეკრულებას ელექტრონული საფულეში რეგისტრაციასა და მის სარგებლობასთან დაკავშირებით</a></label>
                                                     </div>
                                                 </div>
                                             </div>

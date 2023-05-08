@@ -61,10 +61,10 @@ $(document).ready(function() {
               required: function(element) {
                   return ($('#pep_status').val() == '1') ? true : false;
               },
+          },
           'limits': {required: true},
           'privacy_policy': {required: true},
           'contract': {required: true},
-          },
 
       },
       messages: {
