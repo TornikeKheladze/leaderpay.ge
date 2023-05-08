@@ -306,7 +306,7 @@ if (isset($post['step']) && $post['step'] == '2') {
         $userParams = [
             'wallet_number' => $personal_number,
             'personal_number' => $personal_number,
-            'mobile' => $email,
+            'email' => $email,
             'mobile' => $mobile,
             'legal_address' => $legal_address,
             'real_address' => $real_address,
@@ -318,7 +318,7 @@ if (isset($post['step']) && $post['step'] == '2') {
             'birth_place' => $result['person']['birth_place'],
             'gender' => ($result['person']['sex'] == 'M') ? 1 : 2,
             'user' => 'leaderpay.ge',
-            'self' => $self,
+            'selfie' => $self,
         ];
         $documentParams = [
             'personal_number' => $personal_number,
