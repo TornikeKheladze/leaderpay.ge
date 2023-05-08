@@ -28,7 +28,7 @@ class Identomat {
                 'document_types' => ['id', 'passport'],
                 'allow_document_upload' => true,
                 'skip_desktop' => false,
-                'skip_face' => true,
+                'skip_face' => false,
             ];
 
         }
@@ -69,6 +69,14 @@ class Identomat {
     public function passport() {
 
         $this->method = 'result/passport';
+
+        return $this->grabImage();
+
+    }
+
+    public function self() {
+
+        $this->method = 'result/face';
 
         return $this->grabImage();
 

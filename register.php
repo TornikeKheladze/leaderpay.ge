@@ -65,7 +65,7 @@
                                         </div><!-- end row -->
 
                                         <div class="row">
-                                            <div class="col-md-6 col-sm-6">
+                                            <div class="col-md-12 col-sm-6">
                                                 <div class="form-group req">
                                                     <label for="personal_number1">პირადი ნომერი</label>
                                                     <input name="personal_number1" type="text" id="personal_number1" minlength="11" maxlength="11" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
@@ -315,8 +315,38 @@
                                             <div class="col-md-12">
                                                 <div class="form-group checkbox">
                                                     <div class="md-checkbox">
-                                                        <input id="checkbox" name="checkbox" type="checkbox">
-                                                        <label for="checkbox"><?=$lang['agree'] ?> <a href="#" target="_blank" class="user_contract"> <?=$lang['agreements'] ?> </a> <?=$lang['agreement'] ?></label>
+                                                        <input id="limits" name="limits" type="checkbox">
+                                                        <label for="limits">გავეცანი და ვეთანხმები <a href="files/limits.pdf" target="_blank">ტარიფებს და საოპერაციო ლიმიტებს</a></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div><!-- end row div -->
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group checkbox">
+                                                    <div class="md-checkbox">
+                                                        <input id="privacy_policy" name="privacy_policy" type="checkbox">
+                                                        <label for="privacy_policy">გავეცანი და ვეთანხმები <a href="files/privacy_policy.pdf" target="_blank">პერსონალური ინფორმაცია და კონფიდენციალურობის პოლიტიკას</a></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div><!-- end row div -->
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group checkbox">
+                                                    <div class="md-checkbox">
+                                                        <input id="contract" name="contract" type="checkbox">
+                                                        <label for="contract">გავეცანი და ვეთანხმები <a href="files/contract.pdf" target="_blank"> ხელშეკრულებას ელექტრონული საფულეში რეგისტრაციასა და მის სარგებლობასთან დაკავშირებით</a></label>
                                                     </div>
                                                 </div>
                                             </div>

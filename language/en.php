@@ -242,7 +242,7 @@
         'job_title' => 'Job Title',
         'occupied_position' => 'Occupied position',
         'monthly_income' => 'Monthly income',
-        'expected_turnover' => 'Monthly Estimated Turnover Income',
+        'expected_turnover' => 'Expected turnover in the process of business relationship with the provider',
         'purpose_id' => 'The purpose of the business relationship with the provider',
         'pep_status' => 'Are you politically active',
         'pep' => 'Politically active',

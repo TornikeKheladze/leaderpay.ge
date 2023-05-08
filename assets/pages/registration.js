@@ -61,6 +61,9 @@ $(document).ready(function() {
               required: function(element) {
                   return ($('#pep_status').val() == '1') ? true : false;
               },
+          'limits': {required: true},
+          'privacy_policy': {required: true},
+          'contract': {required: true},
           },
 
       },
@@ -207,7 +210,7 @@ $(document).ready(function() {
 
                               $.ajax({
                                   type: 'POST',
-                                  url: 'loads/contract.php',
+                                  url: 'loads/pep.php',
                                   data: {personal_number: data.data.personal_number},
                                   dataType: 'json',
                                   success: function(data) {}
@@ -318,20 +321,5 @@ addEventListener('message', function (e) {
   if (e.data !== 'DONE') return;
 
   $('.g1-btn').trigger('click');
-
-});
-
-$('.user_contract').on('click', function() {
-
-    if ($('#registracion_form').valid()) {
-
-        var personal_number = $('#pNumber').val();
-        var pep = $('#pep_status').val();
-
-        var url = './loads/contractShow.php?personal_number=' + personal_number + '&pep=' + pep;
-        window.open(url, '_blank');
-    } else {
-        return false;
-    }
 
 });

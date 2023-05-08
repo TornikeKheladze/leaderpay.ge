@@ -102,6 +102,7 @@ if (isset($post['step']) && $post['step'] == 1) {
 
     $mobile = trim($post['mobile']);
     $email = trim($post['email']);
+    $personal_number1 = trim($post['personal_number1']);
 
     $password = trim($post['password']);
     $repeat_password = trim($post['repeat_password']);
@@ -122,6 +123,7 @@ if (isset($post['step']) && $post['step'] == 1) {
 
     $mobileUser = $db->MobileUser($mobile);
     $emailUser = $db->EmailUser($email);
+    $personalUser = $db->UserByWalletNumber($personal_number1);
 
     if ($mobileUser) {
 
@@ -139,6 +141,17 @@ if (isset($post['step']) && $post['step'] == 1) {
         $json = [
             'errorCode' => 4,
             'errorMessage' => $lang['unique_email'],
+        ];
+        echo json_encode($json);
+        die();
+
+    }
+
+    if ($personalUser) {
+
+        $json = [
+            'errorCode' => 3,
+            'errorMessage' => $lang['user_exist'],
         ];
         echo json_encode($json);
         die();
@@ -204,8 +217,6 @@ if (isset($post['step']) && $post['step'] == '2') {
 
     }
 
-    $identomatError = $db->get_date('identomat_errors', " en = '$rejectReason' ");
-
     if ($resultStatus == 'approved') {
 
         $personal_number = $result['person']['personal_number'];
@@ -244,6 +255,8 @@ if (isset($post['step']) && $post['step'] == '2') {
 
         }
 
+        $self = 'data:image/jpeg;base64,' . $Identomat->self();
+
         $today = date('Y-m-d');
         $diff = date_diff(date_create($result['person']['birthday']), date_create($today));
         $age = $diff->format('%y');
@@ -280,6 +293,16 @@ if (isset($post['step']) && $post['step'] == '2') {
 
         }
 
+        // upload
+        $self_name = $personal_number . '-' . '-self';
+        $dir = 'files/self/';
+
+        $self = $Upload->file([
+            'file'      => $self,
+            'file_name' => $self_name,
+            'dir'       => $dir,
+        ]);
+
         $userParams = [
             'wallet_number' => $personal_number,
             'personal_number' => $personal_number,
@@ -292,15 +315,16 @@ if (isset($post['step']) && $post['step'] == '2') {
             'first_name' => $result['person']['local_first_name'],
             'last_name' => $result['person']['local_last_name'],
             'birth_date' => date('Y-m-d', strtotime($result['person']['birthday'])),
-            'birth_place' => ($result['document_type'] == 'id') ? $result['id_card_back']['Place_of_Birth_ka_GE'] : $result['person']['birth_place'],
+            'birth_place' => $result['person']['birth_place'],
             'gender' => ($result['person']['sex'] == 'M') ? 1 : 2,
             'user' => 'leaderpay.ge',
+            'self' => $self,
         ];
         $documentParams = [
             'personal_number' => $personal_number,
             'document_number' => $document_number,
             'document_type' => ($result['document_type'] == 'id') ? 2 : 1,
-            'issue_organisation' => ($result['document_type'] == 'id') ? $result['id_card_back']['Authority_ka_GE'] : $result['person']['local_authority'],
+            'issue_organisation' => (isset($result['person']['local_authority'])) ? $result['person']['local_authority'] : $result['person']['authority'],
             'issue_date' => date('Y-m-d', strtotime($result['person']['document_issued'])),
             'expiry_date' => date('Y-m-d', strtotime($result['person']['document_expires'])),
             'expiry' => 0,
@@ -327,7 +351,7 @@ if (isset($post['step']) && $post['step'] == '2') {
 
         $json = [
             'errorCode' => 6,
-            'errorMessage' => ($identomatError) ? $identomatError['ka'] : $rejectReason,
+            'errorMessage' => $rejectReason,
         ];
 
         echo json_encode($json);
