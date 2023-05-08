@@ -23,6 +23,11 @@
     $user_pep = $db->get_unlimited_list('user_pep', 'id > 0', 'id', 'asc');
 
 ?>
+<style>
+    .select2-container {
+        max-width: 100%;
+    }
+</style>
 <div class="container page">
     <div class="row">
         <div class="col-md-12">
