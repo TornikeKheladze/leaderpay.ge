@@ -37,11 +37,13 @@ require '../classes/Identomat.php';
 require '../classes/Upload.php';
 require '../classes/Risk.php';
 require '../classes/Payway.php';
+require '../classes/Sda.php';
 
 $db = new db();
 $Identomat = new Identomat($db);
 $Upload = new Upload();
 $Risk = new Risk();
+$Sda = new Sda($db);
 
 $Payway = new Payway($db, 'WalletRegistration');
 
@@ -228,6 +230,19 @@ if (isset($post['step']) && $post['step'] == '2') {
         $password = hash('sha256', $password);
         $legal_address = trim($post['legal_address']);
         $real_address = trim($post['real_address']);
+
+        $sdaCheck = $Sda->Check($personal_number, $document_number);
+
+        if ($sdaCheck['status'] != 200) {
+
+            $json = [
+                'errorCode' => 3,
+                'errorMessage' => 'დოკუმენტმა ვერ გაიარა ვალიდაცია სერვისების განვითარების სააგენტოში!',
+            ];
+            echo json_encode($json);
+            die();
+
+        }
 
         $user = $db->UserByWalletNumber($personal_number);
 
