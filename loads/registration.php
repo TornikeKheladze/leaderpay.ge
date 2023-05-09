@@ -348,10 +348,10 @@
                 'was_done' => 1,
             ];
 
-            $db->insert('users', $userParams);
+            $user_id = $db->insert('users', $userParams);
             $db->insert('users_documents', $documentParams);
             // detect risk
-            $Risk->Get($user['id']);
+            $Risk->Get($user_id);
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, 'https://leaderpay.ge/loads/pep.php');

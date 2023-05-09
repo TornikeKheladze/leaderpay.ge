@@ -87,7 +87,7 @@
         'user_id' => $user['id'],
         'author' => 'leaderpay.ge',
         'file' => $document,
-        'updated_at' => $created_at,
+        'updated_at' => date('Y-m-d'),
     ];
 
     $file = $db->get_date('user_files', " user_id = '$user[id]'");
