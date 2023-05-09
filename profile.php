@@ -102,6 +102,12 @@
                                     <span class="image-title"><?=$lang['personal_informacions'] ?></span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="verification.php">
+                                    <img src="assets/img/verification.png" alt="<?=$lang['verification'] ?>">
+                                    <span class="image-title"><?=$lang['verification'] ?></span>
+                                </a>
+                            </li>
                             <li class="">
                                 <a href="profile.php?action=balance" <?=($action == 'balance') ? "class='active'" : '' ?>>
                                     <img src="assets/img/wallet1.png?" alt="<?=$lang['balance_up'] ?>">

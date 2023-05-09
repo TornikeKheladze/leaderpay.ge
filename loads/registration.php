@@ -405,3 +405,178 @@
         echo json_encode($json);
         die();
     }
+
+    if (isset($post['verification']) && $post['verification'] == '1') {
+
+        if ($db->check_auch() === false) {
+
+            $json = [
+                'errorCode' => 1,
+                'errorMessage' => 'არა ავტორიზებული მომხმარებელი',
+            ];
+            $db->insert('registration_logs', ['method' => 'verification', 'step' => 1, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+            echo json_encode($json);
+            die();
+
+        }
+        $Identomat->body['flags'] = [
+            'language' => 'ka',
+            'document_types' => ['id', 'passport'],
+            'allow_document_upload' => true,
+            'skip_desktop' => false,
+            'skip_face' => true,
+        ];
+
+        $json = [
+            'errorCode' => 10,
+            'errorMessage' => 'წარმატებული',
+            'data' => [
+                'session' => $Identomat->begin(),
+            ],
+        ];
+        $db->insert('registration_logs', ['method' => 'verification', 'step' => 1, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+        echo json_encode($json);
+        die();
+    }
+
+    if (isset($post['verification']) && $post['verification'] == '2') {
+
+        if ($db->check_auch() === false) {
+
+            $json = [
+                'errorCode' => 1,
+                'errorMessage' => 'არა ავტორიზებული მომხმარებელი',
+            ];
+            $db->insert('registration_logs', ['method' => 'verification', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+            echo json_encode($json);
+            die();
+
+        } else {
+
+            $personal_number = $_SESSION['user_name'];
+
+        }
+
+        $mustParams = [
+            'iToken' => true,
+        ];
+
+        foreach($mustParams as $k => $v) {
+
+            if ($v == true) {
+
+                if (!isset($post[$k])) {
+
+                    $json = [
+                        'errorCode' => 1,
+                        'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
+                    ];
+                    $db->insert('registration_logs', ['method' => 'verification', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+                    echo json_encode($json);
+                    die();
+                }
+
+            }
+
+        }
+
+        $token = trim($post['iToken']);
+
+        $Identomat = new Identomat($db, $token);
+        $result = $Identomat->result();
+
+        if ($result == 'SESSION_NOT_FOUND') {
+
+            $resultStatus = 'SESSION_NOT_FOUND';
+            $rejectReason = 'SESSION_NOT_FOUND';
+
+        } else {
+
+            $resultStatus = $result['result'];
+            $rejectReason = $result['reject_reason']['value'];
+
+        }
+
+        if ($resultStatus == 'approved') {
+
+            $document_number = $result['person']['document_number'];
+
+            if ($result['document_type'] == 'id') {
+
+                $documentFront = 'data:image/jpeg;base64,' . $Identomat->documentFront();
+                $documentBack = 'data:image/jpeg;base64,' . $Identomat->documentBack();
+
+            }
+
+            if ($result['document_type'] == 'passport') {
+
+                $documentFront = 'data:image/jpeg;base64,' . $Identomat->passport();
+
+            }
+
+            // upload
+            $document_front_name = $personal_number . '-' . $document_number . '-imageFront';
+            $document_back_name = $personal_number . '-' . $document_number . '-imageRear';
+            $dir = 'files/documents/';
+
+            $document_front = $Upload->file([
+                'file'      => $documentFront,
+                'file_name' => $document_front_name,
+                'dir'       => $dir,
+            ]);
+
+            if ($result['document_type'] == 'id') {
+
+                $document_back = $Upload->file([
+                    'file'      => $documentBack,
+                    'file_name' => $document_back_name,
+                    'dir'       => $dir,
+                ]);
+
+            }
+
+            $documentParams = [
+                'personal_number' => $personal_number,
+                'document_number' => $document_number,
+                'document_type' => ($result['document_type'] == 'id') ? 2 : 1,
+                'issue_organisation' => (isset($result['person']['local_authority'])) ? $result['person']['local_authority'] : $result['person']['authority'],
+                'issue_date' => date('Y-m-d', strtotime($result['person']['document_issued'])),
+                'expiry_date' => date('Y-m-d', strtotime($result['person']['document_expires'])),
+                'expiry' => 0,
+                'document_front' => $document_front,
+                'document_back' =>  ($result['document_type'] == 'id') ? $document_back : '',
+                'user' => 'leaderpay.ge',
+                'was_done' => 1,
+            ];
+
+            $db->insert('users_documents', $documentParams);
+
+        } else if ($resultStatus == 'manual_check') {
+
+            $json = [
+                'errorCode' => 5,
+                'errorMessage' => $lang['user_checking'],
+            ];
+            $db->insert('registration_logs', ['method' => 'verification', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+            echo json_encode($json);
+            die();
+
+        } else {
+
+            $json = [
+                'errorCode' => 6,
+                'errorMessage' => $rejectReason,
+            ];
+            $db->insert('registration_logs', ['method' => 'verification', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+            echo json_encode($json);
+            die();
+        }
+
+        $json = [
+            'errorCode' => 10,
+            'errorMessage' => 'ვერიფიკაცია წარმატებით დასრულდა',
+        ];
+        $db->insert('registration_logs', ['method' => 'verification', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+        echo json_encode($json);
+        die();
+    }

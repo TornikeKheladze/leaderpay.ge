@@ -5,7 +5,7 @@ class Identomat {
     private $url = 'https://widget.identomat.com/external-api/';
     private $method = '';
     private $secret = '61bc5579572c89188656ad56_801caa7528991759965873d8e8cbd47f1b1e8728';
-    private $body = [];
+    public $body = [];
     private $session_token;
     public $Database;
 
