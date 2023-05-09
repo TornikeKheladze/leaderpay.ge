@@ -649,4 +649,34 @@
 
     }
 
+    public function LastWalletNumber() {
+
+        $sth = $this->db->prepare("SELECT CAST(wallet_number AS UNSIGNED) AS wallet_number FROM `users` WHERE `country` != 'GE' AND CAST(wallet_number AS UNSIGNED) < 10000 ORDER BY wallet_number DESC LIMIT 1");
+
+        $sth->execute();
+
+        $row = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return ($sth->errorCode() != PDO::ERR_NONE || !$row) ? '00000000001' : $row['wallet_number'];
+
+    }
+
+    public function generateWalletNumber() {
+
+        $last = $this->LastWalletNumber();
+        $charset = 11;
+        $new = (INT) $last + 1;
+        $strlen = strlen($new);
+        $null_charset = $charset - $strlen;
+        $wallet_number = '';
+
+        for ($i = 0; $i < $null_charset; $i++) {
+            $wallet_number .= '0';
+        }
+
+        $wallet_number = $wallet_number . $new;
+        return $wallet_number;
+
+    }
+
 }

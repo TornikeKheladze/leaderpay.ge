@@ -1,503 +1,406 @@
 <?php
 
-require '../classes/static.php';
+    require '../classes/static.php';
 
-$cookie = new cookie();
+    $cookie = new cookie();
 
-if (isset($_GET['lang'])) {
+    if (isset($_GET['lang'])) {
 
-    if ($cookie::set("lang", $_GET['lang'], time()+100000000) == true) {
+        if ($cookie::set("lang", $_GET['lang'], time()+100000000) == true) {
 
-        $page_uri = explode('lang', $_SERVER['REQUEST_URI']);
-        header('Location:'.$page_uri[0]);
+            $page_uri = explode('lang', $_SERVER['REQUEST_URI']);
+            header('Location:'.$page_uri[0]);
 
-    }
-
-    $lang_id = $cookie::get('lang');
-
-} else {
-
-    if ($cookie::check('lang') == true) {
+        }
 
         $lang_id = $cookie::get('lang');
 
     } else {
 
-        $lang_id = "ge";
+        if ($cookie::check('lang') == true) {
 
-    }
+            $lang_id = $cookie::get('lang');
 
-}
+        } else {
 
-include "../language/$lang_id.php";
-
-require '../classes/config.php';
-require '../classes/db.php';
-require '../classes/Identomat.php';
-require '../classes/Upload.php';
-require '../classes/Risk.php';
-require '../classes/Payway.php';
-require '../classes/Sda.php';
-
-$db = new db();
-$Identomat = new Identomat($db);
-$Upload = new Upload();
-$Risk = new Risk();
-$Sda = new Sda($db);
-
-$Payway = new Payway($db, 'WalletRegistration');
-
-if (isset($post['step']) && $post['step'] == 1) {
-
-    $mustParams = [
-        'first_name1' => true,
-        'last_name1' => true,
-        'personal_number1' => true,
-
-        'mobile' => true,
-        'email' => true,
-        'legal_address' => true,
-        'real_address' => true,
-        'password' => true,
-        'repeat_password' => true,
-    ];
-
-    foreach($mustParams as $k => $v) {
-
-        if ($v == true) {
-
-            if (!isset($post[$k])) {
-
-                $json = [
-                    'errorCode' => 1,
-                    'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
-                ];
-                echo json_encode($json);
-                die();
-            }
+            $lang_id = "ge";
 
         }
 
     }
 
-    //payway
-    $paywayPost = [
-        'first_name' => $post['first_name1'],
-        'last_name' => $post['last_name1'],
-        'personal_no' => $post['personal_number1'],
-        'mobile' => $post['mobile'],
-    ];
+    include "../language/$lang_id.php";
 
-    $Payway->post = $paywayPost;
-    $paywayCheck = $Payway->check();
+    require '../classes/config.php';
+    require '../classes/db.php';
+    require '../classes/Identomat.php';
+    require '../classes/Upload.php';
+    require '../classes/Risk.php';
+    require '../classes/Payway.php';
+    require '../classes/Sda.php';
 
-    if ($paywayCheck['errorCode'] != 100) {
+    $db = new db();
+    $Identomat = new Identomat($db);
+    $Upload = new Upload();
+    $Risk = new Risk();
+    $Sda = new Sda($db);
 
-        $json = [
-            'errorCode' => 1,
-            'errorMessage' => $paywayCheck['errorMessage']
+    $Payway = new Payway($db, 'WalletRegistration');
+
+    if (isset($post['step']) && $post['step'] == 1) {
+
+        $mustParams = [
+            'mobile' => true,
+            'email' => true,
+            'legal_address' => true,
+            'real_address' => true,
+            'password' => true,
+            'repeat_password' => true,
+            'pep_status' => true,
+            'pep' => (@$post['pep_status'] == 1) ? true : false,
+            'limits' => true,
+            'privacy_policy' => true,
+            'contract' => true,
         ];
-        echo json_encode($json);
-        die();
 
-    }
+        foreach($mustParams as $k => $v) {
 
-    $mobile = trim($post['mobile']);
-    $email = trim($post['email']);
-    $personal_number1 = trim($post['personal_number1']);
+            if ($v == true) {
 
-    $password = trim($post['password']);
-    $repeat_password = trim($post['repeat_password']);
+                if (!isset($post[$k])) {
 
-    if ($password != $repeat_password) {
+                    $json = [
+                        'errorCode' => 1,
+                        'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
+                    ];
+                    $db->insert('registration_logs', ['method' => 'registration', 'step' => 1, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+                    echo json_encode($json);
+                    die();
+                }
 
-        $json = [
-            'errorCode' => 2,
-            'errorMessage' => 'გამეორებული პაროლი არ ემთხვევა!',
-        ];
-        echo json_encode($json);
-        die();
-
-    }
-
-//    $mobileUser = $db->get_date('users', " mobile = '$mobile' ");
-//    $emailUser = $db->get_date('users', " email = '$email' ");
-
-    $mobileUser = $db->MobileUser($mobile);
-    $emailUser = $db->EmailUser($email);
-    $personalUser = $db->UserByWalletNumber($personal_number1);
-
-    if ($mobileUser) {
-
-        $json = [
-            'errorCode' => 3,
-            'errorMessage' => $lang['unique_phone'],
-        ];
-        echo json_encode($json);
-        die();
-
-    }
-
-    if ($emailUser) {
-
-        $json = [
-            'errorCode' => 4,
-            'errorMessage' => $lang['unique_email'],
-        ];
-        echo json_encode($json);
-        die();
-
-    }
-
-    if ($personalUser) {
-
-        $json = [
-            'errorCode' => 3,
-            'errorMessage' => $lang['user_exist'],
-        ];
-        echo json_encode($json);
-        die();
-
-    }
-
-    $json = [
-        'errorCode' => 10,
-        'errorMessage' => 'წარმატებული',
-        'data' => [
-            'session' => $Identomat->begin(),
-        ],
-    ];
-    echo json_encode($json);
-    die();
-
-}
-
-if (isset($post['step']) && $post['step'] == '2') {
-
-    $mustParams = [
-        'iToken' => true,
-        'mobile' => true,
-        'email' => true,
-        'legal_address' => true,
-        'real_address' => true,
-        'password' => true,
-        'repeat_password' => true,
-    ];
-
-    foreach($mustParams as $k => $v) {
-
-        if ($v == true) {
-
-            if (!isset($post[$k])) {
-
-                $json = [
-                    'errorCode' => 1,
-                    'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
-                ];
-                echo json_encode($json);
-                die();
             }
 
         }
-
-    }
-
-    $token = trim($post['iToken']);
-
-    $Identomat = new Identomat($db, $token);
-    $result = $Identomat->result();
-
-    if ($result == 'SESSION_NOT_FOUND') {
-
-        $resultStatus = 'SESSION_NOT_FOUND';
-        $rejectReason = 'SESSION_NOT_FOUND';
-
-    } else {
-
-        $resultStatus = $result['result'];
-        $rejectReason = $result['reject_reason']['value'];
-
-    }
-
-    if ($resultStatus == 'approved') {
-
-        $personal_number = $result['person']['personal_number'];
-        $document_number = $result['person']['document_number'];
 
         $mobile = trim($post['mobile']);
         $email = trim($post['email']);
+
         $password = trim($post['password']);
-        $password = hash('sha256', $password);
-        $legal_address = trim($post['legal_address']);
-        $real_address = trim($post['real_address']);
+        $repeat_password = trim($post['repeat_password']);
 
-        $sdaCheck = $Sda->Check($personal_number, $document_number);
-
-        if ($sdaCheck['status'] != 200) {
+        if ($password != $repeat_password) {
 
             $json = [
-                'errorCode' => 3,
-                'errorMessage' => 'დოკუმენტმა ვერ გაიარა ვალიდაცია სერვისების განვითარების სააგენტოში!',
+                'errorCode' => 2,
+                'errorMessage' => 'გამეორებული პაროლი არ ემთხვევა!',
             ];
+            $db->insert('registration_logs', ['method' => 'registration', 'step' => 1, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
             echo json_encode($json);
             die();
 
         }
 
-        $user = $db->UserByWalletNumber($personal_number);
+    //    $mobileUser = $db->get_date('users', " mobile = '$mobile' ");
+    //    $emailUser = $db->get_date('users', " email = '$email' ");
 
-        if ($user) {
+        $mobileUser = $db->MobileUser($mobile);
+        $emailUser = $db->EmailUser($email);
+
+        if ($mobileUser) {
 
             $json = [
                 'errorCode' => 3,
-                'errorMessage' => $lang['user_exist'],
+                'errorMessage' => $lang['unique_phone'],
             ];
+            $db->insert('registration_logs', ['method' => 'registration', 'step' => 1, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
             echo json_encode($json);
             die();
 
         }
 
-        if ($result['document_type'] == 'id') {
-
-            $documentFront = 'data:image/jpeg;base64,' . $Identomat->documentFront();
-            $documentBack = 'data:image/jpeg;base64,' . $Identomat->documentBack();
-
-        }
-
-        if ($result['document_type'] == 'passport') {
-
-            $documentFront = 'data:image/jpeg;base64,' . $Identomat->passport();
-
-        }
-
-        $self = 'data:image/jpeg;base64,' . $Identomat->self();
-
-        $today = date('Y-m-d');
-        $diff = date_diff(date_create($result['person']['birthday']), date_create($today));
-        $age = $diff->format('%y');
-
-        if ($age < 18 ) {
+        if ($emailUser) {
 
             $json = [
                 'errorCode' => 4,
-                'errorMessage' => $lang['user_must_18'],
+                'errorMessage' => $lang['unique_email'],
             ];
+            $db->insert('registration_logs', ['method' => 'registration', 'step' => 1, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
             echo json_encode($json);
             die();
 
         }
 
-        // upload
-        $document_front_name = $personal_number . '-' . $document_number . '-imageFront';
-        $document_back_name = $personal_number . '-' . $document_number . '-imageRear';
-        $dir = 'files/documents/';
-
-        $document_front = $Upload->file([
-            'file'      => $documentFront,
-            'file_name' => $document_front_name,
-            'dir'       => $dir,
-        ]);
-
-        if ($result['document_type'] == 'id') {
-
-            $document_back = $Upload->file([
-                'file'      => $documentBack,
-                'file_name' => $document_back_name,
-                'dir'       => $dir,
-            ]);
-
-        }
-
-        // upload
-        $self_name = $personal_number . '-' . '-self';
-        $dir = 'files/self/';
-
-        $self = $Upload->file([
-            'file'      => $self,
-            'file_name' => $self_name,
-            'dir'       => $dir,
-        ]);
-
-        $userParams = [
-            'wallet_number' => $personal_number,
-            'personal_number' => $personal_number,
-            'email' => $email,
-            'mobile' => $mobile,
-            'legal_address' => $legal_address,
-            'real_address' => $real_address,
-            'password' => $password,
-            'country' => substr_replace($result['person']['citizenship'], '', -1),
-            'first_name' => $result['person']['local_first_name'],
-            'last_name' => $result['person']['local_last_name'],
-            'birth_date' => date('Y-m-d', strtotime($result['person']['birthday'])),
-            'birth_place' => $result['person']['birth_place'],
-            'gender' => ($result['person']['sex'] == 'M') ? 1 : 2,
-            'user' => 'leaderpay.ge',
-            'selfie' => $self,
-        ];
-        $documentParams = [
-            'personal_number' => $personal_number,
-            'document_number' => $document_number,
-            'document_type' => ($result['document_type'] == 'id') ? 2 : 1,
-            'issue_organisation' => (isset($result['person']['local_authority'])) ? $result['person']['local_authority'] : $result['person']['authority'],
-            'issue_date' => date('Y-m-d', strtotime($result['person']['document_issued'])),
-            'expiry_date' => date('Y-m-d', strtotime($result['person']['document_expires'])),
-            'expiry' => 0,
-            'document_front' => $document_front,
-            'document_back' =>  ($result['document_type'] == 'id') ? $document_back : '',
-            'user' => 'leaderpay.ge',
-            'was_done' => 1,
-        ];
-
-        $db->insert('users', $userParams);
-        $db->insert('users_documents', $documentParams);
-
-    } else if ($resultStatus == 'manual_check') {
-
         $json = [
-            'errorCode' => 5,
-            'errorMessage' => $lang['user_checking'],
+            'errorCode' => 10,
+            'errorMessage' => 'წარმატებული',
+            'data' => [
+                'session' => $Identomat->begin(),
+            ],
         ];
-
+        $db->insert('registration_logs', ['method' => 'registration', 'step' => 1, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
         echo json_encode($json);
         die();
 
-    } else {
-
-        $json = [
-            'errorCode' => 6,
-            'errorMessage' => $rejectReason,
-        ];
-
-        echo json_encode($json);
-        die();
     }
 
-    $json = [
-        'errorCode' => 10,
-        'errorMessage' => 'წარმატებული',
-        'data' => [
-            'personal_number' => $personal_number,
-        ],
-    ];
+    if (isset($post['step']) && $post['step'] == '2') {
 
-    echo json_encode($json);
-    die();
-}
+        $mustParams = [
+            'iToken' => true,
+            'mobile' => true,
+            'email' => true,
+            'legal_address' => true,
+            'real_address' => true,
+            'password' => true,
+            'repeat_password' => true,
+            'pep_status' => true,
+            'pep' => (@$post['pep_status'] == 1) ? true : false,
+            'limits' => true,
+            'privacy_policy' => true,
+            'contract' => true,
+        ];
 
-if (isset($post['step']) && $post['step'] == '3') {
+        foreach($mustParams as $k => $v) {
 
-    $mustParams = [
-        'pNumber' => true,
-        'dual_citizen' => true,
-        'country2' => (@$post['dual_citizen'] == 1) ? true : false,
-        'birth_country' => true,
-        'employee_status' => true,
-        'sfero_id' => (@$post['employee_status'] == 1) ? true : false,
-        'job_title' => (@$post['employee_status'] == 1) ? true : false,
-        'occupied_position' => (@$post['employee_status'] == 1) ? true : false,
-        'self_employed' => (@$post['employee_status'] == 2) ? true : false,
-        'source_of_income' => (@$post['employee_status'] == 3) ? true : false,
-        'monthly_income' => true,
-        'expected_turnover' => true,
-        'purpose_id' => true,
-        'pep_status' => true,
-        'pep' => (@$post['pep_status'] == 1) ? true : false,
-        'limits' => true,
-        'privacy_policy' => true,
-        'contract' => true,
-    ];
+            if ($v == true) {
 
-    foreach($mustParams as $k => $v) {
+                if (!isset($post[$k])) {
 
-        if ($v == true) {
+                    $json = [
+                        'errorCode' => 1,
+                        'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
+                    ];
+                    $db->insert('registration_logs', ['method' => 'registration', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+                    echo json_encode($json);
+                    die();
+                }
 
-            if (!isset($post[$k])) {
-
-                $json = [
-                    'errorCode' => 1,
-                    'errorMessage' => "პარამეტრი '$k' არ არის გადმოცემული!",
-                ];
-                echo json_encode($json);
-                die();
             }
 
         }
 
-    }
+        $token = trim($post['iToken']);
 
-    $pNumber = trim($post['pNumber']);
-    $dual_citizen = (INT) $post['dual_citizen'];
-    $country2 = trim($post['country2']);
-    $birth_country = trim($post['birth_country']);
-    $employee_status = (INT) $post['employee_status'];
-    $sfero_id = (INT) $post['sfero_id'];
-    $job_title = trim($post['job_title']);
-    $occupied_position = trim($post['occupied_position']);
-    $self_employed = (INT) $post['self_employed'];
-    $source_of_income = (INT) $post['source_of_income'];
-    $monthly_income = (INT) $post['monthly_income'];
-    $expected_turnover = (INT) $post['expected_turnover'];
-    $purpose_id = (INT) $post['purpose_id'];
-    $pep_status = (INT) $post['pep_status'];
-    $pep = (INT) $post['pep'];
+        $Identomat = new Identomat($db, $token);
+        $result = $Identomat->result();
 
-    $user = $db->UserByWalletNumber($pNumber);
+        if ($result == 'SESSION_NOT_FOUND') {
 
-    if (!$user) {
+            $resultStatus = 'SESSION_NOT_FOUND';
+            $rejectReason = 'SESSION_NOT_FOUND';
+
+        } else {
+
+            $resultStatus = $result['result'];
+            $rejectReason = $result['reject_reason']['value'];
+
+        }
+
+        if ($resultStatus == 'approved') {
+
+            if ($result['person']['citizenship'] == 'GEO') {
+
+                $personal_number = $result['person']['personal_number'];
+                $first_name = $result['person']['local_first_name'];
+                $last_name = $result['person']['local_last_name'];
+
+            } else {
+
+                $personal_number = $db->generateWalletNumber();
+                $first_name = $result['person']['first_name'];
+                $last_name = $result['person']['last_name'];
+
+            }
+
+            $document_number = $result['person']['document_number'];
+
+            $mobile = trim($post['mobile']);
+            $email = trim($post['email']);
+            $password = trim($post['password']);
+            $password = hash('sha256', $password);
+            $legal_address = trim($post['legal_address']);
+            $real_address = trim($post['real_address']);
+            $pep_status = (INT) $post['pep_status'];
+            $pep = (INT) $post['pep'];
+
+    //        $sdaCheck = $Sda->Check($personal_number, $document_number);
+    //
+    //        if ($sdaCheck['status'] != 200) {
+    //
+    //            $json = [
+    //                'errorCode' => 3,
+    //                'errorMessage' => 'დოკუმენტმა ვერ გაიარა ვალიდაცია სერვისების განვითარების სააგენტოში!',
+    //            ];
+    //            echo json_encode($json);
+    //            die();
+    //
+    //        }
+
+            $user = $db->UserByWalletNumber($personal_number);
+
+            if ($user) {
+
+                $json = [
+                    'errorCode' => 3,
+                    'errorMessage' => $lang['user_exist'],
+                ];
+                $db->insert('registration_logs', ['method' => 'registration', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+                echo json_encode($json);
+                die();
+
+            }
+
+            if ($result['document_type'] == 'id') {
+
+                $documentFront = 'data:image/jpeg;base64,' . $Identomat->documentFront();
+                $documentBack = 'data:image/jpeg;base64,' . $Identomat->documentBack();
+
+            }
+
+            if ($result['document_type'] == 'passport') {
+
+                $documentFront = 'data:image/jpeg;base64,' . $Identomat->passport();
+
+            }
+
+            $self = 'data:image/jpeg;base64,' . $Identomat->self();
+
+            $today = date('Y-m-d');
+            $diff = date_diff(date_create($result['person']['birthday']), date_create($today));
+            $age = $diff->format('%y');
+
+            if ($age < 18 ) {
+
+                $json = [
+                    'errorCode' => 4,
+                    'errorMessage' => $lang['user_must_18'],
+                ];
+                $db->insert('registration_logs', ['method' => 'registration', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+                echo json_encode($json);
+                die();
+
+            }
+
+            // upload
+            $document_front_name = $personal_number . '-' . $document_number . '-imageFront';
+            $document_back_name = $personal_number . '-' . $document_number . '-imageRear';
+            $dir = 'files/documents/';
+
+            $document_front = $Upload->file([
+                'file'      => $documentFront,
+                'file_name' => $document_front_name,
+                'dir'       => $dir,
+            ]);
+
+            if ($result['document_type'] == 'id') {
+
+                $document_back = $Upload->file([
+                    'file'      => $documentBack,
+                    'file_name' => $document_back_name,
+                    'dir'       => $dir,
+                ]);
+
+            }
+
+            // upload
+            $self_name = $personal_number . '-' . '-self';
+            $dir = 'files/self/';
+
+            $self = $Upload->file([
+                'file'      => $self,
+                'file_name' => $self_name,
+                'dir'       => $dir,
+            ]);
+
+            $userParams = [
+                'wallet_number' => $personal_number,
+                'personal_number' => $personal_number,
+                'email' => $email,
+                'mobile' => $mobile,
+                'legal_address' => $legal_address,
+                'real_address' => $real_address,
+                'password' => $password,
+                'country' => substr_replace($result['person']['citizenship'], '', -1),
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'birth_date' => date('Y-m-d', strtotime($result['person']['birthday'])),
+                'birth_place' => $result['person']['birth_place'],
+                'gender' => ($result['person']['sex'] == 'M') ? 1 : 2,
+                'user' => 'leaderpay.ge',
+                'verified_at' => date('Y-m-d H:i:s'),
+                'confirmation' => 1,
+                'verify_id' => 3,
+                'selfie' => $self,
+                'pep_status' => $pep_status,
+                'pep' => $pep,
+            ];
+            $documentParams = [
+                'personal_number' => $personal_number,
+                'document_number' => $document_number,
+                'document_type' => ($result['document_type'] == 'id') ? 2 : 1,
+                'issue_organisation' => (isset($result['person']['local_authority'])) ? $result['person']['local_authority'] : $result['person']['authority'],
+                'issue_date' => date('Y-m-d', strtotime($result['person']['document_issued'])),
+                'expiry_date' => date('Y-m-d', strtotime($result['person']['document_expires'])),
+                'expiry' => 0,
+                'document_front' => $document_front,
+                'document_back' =>  ($result['document_type'] == 'id') ? $document_back : '',
+                'user' => 'leaderpay.ge',
+                'was_done' => 1,
+            ];
+
+            $db->insert('users', $userParams);
+            $db->insert('users_documents', $documentParams);
+            // detect risk
+            $Risk->Get($user['id']);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://leaderpay.ge/loads/pep.php');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ['personal_number' => $personal_number]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+            curl_close($ch);
+
+        } else if ($resultStatus == 'manual_check') {
+
+            $json = [
+                'errorCode' => 5,
+                'errorMessage' => $lang['user_checking'],
+            ];
+            $db->insert('registration_logs', ['method' => 'registration', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+            echo json_encode($json);
+            die();
+
+        } else {
+
+            $json = [
+                'errorCode' => 6,
+                'errorMessage' => $rejectReason,
+            ];
+            $db->insert('registration_logs', ['method' => 'registration', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+            echo json_encode($json);
+            die();
+        }
+
+        //payway
+        $paywayPost = [
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'personal_no' => $personal_number,
+            'mobile' => $mobile,
+        ];
+
+        $Payway->post = $paywayPost;
+        $paywayCheck = $Payway->check();
 
         $json = [
-            'errorCode' => 3,
-            'errorMessage' => 'ტექნიკური შეფერხება!',
+            'errorCode' => 10,
+            'errorMessage' => $lang['registration_completed'] . ' ' . $lang['wallet_number2'] . ': ' . $personal_number,
+            'data' => [
+                'personal_number' => $personal_number,
+            ],
         ];
+        $db->insert('registration_logs', ['method' => 'registration', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
         echo json_encode($json);
         die();
-
     }
-
-    $userParams = [
-        'dual_citizen' => $dual_citizen,
-        'birth_country' => $birth_country,
-        'employee_status' => $employee_status,
-        'monthly_income' => $monthly_income,
-        'expected_turnover' => $expected_turnover,
-        'purpose_id' => $purpose_id,
-        'pep_status' => $pep_status,
-        'confirmation' => 0,
-    ];
-
-    if ($dual_citizen == 1) {
-        $userParams['country2'] = $country2;
-    }
-    if ($employee_status == 1) {
-        $userParams['sfero_id'] = $sfero_id;
-        $userParams['job_title'] = $job_title;
-        $userParams['occupied_position'] = $occupied_position;
-    }
-    if ($employee_status == 2) {
-        $userParams['self_employed'] = $self_employed;
-    }
-    if ($employee_status == 3) {
-        $userParams['source_of_income'] = $source_of_income;
-    }
-    if ($pep_status == 1) {
-        $userParams['pep'] = $pep;
-    }
-
-    $db->update('users', $userParams, $user['id']);
-
-    // detect risk
-    $Risk->Get($user['id']);
-
-    $json = [
-        'errorCode' => 10,
-        'errorMessage' => $lang['registration_completed'],
-        'data' => [
-            'personal_number' => $pNumber,
-        ],
-    ];
-
-    echo json_encode($json);
-    die();
-
-}

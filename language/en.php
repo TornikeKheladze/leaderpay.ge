@@ -142,7 +142,8 @@
 
         // user texts
         'balance' => 'Balance',
-        'wallet_number' => 'Wallet Number',
+        'wallet_number' => 'Personal Number / Wallet Number',
+        'wallet_number2' => 'Wallet Number',
         'verification_level' => 'Verification Level',
         
         //sub pages
@@ -250,7 +251,7 @@
         'user_exist' => 'User is already registered!',
         'user_must_18' => 'The user must be 18 years old',
         'user_checking' => 'User checking please try again later or contact All Fee Way',
-        'registration_completed' => 'Registration completed successfully. You can log in',
+        'registration_completed' => 'Registration completed successfully.',
         'unique_email' => 'The user is already registered with the specified email',
         'convertation' => 'currency exchange',
         'from' => 'From',
