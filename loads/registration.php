@@ -359,6 +359,7 @@
             curl_setopt($ch, CURLOPT_POSTFIELDS, ['personal_number' => $personal_number]);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+            $result = trim(curl_exec($ch));
             curl_close($ch);
 
         } else if ($resultStatus == 'manual_check') {
