@@ -41,6 +41,14 @@
                         </div>
                     </div>
                 </div>
+                <br><br>
+                <div class="r">
+                    <a style="font-size: 11px;" href="assets/files/limits.pdf" target="_blank"><img src="assets/img/pdf.png" alt="pdf"> ტარიფებს და საოპერაციო ლიმიტებს</a>
+                    <br><br>
+                    <a style="font-size: 11px;" href="assets/files/privacy_policy.pdf" target="_blank"><img src="assets/img/pdf.png" alt="pdf"> პერსონალური ინფორმაცია და კონფიდენციალურობის პოლიტიკას</a>
+                    <br><br>
+                    <a style="font-size: 11px;" href="assets/files/contract.pdf" target="_blank"><img src="assets/img/pdf.png" alt="pdf"> ხელშეკრულებას ელექტრონული საფულეში რეგისტრაციასა და მის სარგებლობასთან დაკავშირებით</a>
+                </div>
 
             </div>
         </div> <!-- end row -->

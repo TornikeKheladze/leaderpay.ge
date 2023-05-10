@@ -501,6 +501,18 @@
 
             $document_number = $result['person']['document_number'];
 
+            if ($personal_number != $result['person']['personal_number']) {
+
+                $json = [
+                    'errorCode' => 1,
+                    'errorMessage' => 'არასწორი დოკუმენტი',
+                ];
+                $db->insert('registration_logs', ['method' => 'verification', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+                echo json_encode($json);
+                die();
+
+            }
+
             if ($result['document_type'] == 'id') {
 
                 $documentFront = 'data:image/jpeg;base64,' . $Identomat->documentFront();
