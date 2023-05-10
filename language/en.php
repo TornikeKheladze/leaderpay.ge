@@ -245,7 +245,7 @@
         'monthly_income' => 'Monthly income',
         'expected_turnover' => 'Expected turnover in the process of business relationship with the provider',
         'purpose_id' => 'The purpose of the business relationship with the provider',
-        'pep_status' => 'Are you politically active',
+        'pep_status' => 'Are you politically active or a family member of a politically active person?',
         'pep' => 'Politically active',
         'unique_phone' => 'The user is already registered with the specified phone number',
         'user_exist' => 'User is already registered!',

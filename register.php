@@ -26,7 +26,10 @@
                 <h3 class="page-title" style="margin: 15px 0 0 0;">
                     <span class="t r"><?=$lang['sing_up'] ?></span>
                 </h3>
-                <form action="" method="post" autocomplete="off" id="registracion_form">
+
+                <div class="msg msg-danger">რეგისტრაცია დროებით გათიშულია!</div>
+
+                <form action="" method="post" autocomplete="off" id="registracion_form" style="display:none;">
 
                     <div class="reg_loader" style="display: none">
                         <span class="helper"></span>
@@ -61,13 +64,7 @@
                                         </div><!-- end row -->
 
                                         <div class="row">
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="form-group req">
-                                                    <label for="legal_address"><?=$lang['legal_address'] ?></label>
-                                                    <input name="legal_address" type="text" id="legal_address" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-md-6 col-sm-6">
+                                            <div class="col-md-12 col-sm-6">
                                                 <div class="form-group req">
                                                     <label for="real_address"><?=$lang['real_address'] ?></label>
                                                     <input name="real_address" type="text" id="real_address" class="input" value="" readonly onfocus="this.removeAttribute('readonly');">

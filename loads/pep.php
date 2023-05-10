@@ -87,6 +87,7 @@
         'user_id' => $user['id'],
         'author' => 'leaderpay.ge',
         'file' => $document,
+        'type' => 2,
         'updated_at' => date('Y-m-d'),
     ];
 

@@ -21,7 +21,8 @@
           <h3 class="page-title">
             <span class="t r"><?=$lang['verification'] ?></span>
           </h3>
-          <div class="vr">
+          <div class="msg msg-danger">რეგისტრაცია დროებით გათიშულია!</div>
+          <div class="vr" style="display: none;">
             <iframe
                 src=""
                 allow="camera"

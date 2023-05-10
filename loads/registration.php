@@ -1,5 +1,8 @@
 <?php
 
+
+    die();
+
     require '../classes/static.php';
 
     $cookie = new cookie();
@@ -52,7 +55,6 @@
         $mustParams = [
             'mobile' => true,
             'email' => true,
-            'legal_address' => true,
             'real_address' => true,
             'password' => true,
             'repeat_password' => true,
@@ -149,7 +151,6 @@
             'iToken' => true,
             'mobile' => true,
             'email' => true,
-            'legal_address' => true,
             'real_address' => true,
             'password' => true,
             'repeat_password' => true,
@@ -218,7 +219,6 @@
             $email = trim($post['email']);
             $password = trim($post['password']);
             $password = hash('sha256', $password);
-            $legal_address = trim($post['legal_address']);
             $real_address = trim($post['real_address']);
             $pep_status = (INT) $post['pep_status'];
             $pep = (INT) $post['pep'];
@@ -317,7 +317,6 @@
                 'personal_number' => $personal_number,
                 'email' => $email,
                 'mobile' => $mobile,
-                'legal_address' => $legal_address,
                 'real_address' => $real_address,
                 'password' => $password,
                 'country' => substr_replace($result['person']['citizenship'], '', -1),
