@@ -36,7 +36,7 @@
 
     $tbl = "<style>@page {margin: 0px;}body { margin: 40px;font-family: serif; font-size: 13px; } h3 {margin: 2px 0 2px 0;} .left{width: 60%;float: left;font-size:12px;} .right{width: 40%;float: right;text-align: right;font-size:11px;} .clear { clear:both; }</style>";
 
-    $tbl .= '<p style="margin: 0px;"><b>1.1</b> (PEP) პოლიტიკურად აქტიური პირი გულისხმობს, საქართველოს ან უცხო ქვეყნის მოქალაქე';
+    $tbl .= '<p style="margin: 0px;"><b>(PEP)</b> პოლიტიკურად აქტიური პირი გულისხმობს, საქართველოს ან უცხო ქვეყნის მოქალაქე';
     $tbl .= ' ფიზიკურ პირს, რომლესაც უკავია ან ბოლო 1 წლის განმავლობაში ეკავა სახელმწიფო';
     $tbl .= ' (საჯარო) პოლიტიკური თანამდებობა ან/და ეწევა მნიშვნელოვან სახელმწიფოებრივ და';
     $tbl .= ' პოლიტიკურ საქმიანობას. პოლიტიკურად აქტიური პირები არიან: სახელმწიფოს მეთაური,';

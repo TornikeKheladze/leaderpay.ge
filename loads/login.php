@@ -44,7 +44,7 @@
 
             $smsParams = [
                 'number' => $mobile,
-                'text' => "SMS Code: $code",
+                'text' => "leaderpay.ge-ის ავტორიზაციის კოდი: $code",
             ];
 
             $b = $bulkSms->Send($smsParams);
@@ -107,7 +107,7 @@
 
         }
 
-        $smsLog = $db->get_date('login_log', " `wallet_number` = '$username' AND `type` = 'sendSms' AND  `sms_code` = '$sms_code' AND date > date_sub(now(), interval 5 minute)");
+        $smsLog = $db->get_date('login_log', " `wallet_number` = '$username' AND `type` = 'sendSms' AND  `sms_code` = '$sms_code' AND date > date_sub(now(), interval 1 minute)");
 
         if ($smsLog) {
 
@@ -160,7 +160,7 @@
 
             $json = [
                 'errorCode' => 2,
-                'errorMessage' => 'sms-ის თვის განსაზღვრული დრო 5 წუთი ამოიწურა',
+                'errorMessage' => 'sms-ის თვის განსაზღვრული დრო 1 წუთი ამოიწურა',
             ];
 
             echo json_encode($json);

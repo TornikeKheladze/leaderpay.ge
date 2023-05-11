@@ -338,7 +338,7 @@
 
             $smsParams = [
                 'number' => $mobile,
-                'text' => "SMS Code: $code",
+                'text' => "leaderpay.ge-ის სერვისის გადახდის ერთჯერადი კოდი: $code",
             ];
 
             $bulkSms->Send($smsParams);

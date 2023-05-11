@@ -118,7 +118,7 @@
 
             $smsParams = [
                 'number' => $mobile,
-                'text' => "Wallet Number: $wallet_number New Password: $new_pass",
+                'text' => "leaderpay.ge-ის საფულის ნომერი: $wallet_number ახალი პაროლი: $new_pass",
             ];
 
             $send = $bulkSms->Send($smsParams);
