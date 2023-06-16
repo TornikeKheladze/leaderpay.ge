@@ -54,4 +54,33 @@
             $('#filter-submit').trigger('click');
         });
     });
+
+    $(document).ready(function() {
+        $('.reset_filter').click(function() {
+            $('.transactions_filter').trigger("reset");
+            transactions_filter(".transactions_filter",10);
+        });
+
+        $('.trans-filter-item').change(function() {
+            var form = $('.transactions_filter');
+            transactions_filter(form,10);
+        });
+
+        $('.more_t').click(function (e)  {
+            e.preventDefault();
+
+            var all = parseInt($(".filtered_item").attr('rel'));
+            var c = parseInt($(this).attr('rel'));
+
+            c = c + 10;
+
+            $(this).attr('rel', c);
+            $(".transactions_filter").trigger("change");
+
+            var form = $('.transactions_filter');
+
+            transactions_filter(".transactions_filter",c);
+        });
+        transactions_filter(".transactions_filter",10);
+    });
 </script>
