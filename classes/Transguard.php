@@ -1,6 +1,6 @@
 <?php
 
-class TransGuard {
+class Transguard {
     private $url = 'https://screening.apw.ge/check';
     private $customer_id = 2;
     private $secret = '649aae8bc137c';

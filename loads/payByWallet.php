@@ -5,14 +5,14 @@
     require '../classes/bulkSms.php';
     require '../classes/Limit.php';
     require '../classes/Risk.php';
-    require '../classes/TransGuard.php';
+    require '../classes/Transguard.php';
 
     $db = new db();
     $Billing = new Billing($db, 'Wallet');
     $bulkSms = new bulkSms();
     $Limit = new Limit($db);
     $Risk = new Risk();
-    $TransGuard = new TransGuard($db, 'PayServiceByWallet');
+    $Transguard = new Transguard($db, 'PayServiceByWallet');
 
     // check auch
     if ($db->check_auch() === false) {
@@ -76,8 +76,8 @@
         'actual_address' => $user['real_address'],
         'birth_date' => $user['birth_date'],
     ];
-    $TransGuard->post = $transPost;
-    $transCheck = $TransGuard->check();
+    $Transguard->post = $transPost;
+    $transCheck = $Transguard->check();
 
     if ($transCheck['errorCode'] != 100) {
 
