@@ -82,7 +82,7 @@ class Transguard {
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
@@ -90,18 +90,18 @@ class Transguard {
         $result = curl_exec($ch);
         curl_close ($ch);
 
-        $result = json_decode($result, false);
+        $resultObj = json_decode($result, false);
 
         // insert log
         $params = [
             'method' => $this->method,
-            'status' => $result->status,
+            'status' => $resultObj->status,
             'request' => json_encode($post, JSON_UNESCAPED_UNICODE),
             'response' => $result,
         ];
         $this->db->insert('transguard_logs', $params);
 
-        return $result;
+        return $resultObj;
     }
 
 }
