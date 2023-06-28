@@ -2,17 +2,17 @@
     require '../classes/config.php';
     require '../classes/db.php';
     require '../classes/Billing.php';
-    require '../classes/Payway.php';
     require '../classes/bulkSms.php';
     require '../classes/Limit.php';
     require '../classes/Risk.php';
+    require '../classes/TransGuard.php';
 
     $db = new db();
-    $Payway = new Payway($db, 'PayServiceByWallet');
     $Billing = new Billing($db, 'Wallet');
     $bulkSms = new bulkSms();
     $Limit = new Limit($db);
     $Risk = new Risk();
+    $TransGuard = new TransGuard($db, 'PayServiceByWallet');
 
     // check auch
     if ($db->check_auch() === false) {
@@ -29,6 +29,7 @@
         $username = $_SESSION['user_name'];
         $token = $_SESSION['token'];
         $user = $db->get_date('users', " `personal_number` = '$username' AND `token` = '$token' ");
+        $user_document_number = $db->getSql("SELECT document_number FROM `users_documents` WHERE personal_number = '$username' LIMIT 1");
 
     }
 
@@ -64,28 +65,25 @@
         echo json_encode($json);
         die();
     }
-    
-    //payway
-    $paywayPost = [
-        'birthdate' => $user['birth_date'],
-        'birth_place' => $user['birth_place'],
-        'phone' => $user['mobile'],
+
+    $transPost = [
         'first_name' => $user['first_name'],
         'last_name' => $user['last_name'],
-        'personal_no' => $user['personal_number'],
-        'country' => $user['country'],
-        'registration_address' => $user['legal_address'],
-        'real_actual_address' => $user['real_address'],
+        'resident' => $user['country'],
+        'document_id' => ($user['country'] == 'GE') ? $user['personal_number'] : $user_document_number,
+        'passport_id' => $user_document_number,
+        'legal_address' => $user['legal_address'],
+        'actual_address' => $user['real_address'],
+        'birth_date' => $user['birth_date'],
     ];
+    $TransGuard->post = $transPost;
+    $transCheck = $TransGuard->check();
 
-    $Payway->post = $paywayPost;
-    $paywayCheck = $Payway->check();
-
-    if ($paywayCheck['errorCode'] != 100) {
+    if ($transCheck['errorCode'] != 100) {
 
         $json = [
             'errorCode' => 0,
-            'errorMessage' => $paywayCheck['errorMessage']
+            'errorMessage' => $transCheck['errorMessage']
         ];
         echo json_encode($json);
         die();
