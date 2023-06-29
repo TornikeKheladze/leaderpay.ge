@@ -28,14 +28,12 @@ class Transguard {
      */
     public function check(): array {
 
-        //$request = $this->request();
+        $request = $this->request();
 
         $json = [
             'errorCode' => 100,
             'errorMessage' => 'წარმატებული',
         ];
-
-        return $json;
 
         if (isset($request->status)) {
 
@@ -97,7 +95,7 @@ class Transguard {
         // insert log
         $params = [
             'method' => $this->method,
-            'status' => $resultObj->status,
+            'status' => @$resultObj->status,
             'request' => json_encode($post, JSON_UNESCAPED_UNICODE),
             'response' => $result,
         ];
