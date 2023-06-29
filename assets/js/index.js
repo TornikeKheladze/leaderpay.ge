@@ -963,10 +963,25 @@ function load_infos(form,confirm) {
 }
 function sendRequestToPay() {
 
+    var dataForm = $('#service_form').serializeArray();
+
+    var dataFormIndex = {};
+    $.map(dataForm, function(n, i){
+        dataFormIndex[n['name']] = n['value'];
+    });
+    if ($('#service_id').val() == 2) {
+
+        var accountArr = $('#account').val().split(',');
+
+        dataFormIndex['account'] = accountArr[0];
+        dataFormIndex['account_name'] = accountArr[1];
+
+    }
+
     $.ajax({
         type: 'POST',
         url: 'loads/payByWallet.php?action=pay',
-        data: $('#service_form').serialize(),
+        data: $.param(dataFormIndex),
         dataType: 'json',
         success: function (json) {
 

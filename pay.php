@@ -343,11 +343,11 @@ include 'includes/header.php';
 
                                                     <?php } else { ?>
 
-                                                        <div class="form-group text-left"><label for="<?=$key ?>"><?=$paramName ?></label>
+                                                        <div class="form-group text-left"><label for="<?=$key ?>" style="display: block"><?=$paramName ?></label>
                                                             <select class="input select2-container select2me" name="<?=$key ?>" id="<?=$key ?>">
 
                                                                 <?php foreach ($value as $key => $value) { ?>
-                                                                    <option value="<?=$value['account'] ?>"><?=$value['name'] ?></option>
+                                                                    <option value="<?=$value['account'] ?>,<?=$value['name'] ?>"><?=$value['name'] ?></option>
                                                                 <?php } ?>
 
                                                             </select>
@@ -459,7 +459,7 @@ include 'includes/header.php';
                                 <input name="client_commission_fixed" type="hidden" id="client_commission_fixed" value="<?=$service['commission']['client_commission_fixed'] ?>" disabled>
                                 <input name="min_client_commission" type="hidden" id="min_client_commission" value="<?=$service['commission']['min_client_commission'] ?>" disabled>
                                 <input name="rate" type="hidden" id="rate" value="<?=$service['commission']['rate'] ?>" disabled>
-                                <input name="rate_percent" type="hidden" id="rate_percent" value="<?=$service['commission']['rate_percent'] ?>" disabled>
+                                <input name="rate_percent" type="hidden" id="rate_percent" value="<?=@$service['commission']['rate_percent'] ?>" disabled>
                                 <input name="step" type="hidden" value="<?=$step ?>">
                                 <div class="form-group text-right">
                                     <br>
