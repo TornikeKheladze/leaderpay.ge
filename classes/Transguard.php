@@ -28,12 +28,14 @@ class Transguard {
      */
     public function check(): array {
 
-        $request = $this->request();
+        //$request = $this->request();
 
         $json = [
             'errorCode' => 100,
             'errorMessage' => 'წარმატებული',
         ];
+
+        return $json;
 
         if (isset($request->status)) {
 
