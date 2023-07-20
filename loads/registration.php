@@ -1,7 +1,7 @@
 <?php
 
 
-    die();
+    //die();
 
     require '../classes/static.php';
 
