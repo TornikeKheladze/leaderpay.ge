@@ -22,35 +22,42 @@
     <hr>
     <div class="row">
         <div class="col-md-12">
-            <?php foreach($cards as $c) {
-                $expiry_year = substr( $c['expiry'], 0, 2);
-                $expiry_year = "20$expiry_year";
-                $expiry_month = substr( $c['expiry'], 2, 2);
-                $expiry = "$expiry_year-$expiry_month";
-                $current_y_m = date('Y-m');
+            <?php if ($cards != false) {
 
-                ?>
+                foreach($cards as $c) {
+                    $expiry_year = substr( $c['expiry'], 0, 2);
+                    $expiry_year = "20$expiry_year";
+                    $expiry_month = substr( $c['expiry'], 2, 2);
+                    $expiry = "$expiry_year-$expiry_month";
+                    $current_y_m = date('Y-m');
 
-                <div class="card-item">
+                    ?>
 
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="t"><?=$c['type'] ?></div>
-                            <div class="n"><span class="card_n"><?=$c['name'] ?></span> მოქმედების ვადა</div>
-                            <div class="d <?=($current_y_m > $expiry) ? 'e' : '' ?>"><?=$expiry ?></div>
+                    <div class="card-item">
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="t"><?=$c['type'] ?></div>
+                                <div class="n"><span class="card_n"><?=$c['name'] ?></span> მოქმედების ვადა</div>
+                                <div class="d <?=($current_y_m > $expiry) ? 'e' : '' ?>"><?=$expiry ?></div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <form action="" method="post" class="withdraw-form">
+                                    <input type="hidden" name="card_id" value="<?=$c['card_id'] ?>">
+                                    <input type="text" name="amount" placeholder="თანხა" class="input float amount-in">
+                                    <input type="text" name="generated" placeholder="ჩამოგეჭრებათ" class="input float generated-in" readonly="readonly">
+                                    <button type="submit" class="g1-btn"><i class="fa fa-credit-card" aria-hidden="true"></i> <span><?=$lang['withdraw'] ?></span></button>
+                                    <button type="button" class="g1-btn s-btn" rel="<?=$c['card_id'] ?>"><i class="fa fa-times" aria-hidden="true"></i> <span><?=$lang['delete'] ?></span></button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <form action="" method="post" class="withdraw-form">
-                                <input type="hidden" name="card_id" value="<?=$c['card_id'] ?>">
-                                <input type="text" name="amount" placeholder="თანხა" class="input float amount-in">
-                                <input type="text" name="generated" placeholder="ჩამოგეჭრებათ" class="input float generated-in" readonly="readonly">
-                                <button type="submit" class="g1-btn"><i class="fa fa-credit-card" aria-hidden="true"></i> <span><?=$lang['withdraw'] ?></span></button>
-                                <button type="button" class="g1-btn s-btn" rel="<?=$c['card_id'] ?>"><i class="fa fa-times" aria-hidden="true"></i> <span><?=$lang['delete'] ?></span></button>
-                            </form>
-                        </div>
+
                     </div>
 
-                </div>
+                <?php } ?>
+            <?php } else { ?>
+
+                <div class="msg msg-danger">თქვენ არ გაქვთ დამახსოვრებული ბარათები!</div>
 
             <?php } ?>
 
