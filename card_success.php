@@ -2,6 +2,11 @@
 
     require_once('includes/head.php');
 
+    if ($db->check_auch() === false) {
+
+        die();
+    }
+
     // insert log
     $logParams = [
         'method' => 'SuccessRequest',

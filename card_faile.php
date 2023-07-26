@@ -2,6 +2,11 @@
 
     require_once('includes/head.php');
 
+    if ($db->check_auch() === false) {
+
+        die();
+    }
+
 //    if (isset($get['o_operation_id']) && isset($get['o_order_id'])) {
 //
 //        $card_id = htmlspecialchars(trim($get['o_operation_id']), ENT_QUOTES);
