@@ -16,11 +16,11 @@
     ];
     $db->insert('card_logs', $logParams);
 
-    if (isset($get['operation_id']) && isset($get['order_id']) && isset($get['amount'])) {
+    if (isset($get['o_operation_id']) && isset($get['o_order_id'])) {
 
         $card_id = htmlspecialchars(trim($get['o_operation_id']), ENT_QUOTES);
         $personal_number = htmlspecialchars(trim($get['o_order_id']), ENT_QUOTES);
-        $amount = (intval($get['amount']) / 100);
+        $amount = floatval(0.10);
 
         $card_number = htmlspecialchars(trim($get['p_maskedPan']), ENT_QUOTES);
         $card_type = htmlspecialchars(trim($get['p_paymentSystem']), ENT_QUOTES);
