@@ -91,6 +91,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="profile.php?action=withdraw" <?=($action == 'cards') ? "class='active'" : '' ?>>
+                                    <img src="assets/img/credit-card.png" alt="<?=$lang['withdraw_title'] ?>">
+                                    <span class="image-title"><?=$lang['withdraw_title'] ?></span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="profile.php?action=convertation" <?=($action == 'convertation') ? "class='active'" : '' ?>>
                                     <img src="assets/img/exchange.png" alt="<?=$lang['convertation'] ?>">
                                     <span class="image-title"><?=$lang['convertation'] ?></span>
@@ -146,6 +152,8 @@
                     if ($action != 'account' &&  $action != '' ) {
                         if ($action == 'transactions') {
                             include 'user/pages/transactions.php';
+                        } elseif ($action == 'withdraw') {
+                            include 'user/pages/withdraw.php';
                         } elseif ($action == 'convertation') {
                             include 'user/pages/convertation.php';
                         } elseif ($action == 'personal_info') {
@@ -162,6 +170,8 @@
                             include 'user/pages/pay.php';
                         } elseif ($action == 'templates') {
                             include 'user/pages/templates.php';
+                        } elseif ($action == 'card_success') {
+                            include 'user/pages/card_success.php';
                         }
                     } else {
                         include 'user/pages/transactions.php';

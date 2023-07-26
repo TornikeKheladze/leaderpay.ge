@@ -292,3 +292,6 @@ div.dataTables_length select {
 	font-size: 15px;
 	padding: 25px 0 0 0 !important;
 }
+select {
+	font-size: 10px !important;
+}

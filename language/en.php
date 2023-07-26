@@ -256,6 +256,11 @@
         'convertation' => 'currency exchange',
         'from' => 'From',
         'exchange' => 'Exchange',
+        'withdraw_title' => 'Withdraw money to the card',
+        'add_new_card' => 'Add a new card',
+        'withdraw' => 'Withdraw',
+        'delete_question' => 'Do you really want to cancel?',
+        'delete_success' => 'Deleted successfully',
 
     ];
 
