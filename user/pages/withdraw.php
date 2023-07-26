@@ -1,4 +1,5 @@
 <?php
+    die();
     $cards = $db->get_unlimited_list('cards', "is_deleted = '0' AND status_id = '1' AND personal_number = '$username'", 'created_at', 'DESC');
 
     $operationsPercent = $db->get_date('card_operations_percents', "id = '1'");
