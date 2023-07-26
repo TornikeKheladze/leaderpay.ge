@@ -2,21 +2,21 @@
 
     require_once('includes/head.php');
 
-    if (isset($get['o_operation_id']) && isset($get['o_order_id'])) {
-
-        $card_id = htmlspecialchars(trim($get['o_operation_id']), ENT_QUOTES);
-        $personal_number = htmlspecialchars(trim($get['o_order_id']), ENT_QUOTES);
-
-    } else {
-
-        die();
-    }
-
-    $card = $db->get_date('cards', "card_id = '$card_id' AND personal_number = '$personal_number'");
-
-    if ($card == false) {
-        die();
-    }
+//    if (isset($get['o_operation_id']) && isset($get['o_order_id'])) {
+//
+//        $card_id = htmlspecialchars(trim($get['o_operation_id']), ENT_QUOTES);
+//        $personal_number = htmlspecialchars(trim($get['o_order_id']), ENT_QUOTES);
+//
+//    } else {
+//
+//        die();
+//    }
+//
+//    $card = $db->get_date('cards', "card_id = '$card_id' AND personal_number = '$personal_number'");
+//
+//    if ($card == false) {
+//        die();
+//    }
 
     $lng = strtoupper($lang_id);
     $page_title = 'ოპერაცია ვერ შესრულდა';
