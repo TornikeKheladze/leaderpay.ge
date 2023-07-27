@@ -49,6 +49,7 @@
             'commision' => 0,
             'currency' => 981,
             'status_id' => 2,
+            'performed_at' => $currentDate,
         ];
         $operationId = $db->insert('card_operations', $operationParams);
 

@@ -308,34 +308,6 @@
         });
     });
 
-    $(document).on('click', '.s-btn', function(e) {
-
-        if (confirm('<?=$lang['delete_question'] ?>')) {
-
-            var card_id = $(this).attr('rel');
-
-            $.ajax({
-                type: 'POST',
-                url: 'loads/withdraw.php?action=deleteCard',
-                data: {card_id: card_id},
-                dataType: 'json',
-                success: function(data) {
-                    if (data.errorCode == 1) {
-
-                        $(".s-btn[rel='" + card_id +"']").closest('.card-item').remove();
-                        $('.loads').html('<div class="msg msg-succses" role="alert"><?=$lang['delete_success'] ?></div>');
-                    } else {
-
-                        $('.loads').html('<div class="msg msg-error" role="alert">' + data.errorMessage + '</div>');
-                    }
-                }
-
-            });
-
-        }
-
-    });
-
     $('.confirm-form').submit(function(e) {
         e.preventDefault();
 
