@@ -4,6 +4,7 @@ class Sda {
 
     private $url = 'https://api.apw.ge/sda/';
     private $secret = 'HUm6V8aTWtCFPNFQ';
+    private $type = 1;
     private $body = [];
     public $Database;
 
@@ -18,6 +19,7 @@ class Sda {
         $hash = hash('sha256', md5($personal_number . $this->secret));
 
         $this->body = [
+            'type' => $this->type,
             'PrivateNumber' => $personal_number,
             'Number' => $document_number,
             'hash' => $hash,
