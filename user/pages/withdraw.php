@@ -1,5 +1,4 @@
 <?php
-    die();
     $cards = $db->get_unlimited_list('cards', "is_deleted = '0' AND status_id = '1' AND personal_number = '$username'", 'created_at', 'DESC');
 
     $operationsPercent = $db->get_date('card_operations_percents', "id = '1'");
@@ -235,7 +234,7 @@
     });
     $(document).on('click', '.add_new_card', function(e) {
 
-        window.location.replace("http://127.0.0.1/leaderpay.ge/loads/withdraw.php?action=addNewCard");
+        window.location.replace("https://leaderpay.ge/loads/withdraw.php?action=addNewCard");
 
     });
 

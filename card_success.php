@@ -4,7 +4,7 @@
 
     if ($db->check_auch() === false) {
 
-        die();
+        header('Location: https://leaderpay.ge');
     }
 
     // insert log

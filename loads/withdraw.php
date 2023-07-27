@@ -170,7 +170,7 @@
             'text' => "leaderpay.ge withdraw confirm code: $code",
         ];
 
-        //$bulkSms->Send($smsParams);
+        $bulkSms->Send($smsParams);
 
         $db->getSql("UPDATE `cards` SET `sms` = '$code', `updated_at` = '$current_date' WHERE `card_id` = '$card_id' AND `personal_number` = '$username'");
 
