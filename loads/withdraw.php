@@ -257,8 +257,11 @@
             'commision' => $commision,
             'currency' => 981,
             'status_id' => 2,
+            'performed_at' => $current_date,
         ];
-        var_dump($operationParams);
+        $operationId = $db->insert('card_operations', ['personal_number' => $username, 'card_id' => $card_id]);
+
+        var_dump($operationId);
         die();
 
         $cardResult = $Card->Pay($card_id, $username, $amount);
