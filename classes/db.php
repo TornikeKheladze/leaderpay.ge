@@ -272,8 +272,8 @@
 
           return $last_id;
       } else {
-          //return false;
-          return $sth->errorInfo();
+          return false;
+          //return $sth->errorInfo();
       }
     }
 
