@@ -195,13 +195,6 @@
         $sms = floatval($post['sms']);
         $current_date = $db->get_current_date();
 
-        $json = [
-            'errorCode' => 1,
-            'errorMessage' => 'წარმატებული!',
-        ];
-        echo json_encode($json);
-        die();
-
         // chek sms
         $card = $db->get_date('cards', "card_id = '$card_id' AND personal_number = '$username' AND sms = '$sms'");
         if (!$card) {
