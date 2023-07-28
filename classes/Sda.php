@@ -4,7 +4,7 @@ class Sda {
 
     private $url = 'https://api.apw.ge/sda/';
     private $secret = 'HUm6V8aTWtCFPNFQ';
-    private $type = 1;
+    private $type = 'online';
     private $body = [];
     public $Database;
 

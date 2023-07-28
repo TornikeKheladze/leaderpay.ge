@@ -54,7 +54,7 @@ class Card {
 
         $amount = (int) round($amount * 100);
 
-        $this->method = 'pay';
+        $this->method = 'depositing-pay';
 
         $this->post = [
             'operation_id' => $operation_id,
@@ -94,7 +94,7 @@ class Card {
         $post['hash'] = $this->generateHesh($post['id']);
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url);
+        curl_setopt($ch, CURLOPT_URL, $this->url . '/' . $this->method);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
