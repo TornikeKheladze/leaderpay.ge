@@ -249,9 +249,7 @@
 
         }
 
-        $cardAmount = (int) round($amount * 100);
-
-        $cardResult = $Card->Pay($card_id, $username, $cardAmount);
+        $cardResult = $Card->Pay($card_id, $username, $amount);
 
         if ($cardResult->result->status == 'SUCCESS') {
 
