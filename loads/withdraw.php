@@ -251,7 +251,7 @@
 
         $cardResult = $Card->Pay($card_id, $username, $amount);
 
-        if ($cardResult->result->status == 'SUCCESS') {
+        if ($cardResult->data->object->result->status == 'SUCCESS') {
 
             $operationParams = [
                 'type_id' => 2,
