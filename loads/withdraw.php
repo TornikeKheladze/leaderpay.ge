@@ -249,6 +249,18 @@
 
         }
 
+        $operationParams = [
+            'type_id' => 2,
+            'card_id' => $card['id'],
+            'wallet_number' => $username,
+            'amount' => $amount,
+            'commision' => $commision,
+            'currency' => 981,
+            'status_id' => 2,
+        ];
+        var_dump($operationParams);
+        die();
+
         $cardResult = $Card->Pay($card_id, $username, $amount);
 
         if ($cardResult->data->object->result->status == 'SUCCESS') {
@@ -262,6 +274,7 @@
                 'currency' => 981,
                 'status_id' => 2,
             ];
+
 
             $operationId = $db->insert('card_operations', ['personal_number' => $username, 'card_id' => $card_id]);
 

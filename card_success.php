@@ -26,6 +26,8 @@
         $card_type = htmlspecialchars(trim($get['p_paymentSystem']), ENT_QUOTES);
         $card_expiry = htmlspecialchars(trim($get['p_expiry']), ENT_QUOTES);
 
+        $card_status = htmlspecialchars(trim($get['card_id']), ENT_QUOTES);
+
     } else {
 
         die();
@@ -38,8 +40,11 @@
 
         $currentDate = $db->get_current_date();
 
-        $db->update('cards', ['type' => $card_type, 'name' => $card_number, 'expiry' => $card_expiry, 'status_id' => 1, 'updated_at' => $currentDate], $card['id']);
+        if ($card_status == 1) {
 
+            $db->update('cards', ['type' => $card_type, 'name' => $card_number, 'expiry' => $card_expiry, 'status_id' => 1, 'updated_at' => $currentDate], $card['id']);
+
+        }
         // insert operation
         $operationParams = [
             'type_id' => 1,
@@ -107,7 +112,13 @@
 
                     <div style="padding: 20px; max-width: 400px; margin: 0 auto; border: 1px solid #f3f3f3;">
                         <img src="assets/img/success.png" alt="">
-                        <h5>წარმატებით დასრულდა</h5>
+                        <h5>
+                            <?php if ($card_status == 1) { ?>
+                                წარმატებით დასრულდა
+                            <?php } else { ?>
+                                ბარათის დამახსოვრება ვერ მოხერხდა რადგან არ მონიშნეთ შესაბამისი ველი
+                            <?php } ?>
+                        </h5>
                         <hr>
                         <a href="profile.php?action=withdraw" class="g1-btn"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> უკან დაბრუნება</a>
                     </div>
