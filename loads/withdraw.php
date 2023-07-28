@@ -172,7 +172,7 @@
 
         $bulkSms->Send($smsParams);
 
-        $db->getSql("UPDATE `cards` SET `sms` = '$code', `updated_at` = '$current_date' WHERE `card_id` = '$card_id' AND `personal_number` = '$username'");
+        $db->getSql("UPDATE `cards` SET `sms` = '$code', `updated_at` = '$current_date', `sended_at` = '$current_date' WHERE `card_id` = '$card_id' AND `personal_number` = '$username'");
 
         $json = [
             'errorCode' => 1,
@@ -202,6 +202,21 @@
             $json = [
                 'errorCode' => 10,
                 'errorMessage' => 'sms-კოდი არასწორია!',
+            ];
+            echo json_encode($json);
+            die();
+
+        }
+
+        $sendDate = strtotime($card['sended_at']);
+        $formatDate = $sendDate + (20 * 1);
+        $formatDate = date('Y-m-d H:i:s', $formatDate);
+
+        if ($formatDate < $current_date) {
+
+            $json = [
+                'errorCode' => 9,
+                'errorMessage' => 'sms-კოდი ვადაგასულია!',
             ];
             echo json_encode($json);
             die();
