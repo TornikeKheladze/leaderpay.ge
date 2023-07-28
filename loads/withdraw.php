@@ -209,7 +209,7 @@
         }
 
         $sendDate = strtotime($card['sended_at']);
-        $formatDate = $sendDate + (20 * 1);
+        $formatDate = $sendDate + (60 * 1);
         $formatDate = date('Y-m-d H:i:s', $formatDate);
 
         if ($formatDate < $current_date) {

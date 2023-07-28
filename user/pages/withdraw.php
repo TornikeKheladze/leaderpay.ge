@@ -168,6 +168,24 @@
     </div>
 </div>
 
+<div class="modal fade" id="confirm_add_new_card" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="text-align: center">ბარათის მიბმა
+                    <button type="button" style="border: none;background: transparent;float: right;" data-dismiss="modal"><i style="font-size: 2em;color: #e71f1f;" class="fa fa-times-circle" aria-hidden="true"></i></button>
+                </h5>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p style="font-size: 12px; padding: 0 10px 10px 10px; color: #d55050;">ყურადღება პროვაიდერი ბანკის გვერდზე ბარათის მონაცეწმების შეყვანის დროს აუცილებლად მიუთითეთ ბარათის დამახსოვრება წინააღმდეგ შემთხვევაში ბარათის დამატება ვერ მოხვდება</p>
+                <button type="submit" class="g1-btn confirm_add_new_card" style="padding: 10px !important">
+                    <span>გაგრძელება</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- datatable-->
 <script type="text/javascript" src="assets/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
@@ -235,6 +253,12 @@
 
     });
     $(document).on('click', '.add_new_card', function(e) {
+
+        $('#confirm_add_new_card').modal('show');
+
+    });
+
+    $(document).on('click', '.confirm_add_new_card', function(e) {
 
         window.location.replace("https://leaderpay.ge/loads/withdraw.php?action=addNewCard");
 
