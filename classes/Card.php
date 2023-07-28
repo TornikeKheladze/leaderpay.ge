@@ -103,7 +103,7 @@ class Card {
         $result = curl_exec($ch);
         curl_close ($ch);
 
-        $resultObj = json_decode($result, false);
+        $resultObj = json_decode($result, true);
 
         // insert log
         $params = [
