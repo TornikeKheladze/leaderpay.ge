@@ -251,15 +251,15 @@
 
         $cardResult = $Card->Pay($card_id, $username, $amount);
 
-        var_dump($cardResult);
-        echo '<hr>';
-        var_dump($cardResult->data);
-        echo '<hr>';
-        var_dump($cardResult->data->object);
-        echo '<hr>';
-        var_dump($cardResult->data->object->result);
-        echo '<hr>';
-        var_dump($cardResult->data->object->result->status);
+//        var_dump($cardResult);
+//        echo '<hr>';
+//        var_dump($cardResult->data);
+//        echo '<hr>';
+//        var_dump($cardResult->data->object);
+//        echo '<hr>';
+//        var_dump($cardResult->data->object->result);
+//        echo '<hr>';
+//        var_dump($cardResult->data->object->result->status);
 
         if ($cardResult->data->object->result->status == 'SUCCESS') {
 

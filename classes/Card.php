@@ -64,7 +64,7 @@ class Card {
             'amount' => $amount
         ];
 
-        $request = $this->request();
+        return $this->request();
 
     }
 
