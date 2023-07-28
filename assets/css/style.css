@@ -5561,3 +5561,17 @@ select.input {
 .card-item .er {
   border: 1px solid #f30505;
 }
+.confirm-form .timer {
+  font-size: 1.2em;
+  color: #fff;
+  position: absolute;
+  top: 1px;
+  right: 4px;
+  width: 32px;
+  height: 32px;
+  background: #44b6ae;
+  border-radius: 25px !important;
+  text-align: center;
+  line-height: 30px;
+  border: 2px solid #fff;
+}

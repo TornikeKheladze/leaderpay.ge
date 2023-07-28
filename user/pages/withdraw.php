@@ -154,6 +154,7 @@
                                 <div class="form-group">
                                     <label for="code">SMS-ით მიღებული კოდი</label>
                                     <input onkeypress="return isIntKey(event);" data-rule-required="true" maxlength="6" minlength="6" type="txt" id="sms_code" class="gen_code input" autocomplete="off">
+                                    <span class="timer">99</span>
                                 </div>
                             </li>
                         </ul>
@@ -297,8 +298,10 @@
                     $('#f_card_id').val(data.data.card_id);
                     $('#f_amount').val(amount);
 
-
                     $('#withdraw').modal('show');
+
+                    $('.timer').show();
+                    timer();
 
                 } else {
                     $('.loads').html('<div class="msg msg-error" role="alert">' + data.errorMessage + '</div>');
@@ -347,4 +350,15 @@
         });
 
     });
+
+    function timer() {
+        var sec = 59;
+        setInterval(function() {
+            $('.timer').html(sec);
+            sec--;
+            if (sec == 00) {
+                window.location.replace('profile.php?action=withdraw');
+            }
+        }, 1000);
+    }
 </script>
