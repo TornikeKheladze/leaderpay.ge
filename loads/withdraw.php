@@ -251,21 +251,11 @@
 
         $cardResult = $Card->Pay($card_id, $username, $amount);
 
-//        var_dump($cardResult);
-//        echo '<hr>';
-//        var_dump($cardResult->data);
-//        echo '<hr>';
-//        var_dump($cardResult->data->object);
-//        echo '<hr>';
-//        var_dump($cardResult->data->object->result);
-//        echo '<hr>';
-//        var_dump($cardResult->data->object->result->status);
-
         if ($cardResult->data->object->result->status == 'SUCCESS') {
 
             $operationParams = [
                 'type_id' => 2,
-                'card_id' => $card_id,
+                'card_id' => $card['id'],
                 'wallet_number' => $username,
                 'amount' => $amount,
                 'commision' => $commision,
