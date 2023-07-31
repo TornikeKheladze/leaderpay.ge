@@ -160,6 +160,18 @@
 
         }
 
+        // check user limites
+        $checkLimit = $Limit->Check($username, $amount + $commision);
+        if ($checkLimit['errorCode']  != 1) {
+
+            $json = [
+                'errorCode' => 10,
+                'errorMessage' => $checkLimit['errorMessage'],
+            ];
+            echo json_encode($json);
+            die();
+        }
+
         $code = $bulkSms->generateCode();
 
         $mobile = ltrim($user['mobile'],'+');
