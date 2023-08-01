@@ -1,8 +1,5 @@
 <?php
 
-
-    die();
-
     require '../classes/static.php';
 
     $cookie = new cookie();
@@ -40,6 +37,7 @@
     require '../classes/Upload.php';
     require '../classes/Risk.php';
     require '../classes/Payway.php';
+    require '../classes/Transguard.php';
     require '../classes/Sda.php';
 
     $db = new db();
@@ -49,6 +47,7 @@
     $Sda = new Sda($db);
 
     $Payway = new Payway($db, 'WalletRegistration');
+    $Transguard = new Transguard($db, 'WalletRegistration');
 
     if (isset($post['step']) && $post['step'] == 1) {
 
@@ -329,6 +328,7 @@
                 'verified_at' => date('Y-m-d H:i:s'),
                 'confirmation' => 1,
                 'verify_id' => 3,
+                'verify_type' => 1,
                 'selfie' => $self,
                 'pep_status' => $pep_status,
                 'pep' => $pep,
@@ -383,15 +383,41 @@
         }
 
         //payway
-        $paywayPost = [
+//        $paywayPost = [
+//            'first_name' => $first_name,
+//            'last_name' => $last_name,
+//            'personal_no' => $personal_number,
+//            'mobile' => $mobile,
+//        ];
+//
+//        $Payway->post = $paywayPost;
+//        $paywayCheck = $Payway->check();
+
+        $transPost = [
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'personal_no' => $personal_number,
-            'mobile' => $mobile,
+            'resident' =>  substr_replace($result['person']['citizenship'], '', -1),
+            'document_id' => (substr_replace($result['person']['citizenship'], '', -1) == 'GE') ? $personal_number : $document_number,
+            'passport_id' => $document_number,
+            //'legal_address' => '',
+            'actual_address' => $real_address,
+            'birth_date' => date('Y-m-d', strtotime($result['person']['birthday'])),
         ];
+        $Transguard->post = $transPost;
+        $transCheck = $Transguard->check();
 
-        $Payway->post = $paywayPost;
-        $paywayCheck = $Payway->check();
+        if ($transCheck['errorCode'] != 100) {
+
+            $json = [
+                'errorCode' => 7,
+                'errorMessage' => $transCheck['errorMessage']
+            ];
+
+            $db->insert('registration_logs', ['method' => 'registration', 'step' => 2, 'request' => json_encode($post, JSON_UNESCAPED_UNICODE), 'response' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+            echo json_encode($json);
+            die();
+
+        }
 
         $json = [
             'errorCode' => 10,

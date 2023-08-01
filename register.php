@@ -27,9 +27,9 @@
                     <span class="t r"><?=$lang['sing_up'] ?></span>
                 </h3>
 
-                <div class="msg msg-danger">რეგისტრაცია დროებით გათიშულია!</div>
+<!--                <div class="msg msg-danger">რეგისტრაცია დროებით გათიშულია!</div>-->
 
-                <form action="" method="post" autocomplete="off" id="registracion_form" style="display:none;">
+                <form action="" method="post" autocomplete="off" id="registracion_form">
 
                     <div class="reg_loader" style="display: none">
                         <span class="helper"></span>
