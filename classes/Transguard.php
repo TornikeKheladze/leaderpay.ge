@@ -37,18 +37,18 @@ class Transguard {
         if (isset($request->status)) {
 
             if ($request->status != 'ALLOW' || $request->status != 'ALLOW_PEP') {
-//                $json = [
-//                    'errorCode' => 98,
-//                    'errorMessage' => 'მიმდინარეობს მომხმარებლის გადამოწმება გთხოვთ სცადოთ მოგვიანებთ ან დაუკავშირდით “ოლლ ფეი ვეის“',
-//                ];
+                $json = [
+                    'errorCode' => 98,
+                    'errorMessage' => 'მიმდინარეობს მომხმარებლის გადამოწმება გთხოვთ სცადოთ მოგვიანებთ ან დაუკავშირდით “ოლლ ფეი ვეის“',
+                ];
             }
 
         } else {
 
-//            $json = [
-//                'errorCode' => 99,
-//                'errorMessage' => 'ტექნიკური შეფერხება მომხმარებლის გადამოწმების დროს',
-//            ];
+            $json = [
+                'errorCode' => 99,
+                'errorMessage' => 'ტექნიკური შეფერხება მომხმარებლის გადამოწმების დროს',
+            ];
 
         }
 

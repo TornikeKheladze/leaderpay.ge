@@ -76,19 +76,19 @@
         'actual_address' => $user['real_address'],
         'birth_date' => $user['birth_date'],
     ];
-    $Transguard->post = $transPost;
-    $transCheck = $Transguard->check();
-
-    if ($transCheck['errorCode'] != 100) {
-
-        $json = [
-            'errorCode' => 0,
-            'errorMessage' => $transCheck['errorMessage']
-        ];
-        echo json_encode($json);
-        die();
-
-    }
+//    $Transguard->post = $transPost;
+//    $transCheck = $Transguard->check();
+//
+//    if ($transCheck['errorCode'] != 100) {
+//
+//        $json = [
+//            'errorCode' => 0,
+//            'errorMessage' => $transCheck['errorMessage']
+//        ];
+//        echo json_encode($json);
+//        die();
+//
+//    }
 
     if (isset($get['action']) && $get['action'] == 'pay') {
 
