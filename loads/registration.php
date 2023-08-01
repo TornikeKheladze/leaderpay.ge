@@ -1,5 +1,6 @@
 <?php
 
+die();
     require '../classes/static.php';
 
     $cookie = new cookie();

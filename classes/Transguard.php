@@ -30,13 +30,16 @@ class Transguard {
 
         $request = $this->request();
 
-        $json = [
-            'errorCode' => 100,
-            'errorMessage' => 'წარმატებული',
-        ];
         if (isset($request->status)) {
 
-            if ($request->status != 'ALLOW' || $request->status != 'ALLOW_PEP') {
+            if ($request->status == 'ALLOW' || $request->status == 'ALLOW_PEP') {
+
+                $json = [
+                    'errorCode' => 100,
+                    'errorMessage' => 'წარმატებული',
+                ];
+
+            } else {
                 $json = [
                     'errorCode' => 98,
                     'errorMessage' => 'მიმდინარეობს მომხმარებლის გადამოწმება გთხოვთ სცადოთ მოგვიანებთ ან დაუკავშირდით “ოლლ ფეი ვეის“',
