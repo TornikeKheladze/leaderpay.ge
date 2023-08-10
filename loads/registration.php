@@ -37,7 +37,7 @@ die();
     require '../classes/Identomat.php';
     require '../classes/Upload.php';
     require '../classes/Risk.php';
-    require '../classes/Payway.php';
+    //require '../classes/Payway.php';
     require '../classes/Transguard.php';
     require '../classes/Sda.php';
 
@@ -47,7 +47,7 @@ die();
     $Risk = new Risk();
     $Sda = new Sda($db);
 
-    $Payway = new Payway($db, 'WalletRegistration');
+    //$Payway = new Payway($db, 'WalletRegistration');
     $Transguard = new Transguard($db, 'WalletRegistration');
 
     if (isset($post['step']) && $post['step'] == 1) {
