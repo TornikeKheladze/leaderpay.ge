@@ -5,16 +5,16 @@
     require '../classes/bulkSms.php';
     require '../classes/Limit.php';
     require '../classes/Risk.php';
-    //require '../classes/Transguard.php';
-    require '../classes/Payway.php';
+    require '../classes/Transguard.php';
+    //require '../classes/Payway.php';
 
     $db = new db();
     $Billing = new Billing($db, 'Wallet');
     $bulkSms = new bulkSms();
     $Limit = new Limit($db);
     $Risk = new Risk();
-    $Payway = new Payway($db, 'WalletRegistration');
-    //$Transguard = new Transguard($db, 'PayServiceByWallet');
+    //$Payway = new Payway($db, 'WalletRegistration');
+    $Transguard = new Transguard($db, 'PayServiceByWallet');
 
     // check auch
     if ($db->check_auch() === false) {
@@ -69,49 +69,47 @@
     }
 
     // payway
-    $paywayPost = [
-        'first_name' => $user['first_name'],
-        'last_name' => $user['last_name'],
-        'personal_no' => $user['personal_number'],
-    ];
-
-    $Payway->post = $paywayPost;
-    $paywayCheck = $Payway->check();
-
-    if ($paywayCheck['errorCode'] != 100) {
-
-        $json = [
-            'errorCode' => 0,
-            'errorMessage' => $paywayCheck['errorMessage']
-        ];
-        echo json_encode($json);
-        die();
-
-    }
-
-//    $transPost = [
+//    $paywayPost = [
 //        'first_name' => $user['first_name'],
 //        'last_name' => $user['last_name'],
-//        'resident' => $user['country'],
-//        'document_id' => ($user['country'] == 'GE') ? $user['personal_number'] : $user_document_number['document_number'],
-//        'passport_id' => $user_document_number['document_number'],
-//        'legal_address' => $user['legal_address'],
-//        'actual_address' => $user['real_address'],
-//        'birth_date' => $user['birth_date'],
+//        'personal_no' => $user['personal_number'],
 //    ];
-//    $Transguard->post = $transPost;
-//    $transCheck = $Transguard->check();
 //
-//    if ($transCheck['errorCode'] != 100) {
+//    $Payway->post = $paywayPost;
+//    $paywayCheck = $Payway->check();
+//
+//    if ($paywayCheck['errorCode'] != 100) {
 //
 //        $json = [
 //            'errorCode' => 0,
-//            'errorMessage' => $transCheck['errorMessage']
+//            'errorMessage' => $paywayCheck['errorMessage']
 //        ];
 //        echo json_encode($json);
 //        die();
 //
 //    }
+
+    $transPost = [
+        'first_name' => $user['first_name'],
+        'last_name' => $user['last_name'],
+        'resident' => $user['country'],
+        'document_id' => ($user['country'] == 'GE') ? $user['personal_number'] : $user_document_number['document_number'],
+        'passport_id' => $user_document_number['document_number'],
+        'birth_date' => $user['birth_date'],
+    ];
+    $Transguard->post = $transPost;
+    $transCheck = $Transguard->check();
+
+    if ($transCheck['errorCode'] != 100) {
+
+        $json = [
+            'errorCode' => 0,
+            'errorMessage' => $transCheck['errorMessage']
+        ];
+        echo json_encode($json);
+        die();
+
+    }
 
     if (isset($get['action']) && $get['action'] == 'pay') {
 
