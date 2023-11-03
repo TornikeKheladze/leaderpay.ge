@@ -261,6 +261,7 @@
         'withdraw' => 'Withdraw',
         'delete_question' => 'Do you really want to cancel?',
         'delete_success' => 'Deleted successfully',
+        'qr_title' => 'QR cash out',
 
     ];
 

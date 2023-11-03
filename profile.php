@@ -97,6 +97,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="profile.php?action=qr" <?=($action == 'qr') ? "class='active'" : '' ?>>
+                                    <img src="assets/img/qr-code.png" alt="<?=$lang['qr_title'] ?>">
+                                    <span class="image-title"><?=$lang['qr_title'] ?></span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="profile.php?action=convertation" <?=($action == 'convertation') ? "class='active'" : '' ?>>
                                     <img src="assets/img/exchange.png" alt="<?=$lang['convertation'] ?>">
                                     <span class="image-title"><?=$lang['convertation'] ?></span>
@@ -154,6 +160,8 @@
                             include 'user/pages/transactions.php';
                         } elseif ($action == 'withdraw') {
                             include 'user/pages/withdraw.php';
+                        } elseif ($action == 'qr') {
+                            include 'user/pages/qr.php';
                         } elseif ($action == 'convertation') {
                             include 'user/pages/convertation.php';
                         } elseif ($action == 'personal_info') {
