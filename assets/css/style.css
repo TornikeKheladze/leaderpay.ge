@@ -3853,7 +3853,7 @@ select.input {
   font-family: Arial;
 }
 .text {
-  text-align: center;
+  /*text-align: center;*/
 }
 .text .post-des {
   color: #828282;
