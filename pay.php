@@ -267,7 +267,7 @@ include 'includes/header.php';
 
                                         $info = $Billing->info($info_params);
 
-                                        if ($info['errorCode'] != 1000) { ?>
+                                        if (@$info['errorCode'] != 1000) { ?>
 
                                             <?php if (isset($info['errorCode'])) { ?>
                                                 <div class="msg msg-error" role="alert"><?=$info['errorMessage'] ?></div>
