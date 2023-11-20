@@ -16,6 +16,8 @@
     //$Payway = new Payway($db, 'WalletRegistration');
     $Transguard = new Transguard($db, 'PayServiceByWallet');
 
+    $currency_id = 981;
+
     // check auch
     if ($db->check_auch() === false) {
 
@@ -172,7 +174,7 @@
         $unicdate = $sec . $usec;
 
         // balance
-        $balance = $db->getSql("SELECT SUM(credit) - SUM(debt) AS balance FROM `user_balance_history` WHERE `personal_number` = '$personal_number'");
+        $balance = $db->getSql("SELECT SUM(credit) - SUM(debt) AS balance FROM `user_balance_history` WHERE `personal_number` = '$personal_number' AND currency_id = '$currency_id'");
         $balance = $balance['balance'];
         if ($amount > $balance) {
 
@@ -186,7 +188,7 @@
         }
 
         // check user limites
-        $checkLimit = $Limit->Check($user['wallet_number'], floatval($post['generated']));
+        $checkLimit = $Limit->Check($user['wallet_number'], floatval($post['generated']), $currency_id);
         if ($checkLimit['errorCode']  != 1) {
 
             $json = [
@@ -295,7 +297,7 @@
             'agent_comision' => $pay['accoutant']['agentBenefit'],
             'agent_benefit' => $pay['accoutant']['agentCommission'],
             'client_comision' => $pay['accoutant']['clientCommission'],
-            'currency' => 981,
+            'currency' => $currency_id,
             'status_id' => $pay['status']['id'],
             'cron' => 0,
             'created_at' => $date,
@@ -309,6 +311,7 @@
             'operation_id' => $payment_id,
             'credit' => 0,
             'debt' => $amount,
+            'currency_id' => $currency_id,
             'type_id' => 4,
             'date' => $date,
             'unicdate' => $unicdate,
