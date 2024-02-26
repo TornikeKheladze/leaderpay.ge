@@ -1,16 +1,41 @@
 stages:
-  - deploy
+  - git_pull
+  - build_and_deploy
 
-deploy_to_production:
-  stage: deploy
+variables:
+  APP_DIR: "/var/www/leaderpay.ge"
+  BRANCH_NAME: master
+  TAG_NAME: leaderpay.ge
+
+git_pull:
+  stage: git_pull
 
   tags:
-    - leaderpay.ge
+    - $TAG_NAME
  
   script:
-    - cd "/var/www/apw_hosts/leaderpay.ge"
+    - cd "$APP_DIR"
+    - git checkout $BRANCH_NAME
     - git pull
+    - echo "Master Branch Pull"
+
+  only:
+    variables:
+      - $CI_COMMIT_BRANCH == $BRANCH_NAME
+
+
+build_and_deploy:
+  stage: build_and_deploy
+
+  tags:
+    - $TAG_NAME
+ 
+  script:
+    - echo "Project Dir $APP_DIR"
+    - docker run --rm -v "$APP_DIR:/app" -w /app node:18-alpine npm install --force
+    - docker run --rm -v "$APP_DIR:/app" -w /app node:18-alpine npm run build --force
     - echo "Master Branch Deployed"
 
   only:
-    - master
+    variables:
+      - $CI_COMMIT_BRANCH == $BRANCH_NAME
