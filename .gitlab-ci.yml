@@ -1,41 +1,48 @@
-stages:
-  - git_pull
-  - build_and_deploy
-
 variables:
-  APP_DIR: "/var/www/leaderpay.ge"
-  BRANCH_NAME: master
-  TAG_NAME: leaderpay.ge
+    SSH_HOST: 172.26.0.230
+    SSH_USER: www
+    PROJECT_DIR: /var/www/leaderpay.ge
+    BRANCH_NAME: master
 
-git_pull:
-  stage: git_pull
 
+
+stages:
+  - build
+  - deploy
+
+build:
   tags:
-    - $TAG_NAME
- 
+    - local_docker
+
+  stage: build
+  image: node:18-alpine
   script:
-    - cd "$APP_DIR"
-    - git checkout $BRANCH_NAME
-    - git pull
-    - echo "Master Branch Pull"
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
 
   only:
     variables:
       - $CI_COMMIT_BRANCH == $BRANCH_NAME
 
 
-build_and_deploy:
-  stage: build_and_deploy
-
+deploy:
   tags:
-    - $TAG_NAME
- 
+    - local_docker
+  stage: deploy
+  image: alpine:latest
   script:
-    - echo "Project Dir $APP_DIR"
-    - docker run --rm -v "$APP_DIR:/app" -w /app node:18-alpine npm install --force
-    - docker run --rm -v "$APP_DIR:/app" -w /app node:18-alpine npm run build --force
-    - echo "Master Branch Deployed"
+    - apk add --no-cache openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY_GITLAB" | tr -d '\r' | ssh-add -  
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts  
+    - scp -o StrictHostKeyChecking=no -r dist/* $SSH_USER@$SSH_HOST:$PROJECT_DIR
 
   only:
     variables:
       - $CI_COMMIT_BRANCH == $BRANCH_NAME
+
