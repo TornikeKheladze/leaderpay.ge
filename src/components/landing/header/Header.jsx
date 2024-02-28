@@ -20,7 +20,7 @@ const Header = () => {
   const black = "#1e2329";
   const yellow = "#fcd535";
 
-  const loginRoute = "https://dev.leaderpay.ge/";
+  const loginRoute = "https://wallet.leaderpay.ge/";
 
   return (
     <header

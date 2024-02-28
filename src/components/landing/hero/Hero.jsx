@@ -6,7 +6,7 @@ import { landingTranslations } from "../../../data/lang/landingTranslations";
 
 const Hero = ({ data = { data: {} } }) => {
   const { t } = useTranslate(landingTranslations);
-  const registerRoute = "https://dev.leaderpay.ge/register";
+  const registerRoute = "https://wallet.leaderpay.ge/register";
 
   return (
     <section id="hero" className="hero d-flex align-items-center">
