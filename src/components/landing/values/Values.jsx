@@ -8,7 +8,7 @@ const Values = ({ data = { data: [{ lang: {} }] } }) => {
   const { t } = useTranslate(landingTranslations);
   const { lang } = useSelector((state) => state.lang);
 
-  const walletUrl = "https://dev.leaderpay.ge/";
+  const walletUrl = "https://wallet.leaderpay.ge/";
 
   return (
     <section id="values" className="values">

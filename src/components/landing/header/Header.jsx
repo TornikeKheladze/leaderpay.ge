@@ -22,6 +22,14 @@ const Header = () => {
 
   const loginRoute = "https://wallet.leaderpay.ge/";
 
+  const toggleMobileNavbar = () => {
+    const toggleButton = document.querySelector(".mobile-nav-toggle");
+    const navbar = document.querySelector("#navbar");
+    navbar.classList.toggle("navbar-mobile");
+    toggleButton.classList.toggle("bi-list");
+    toggleButton.classList.toggle("bi-x");
+  };
+
   return (
     <header
       id="header"
@@ -54,12 +62,12 @@ const Header = () => {
 
         <nav id="navbar" className="navbar">
           <ul>
-            <li>
+            <li onClick={toggleMobileNavbar}>
               <a className="nav-link scrollto active" href="#hero">
                 {t("home")}
               </a>
             </li>
-            <li>
+            <li onClick={toggleMobileNavbar}>
               <a className="nav-link scrollto" href="#values">
                 {t("services")}
               </a>
@@ -80,7 +88,7 @@ const Header = () => {
               </a>
             </li> */}
 
-            <li>
+            <li onClick={toggleMobileNavbar}>
               <a className="nav-link scrollto" href="#contact">
                 {t("contact")}
               </a>
