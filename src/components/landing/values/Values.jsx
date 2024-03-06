@@ -29,10 +29,7 @@ const Values = ({ data = { data: [{ lang: {} }] } }) => {
                 data-aos-delay="200"
               >
                 <div className="box">
-                  <a
-                    href={`${walletUrl}guest/services/category/${item.id}`}
-                    target="_blank"
-                  >
+                  <a href={`${walletUrl}guest/services/category/${item.id}`}>
                     <img src={item.image} className="img-fluid" alt="" />
                     <h3>{item.lang[languageKey]}</h3>
                   </a>

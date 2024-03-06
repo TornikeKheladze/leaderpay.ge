@@ -23,7 +23,6 @@ const Hero = ({ data = { data: {} } }) => {
               <div className="text-center text-lg-start">
                 <a
                   href={registerRoute}
-                  target="_blank"
                   className="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
                 >
                   <span>{t("register")}</span>

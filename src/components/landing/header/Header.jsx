@@ -148,7 +148,7 @@ const Header = () => {
             </li> */}
 
             <li>
-              <a href={loginRoute} target="_blank" className="getstarted">
+              <a href={loginRoute} className="getstarted">
                 <span>{t("authorization")}</span>
               </a>
             </li>
