@@ -2500,6 +2500,11 @@ section {
   color: var(--primaryYellowHover);
 }
 
+.footer .footer-top .store-links a img {
+  width: 150px;
+  cursor: pointer;
+}
+
 .footer .footer-top h4 {
   font-size: 16px;
   font-weight: bold;

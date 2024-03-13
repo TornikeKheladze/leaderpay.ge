@@ -4,6 +4,8 @@ import { getContactContent } from "../../../services/landing";
 import { useTranslate } from "../../../hooks/useTranslate";
 import { landingTranslations } from "../../../data/lang/landingTranslations";
 import { useSelector } from "react-redux";
+import playStore from "../../../assets/images/play_store.png";
+import appStore from "../../../assets/images/app_store.png";
 
 const Footer = ({ data = { data: { data: {} } } }) => {
   // const { data: contactContent } = useQuery({
@@ -69,6 +71,20 @@ const Footer = ({ data = { data: { data: {} } } }) => {
                 </a>
                 <a href="#" className="linkedin">
                   <i className="bi bi-linkedin"></i>
+                </a>
+              </div>
+              <div className="mt-3 store-links">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.leader.pay.wallet"
+                  target="_blank"
+                >
+                  <img className="" src={playStore} />
+                </a>
+                <a
+                  href="https://apps.apple.com/ge/app/leader-pay/id6478852590"
+                  target="_blank"
+                >
+                  <img className="" src={appStore} />
                 </a>
               </div>
             </div>
