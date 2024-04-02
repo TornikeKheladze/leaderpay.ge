@@ -93,7 +93,7 @@ const Header = () => {
               </a>
             </li>
 
-            <li>
+            <li className="authorization">
               <a href={loginRoute} className="getstarted">
                 <LoginIcon />
                 <span>{t("authorization")}</span>

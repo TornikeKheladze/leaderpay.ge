@@ -295,7 +295,6 @@ section {
 
 .navbar .getstarted {
   color: var(--primaryYellow);
-  margin-left: 100px;
 }
 
 .navbar .getstarted:hover,
@@ -489,6 +488,12 @@ section {
 .navbar-mobile .getstarted,
 .navbar-mobile .getstarted:focus {
   margin: 15px;
+}
+
+.navbar .authorization {
+  width: 300px;
+  display: flex;
+  justify-content: center;
 }
 
 .getstarted {
