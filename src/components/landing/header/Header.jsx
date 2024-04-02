@@ -36,9 +36,7 @@ const Header = () => {
   return (
     <header
       id="header"
-      className={`header fixed-top ${isHeaderSticky ? "header-scrolled" : ""} ${
-        lang === "en" || lang === "ru" ? "english-font" : "georgian-font"
-      }`}
+      className={`header fixed-top ${isHeaderSticky ? "header-scrolled" : ""}`}
     >
       <div className="container-fluid container-sm d-flex align-items-center justify-content-between">
         <a
