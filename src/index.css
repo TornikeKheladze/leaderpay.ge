@@ -26,7 +26,7 @@
   scroll-behavior: smooth;
   --bgCard: #2b3139;
   --primaryYellow: #fcd535;
-  --textPrimary: #eaecef;
+  --textPrimary: #e4e5e6;
   --bgDefault: #0b0e11;
   --bgLightGray: #1e2329;
   --primaryYellowHover: #f0b90b;
@@ -276,12 +276,13 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   padding: 10px 0 10px 30px;
   /* font-family: "Nunito", sans-serif; */
   /* font-family: "bpg-rioni", sans-serif; */
   font-size: 16px;
-  font-weight: 700;
-  color: var(--primaryYellow);
+  font-weight: 400;
+  color: var(--textPrimary);
   white-space: nowrap;
   transition: 0.3s;
 }
@@ -291,29 +292,24 @@ section {
   font-size: 12px;
   line-height: 0;
   margin-left: 5px;
+  color: var(--textPrimary);
 }
 
 .navbar a:hover,
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover > a {
-  /* color: var(--primaryYellow); */
+  color: var(--primaryYellowHover);
 }
 
-.navbar .getstarted,
-.navbar .getstarted:focus {
-  background: var(--primaryYellow);
-  padding: 8px 20px;
-  margin-left: 30px;
-  border-radius: 4px;
-  color: var(--textPrimary);
-  border: none;
+.navbar .getstarted {
+  color: var(--primaryYellow);
+  margin-left: 100px;
 }
 
 .navbar .getstarted:hover,
 .navbar .getstarted:focus:hover {
-  color: var(--textPrimary);
-  background-color: var(--primaryYellowHover);
+  color: var(--primaryYellowHover);
 }
 
 .navbar .dropdown ul {
@@ -359,7 +355,8 @@ section {
 }
 
 .dropdown a span {
-  color: var(--primaryYellow);
+  color: var(--textPrimary);
+  margin-left: 4px;
   cursor: pointer;
 }
 
@@ -505,10 +502,6 @@ section {
 
 .getstarted {
   cursor: pointer;
-}
-
-.getstarted span {
-  color: var(--bgDefault);
 }
 
 .navbar-mobile .dropdown ul {

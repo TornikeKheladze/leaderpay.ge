@@ -5,7 +5,9 @@ import { useTranslate } from "../../../hooks/useTranslate";
 import { landingTranslations } from "../../../data/lang/landingTranslations";
 import useHeader from "./useHeader";
 import "bootstrap/dist/css/bootstrap.min.css";
-import studypaylogo from "../../../assets/images/logo.png";
+import LeaderPayLogo from "../../../assets/icons/LeaderPayLogo";
+import GlobeIcon from "../../../assets/icons/GlobeIcon";
+import LoginIcon from "../../../assets/icons/LoginIcon";
 
 const Header = () => {
   const { isHeaderSticky, lang } = useHeader();
@@ -23,6 +25,7 @@ const Header = () => {
   const loginRoute = "https://wallet.leaderpay.ge/";
 
   const toggleMobileNavbar = () => {
+    if (window.innerWidth > 1135) return;
     const toggleButton = document.querySelector(".mobile-nav-toggle");
     const navbar = document.querySelector("#navbar");
     navbar.classList.toggle("navbar-mobile");
@@ -37,7 +40,7 @@ const Header = () => {
         lang === "en" || lang === "ru" ? "english-font" : "georgian-font"
       }`}
     >
-      <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <div className="container-fluid container-sm d-flex align-items-center justify-content-between">
         <a
           style={{
             // backgroundColor: "gray",
@@ -51,13 +54,11 @@ const Header = () => {
         >
           <div
             style={{
-              // backgroundColor: "gray",
               borderRadius: "5px",
             }}
           >
-            <img src={studypaylogo} alt="logo" />
+            <LeaderPayLogo />
           </div>
-          <span className="english-font">LeaderPay</span>
         </a>
 
         <nav id="navbar" className="navbar">
@@ -93,16 +94,20 @@ const Header = () => {
                 {t("contact")}
               </a>
             </li>
+
+            <li>
+              <a href={loginRoute} className="getstarted">
+                <LoginIcon />
+                <span>{t("authorization")}</span>
+              </a>
+            </li>
             {/* ენები */}
 
-            {/* <li className="dropdown">
+            <li className="dropdown">
               <a>
+                <GlobeIcon />
                 <span>
-                  {lang === "ge"
-                    ? "ქართული"
-                    : lang === "en"
-                    ? "English"
-                    : "Russian"}
+                  {lang === "ge" ? "ქარ" : lang === "en" ? "Eng" : "Rus"}
                 </span>
                 <i className="bi bi-chevron-down"></i>
               </a>
@@ -145,12 +150,6 @@ const Header = () => {
                   </button>
                 </li>
               </ul>
-            </li> */}
-
-            <li>
-              <a href={loginRoute} className="getstarted">
-                <span>{t("authorization")}</span>
-              </a>
             </li>
           </ul>
           <i className="bi bi-list mobile-nav-toggle"></i>
