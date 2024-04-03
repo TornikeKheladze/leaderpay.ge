@@ -19,8 +19,8 @@ const Header = () => {
     color: "#1e2329",
   };
 
-  const black = "#1e2329";
-  const yellow = "#fcd535";
+  const black = "#F6D658";
+  const yellow = "#464956";
 
   const loginRoute = "https://wallet.leaderpay.ge/";
 
@@ -111,40 +111,46 @@ const Header = () => {
               </a>
               <ul
                 style={{
-                  backgroundColor: "#1e2329",
+                  backgroundColor: "#3A3C49",
                 }}
               >
                 <li style={lang === "ge" ? { backgroundColor: yellow } : {}}>
                   <button
-                    style={lang === "ge" ? { color: black } : {}}
+                    style={
+                      lang === "ge" ? { color: black } : { color: "#FFFFFF" }
+                    }
                     onClick={() => {
                       dispatch(setLanguage("ge"));
                       localStorage.setItem("lang", "ge");
                     }}
                   >
-                    ქართული
+                    ქარ
                   </button>
                 </li>
                 <li style={lang === "en" ? { backgroundColor: yellow } : {}}>
                   <button
-                    style={lang === "en" ? { color: black } : {}}
+                    style={
+                      lang === "en" ? { color: black } : { color: "#FFFFFF" }
+                    }
                     onClick={() => {
                       dispatch(setLanguage("en"));
                       localStorage.setItem("lang", "en");
                     }}
                   >
-                    English
+                    Eng
                   </button>
                 </li>
                 <li style={lang === "ru" ? { backgroundColor: yellow } : {}}>
                   <button
-                    style={lang === "ru" ? { color: black } : {}}
+                    style={
+                      lang === "ru" ? { color: black } : { color: "#FFFFFF" }
+                    }
                     onClick={() => {
                       dispatch(setLanguage("ru"));
                       localStorage.setItem("lang", "ru");
                     }}
                   >
-                    Russian
+                    Rus
                   </button>
                 </li>
               </ul>
