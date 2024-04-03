@@ -26,7 +26,6 @@ const Hero = ({ data = { data: {} } }) => {
                   className="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
                 >
                   <span>{t("register")}</span>
-                  <i className="bi bi-arrow-right"></i>
                 </a>
               </div>
             </div>
