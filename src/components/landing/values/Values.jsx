@@ -3,8 +3,16 @@
 import { useTranslate } from "../../../hooks/useTranslate";
 import { landingTranslations } from "../../../data/lang/landingTranslations";
 import { useSelector } from "react-redux";
+import CashDeskIcon from "../../../assets/icons/CashDeskIcon";
+import Counter from "../counts/Counter";
+import ServiceIcon from "../../../assets/icons/ServiceIcon";
+import TransactionIcon from "../../../assets/icons/TransactionIcon";
+import CustomersIcon from "../../../assets/icons/CustomersIcon";
 
-const Values = ({ data = { data: [{ lang: {} }] } }) => {
+const Values = ({
+  data = { data: [{ lang: {} }] },
+  countsData = { data: {} },
+}) => {
   const { t } = useTranslate(landingTranslations);
   const { lang } = useSelector((state) => state.lang);
 
@@ -18,7 +26,7 @@ const Values = ({ data = { data: [{ lang: {} }] } }) => {
           {/* <p>Odit est perspiciatis laborum et dicta</p> */}
         </header>
 
-        <div className="row">
+        <div className="service-list">
           {data.data.map((item) => {
             let languageKey = lang === "ge" ? "ka" : lang;
             return (
@@ -30,7 +38,9 @@ const Values = ({ data = { data: [{ lang: {} }] } }) => {
               >
                 <div className="box">
                   <a href={`${walletUrl}guest/services/category/${item.id}`}>
-                    <img src={item.image} className="img-fluid" alt="" />
+                    <div className="imageWrapper">
+                      <img src={item.image} className="img-fluid" alt="" />
+                    </div>
                     <h3>{item.lang[languageKey]}</h3>
                   </a>
                   {/* <p>{service && service[`subtitle_${lang}`]}</p> */}
@@ -60,6 +70,47 @@ const Values = ({ data = { data: [{ lang: {} }] } }) => {
               </div>
             ))
           )} */}
+        </div>
+        <div className="row gy-4 counts">
+          <div className="col-lg-3 col-md-6">
+            <div className="count-box">
+              <CustomersIcon />
+              <div>
+                <Counter end={countsData.data.users} />
+                <p>{t("user")}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-6">
+            <div className="count-box">
+              <TransactionIcon />
+              <div>
+                <Counter end={countsData.data.operations} />
+                <p>{t("transaction")}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-6">
+            <div className="count-box">
+              <ServiceIcon />
+              <div>
+                <Counter end={countsData.data.services} />
+                <p>{t("service")}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-6">
+            <div className="count-box">
+              <CashDeskIcon />
+              <div>
+                <Counter end={countsData.data.cashdesks} />
+                <p>{t("cashdesk")}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

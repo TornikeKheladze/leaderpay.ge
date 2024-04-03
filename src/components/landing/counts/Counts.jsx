@@ -4,6 +4,7 @@ import TransactionIcon from "../../../assets/icons/TransactionIcon";
 import { landingTranslations } from "../../../data/lang/landingTranslations";
 import { useTranslate } from "../../../hooks/useTranslate";
 import Counter from "./Counter";
+import CustomersIcon from "../../../assets/icons/CustomersIcon";
 
 const Counts = ({ data = { data: {} } }) => {
   const { t } = useTranslate(landingTranslations);
@@ -13,7 +14,7 @@ const Counts = ({ data = { data: {} } }) => {
         <div className="row gy-4">
           <div className="col-lg-3 col-md-6">
             <div className="count-box">
-              <i className="bi bi-emoji-smile"></i>
+              <CustomersIcon />
               <div>
                 <Counter end={data.data.users} />
                 <p>{t("user")}</p>

@@ -14,9 +14,13 @@
 :root {
   scroll-behavior: smooth;
   --bgCard: #292b38;
-  --primaryYellow: #fcd535;
+  /* --primaryYellow: #fcd535; */
+  --primaryYellow: #f6d658;
+
   --textPrimary: #e4e5e6;
   /* --bgDefault: #0b0e11; */
+  --bgInsideCard: #3a3c49;
+
   --bgDefault: #191a24;
   --bgLightGray: #1e2329;
   --primaryYellowHover: #f0b90b;
@@ -89,9 +93,8 @@ section {
 }
 
 .section-header h2 {
-  font-size: 13px;
+  font-size: 28px;
   letter-spacing: 1px;
-  font-weight: 700;
   margin: 0;
   color: var(--primaryYellow);
   text-transform: uppercase;
@@ -217,7 +220,7 @@ section {
 }
 
 .header.header-scrolled {
-  background: var(--bgCard);
+  /* background: var(--bgCard); */
   padding: 15px 0;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
 }
@@ -697,28 +700,62 @@ section {
 /*--------------------------------------------------------------
 # Values
 --------------------------------------------------------------*/
+
+#values {
+  background-color: var(--bgCard);
+}
+
+.values .service-list {
+  max-width: 1440px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .values .service-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.values .service-list div {
+  width: 100%;
+}
+
 .values .box {
-  padding: 30px;
+  /* padding: 30px; */
+  height: 80px;
   box-shadow: 0px 0 5px rgba(1, 41, 112, 0.08);
   text-align: center;
   transition: 0.3s;
-  height: 100%;
-  border-radius: 6px;
+  border-radius: 12px;
   cursor: pointer;
+  background: var(--bgInsideCard);
+}
+
+.values .box a {
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 21px;
+  color: var(--textPrimary);
+}
+
+.values .box a .imageWrapper {
+  border-radius: 8px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--primaryYellow);
+  padding: 10px;
 }
 
 .values .box img {
-  padding: 30px 50px;
   transition: 0.5s;
   transform: scale(1.1);
 }
 
-.values .box h3 {
-  font-size: 24px;
-  color: var(--primaryYellow);
-  font-weight: 700;
-  margin-bottom: 18px;
-}
 .values .box p {
   color: var(--textPrimary);
 }
@@ -731,34 +768,81 @@ section {
   transform: scale(1);
 }
 
-/*--------------------------------------------------------------
-# Counts
---------------------------------------------------------------*/
-.counts {
-  padding: 70px 0 60px;
-}
-
-.counts .count-box {
+.values .count-box {
   display: flex;
   align-items: center;
-  padding: 30px;
+  padding: 10px;
   width: 100%;
+  height: 80px;
   /* background: #fff; */
-  background-color: var(--bgCard);
+
   color: var(--primaryYellow);
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
   border-radius: 6px;
 }
 
-.counts .count-box i {
+.values .count-box svg {
   font-size: 42px;
   line-height: 0;
   margin-right: 20px;
+  height: 60px;
+  width: 60px;
+  background-color: var(--bgInsideCard);
+  padding: 12px;
+  border-radius: 8px;
+  /* color: var(--primaryYellow); */
+}
+
+.values .count-box span {
+  font-size: 28px;
+  display: block;
+  font-weight: 600;
+  color: var(--primaryYellow);
+}
+
+.values .count-box p {
+  padding: 0;
+  margin: 0;
+  /* font-family: "Nunito", sans-serif; */
+  font-size: 14px;
+  color: var(--textPrimary);
+}
+
+/*--------------------------------------------------------------
+# Counts
+--------------------------------------------------------------*/
+.counts {
+  padding: 70px 0 60px;
+  background-color: var(--bgCard);
+}
+
+.counts .count-box {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  height: 80px;
+  /* background: #fff; */
+
+  color: var(--primaryYellow);
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+  border-radius: 6px;
+}
+
+.counts .count-box svg {
+  font-size: 42px;
+  line-height: 0;
+  margin-right: 20px;
+  height: 60px;
+  width: 60px;
+  background-color: var(--bgInsideCard);
+  padding: 12px;
+  border-radius: 8px;
   /* color: var(--primaryYellow); */
 }
 
 .counts .count-box span {
-  font-size: 36px;
+  font-size: 28px;
   display: block;
   font-weight: 600;
   color: var(--primaryYellow);
@@ -2684,7 +2768,6 @@ section {
 
 h3 {
   /* margin-bottom: 30px;/ */
-  margin-top: 10px;
   font-size: 20px;
   /* font-family: "bpg-arial"; */
   text-align: center;

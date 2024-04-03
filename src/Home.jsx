@@ -101,8 +101,8 @@ const Home = () => {
         </AnimatePresence> */}
 
         {/* <About /> */}
-        <Values data={serviceData} />
-        <Counts data={statsData} />
+        <Values countsData={statsData} data={serviceData} />
+        {/* <Counts data={statsData} /> */}
         {/* <Features /> */}
         {/* <Services /> */}
         {/* <Pricing /> */}
