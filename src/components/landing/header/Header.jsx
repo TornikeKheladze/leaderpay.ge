@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import LeaderPayLogo from "../../../assets/icons/LeaderPayLogo";
 import GlobeIcon from "../../../assets/icons/GlobeIcon";
 import LoginIcon from "../../../assets/icons/LoginIcon";
+import DownArrow from "../../../assets/icons/DownArrow";
 
 const Header = () => {
   const { isHeaderSticky, lang } = useHeader();
@@ -107,7 +108,7 @@ const Header = () => {
                 <span>
                   {lang === "ge" ? "ქარ" : lang === "en" ? "Eng" : "Rus"}
                 </span>
-                <i className="bi bi-chevron-down"></i>
+                <DownArrow />
               </a>
               <ul
                 style={{
