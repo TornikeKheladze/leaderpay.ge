@@ -2464,8 +2464,7 @@ section {
 # Footer
 --------------------------------------------------------------*/
 .footer {
-  background: var(--bgLightGray);
-  padding: 0 0 30px 0;
+  background: var(--bgCard);
   font-size: 14px;
 }
 
@@ -2521,10 +2520,24 @@ section {
 
 .footer .footer-top {
   /* background: white url(/assets/img/footer-bg.png) no-repeat right top; */
-  background-color: var(--bgLightGray);
+  background-color: var(--bgCard);
   background-size: contain;
   border-bottom: 1px solid gray;
   padding: 60px 0 30px 0;
+}
+
+.footer .footer-top .container .footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .footer .footer-top .container .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media (max-width: 992px) {
@@ -2534,26 +2547,10 @@ section {
 }
 
 .footer .footer-top .footer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 30px;
-}
-
-.footer .footer-top .footer-info .logo {
-  line-height: 0;
-  margin-bottom: 15px;
-}
-
-.footer .footer-top .footer-info .logo img {
-  max-height: 40px;
-  margin-right: 6px;
-}
-
-.footer .footer-top .footer-info .logo span {
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--primaryYellow);
-  /* font-family: "Nunito", sans-serif; */
-  margin-top: 3px;
 }
 
 .footer .footer-top .footer-info p {
@@ -2577,13 +2574,12 @@ section {
 }
 
 .footer .footer-top .store-links a img {
-  width: 150px;
+  width: 110px;
   cursor: pointer;
 }
 
 .footer .footer-top h4 {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 22px;
   color: var(--primaryYellow);
   text-transform: uppercase;
   position: relative;
@@ -2591,26 +2587,18 @@ section {
 }
 
 .footer .footer-top .footer-links {
-  margin-bottom: 30px;
+  height: 100%;
 }
 
 .footer .footer-top .footer-links ul {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-.footer .footer-top .footer-links ul i {
-  padding-right: 2px;
-  color: #d0d4fc;
-  font-size: 12px;
-  line-height: 0;
-}
-
-.footer .footer-top .footer-links ul li {
-  padding: 10px 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: 300;
+  height: 113px;
 }
 
 .footer .footer-top .footer-links ul li:first-child {
@@ -2618,7 +2606,7 @@ section {
 }
 
 .footer .footer-top .footer-links ul a {
-  color: var(--primaryYellow);
+  color: var(--textPrimary);
   transition: 0.3s;
   display: inline-block;
   line-height: 1;
@@ -2631,12 +2619,25 @@ section {
 .footer .footer-top .footer-contact p {
   line-height: 26px;
   color: var(--textPrimary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 113px;
 }
 
 .footer .copyright {
-  text-align: center;
-  padding-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   color: var(--primaryYellow);
+}
+
+.footer .footer-social {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: 300;
+  height: 153px;
 }
 
 .footer .credits {

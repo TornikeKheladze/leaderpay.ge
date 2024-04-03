@@ -1,11 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import studypaylogo from "../../../assets/images/logo.png";
-import { getContactContent } from "../../../services/landing";
 import { useTranslate } from "../../../hooks/useTranslate";
 import { landingTranslations } from "../../../data/lang/landingTranslations";
 import { useSelector } from "react-redux";
 import playStore from "../../../assets/images/play_store.png";
 import appStore from "../../../assets/images/app_store.png";
+import FooterLPLogo from "../../../assets/icons/FooterLPLogo";
+import LinkedinLogo from "../../../assets/icons/LinkedinLogo";
+import FacebookIcon from "../../../assets/icons/FacebookIcon";
+import TwitterLogo from "../../../assets/icons/TwitterLogo";
+import InstagramLogo from "../../../assets/icons/InstagramLogo";
+import CopyRignt from "../../../assets/icons/CopyRignt";
 
 const Footer = ({ data = { data: { data: {} } } }) => {
   // const { data: contactContent } = useQuery({
@@ -39,40 +42,17 @@ const Footer = ({ data = { data: { data: {} } } }) => {
 
       <div className="footer-top">
         <div className="container">
-          <div className="row gy-4">
-            <div className="col-lg-5 col-md-12 footer-info">
+          <div className="gy-4 footer-container">
+            <div className="footer-info">
               <a href="/" className="logo d-flex align-items-center">
-                <img src={studypaylogo} alt="" />
-
-                <span className="english-font">LeaderPay</span>
+                <FooterLPLogo />
               </a>
               {/* <p>
                 Cras fermentum odio eu feugiat lide par naso tierra. Justo eget
                 nada terra videa magna derita valies darta donna mare fermentum
                 iaculis eu non diam phasellus.
               </p> */}
-              <div className="social-links mt-3">
-                <a
-                  href="https://twitter.com/Leaderpay1"
-                  target="_blank"
-                  className="twitter"
-                >
-                  <i className="bi bi-twitter"></i>
-                </a>
-                <a
-                  href="https://www.facebook.com/Leaderpaywallet"
-                  target="_blank"
-                  className="facebook"
-                >
-                  <i className="bi bi-facebook"></i>
-                </a>
-                <a href="#" className="instagram">
-                  <i className="bi bi-instagram"></i>
-                </a>
-                <a href="#" className="linkedin">
-                  <i className="bi bi-linkedin"></i>
-                </a>
-              </div>
+
               <div className="mt-3 store-links">
                 <a
                   href="https://play.google.com/store/apps/details?id=com.leader.pay.wallet"
@@ -93,7 +73,6 @@ const Footer = ({ data = { data: { data: {} } } }) => {
               <h4>{t("usefulLinks")}</h4>
               <ul>
                 <li>
-                  <i className="bi bi-chevron-right"></i>{" "}
                   <a href="#hero">{t("home")}</a>
                 </li>
                 {/* <li>
@@ -101,11 +80,9 @@ const Footer = ({ data = { data: { data: {} } } }) => {
                   <a href="#about">{t("about")}</a>
                 </li> */}
                 <li>
-                  <i className="bi bi-chevron-right"></i>{" "}
                   <a href="#values">{t("services")}</a>
                 </li>
                 <li>
-                  <i className="bi bi-chevron-right"></i>
                   <a
                     href="https://dev.leaderpay.ge/pages/privacyAndSecurity"
                     target="_blank"
@@ -116,30 +93,52 @@ const Footer = ({ data = { data: { data: {} } } }) => {
               </ul>
             </div>
 
-            <div className="col-lg-3 col-md-12 footer-contact text-center text-md-start ">
+            <div className="footer-contact ">
               <h4>{t("contact_us")}</h4>
-              <p>
-                {data.data.data.address}
-                <br />
-                <strong>Phone:</strong>
-                {data.data.data.phone}
-                <br />
-                <strong>Email:</strong>
-                {data.data.data.email}
-                <br />
+              <p className="contact-infos">
+                <span>{data.data.data.address}</span>
+                <span>
+                  <strong>Phone:</strong>
+                  {data.data.data.phone}
+                </span>
+                <span>
+                  <strong>Email:</strong>
+                  {data.data.data.email}
+                </span>
               </p>
             </div>
+            <div className="footer-social ">
+              <h4>{t("follow_us")}</h4>
+              <div className="social-links mt-3">
+                <a
+                  href="https://twitter.com/Leaderpay1"
+                  target="_blank"
+                  className="twitter"
+                >
+                  <TwitterLogo />
+                </a>
+                <a
+                  href="https://www.facebook.com/Leaderpaywallet"
+                  target="_blank"
+                  className="facebook"
+                >
+                  <FacebookIcon />
+                </a>
+                <a href="#" className="instagram">
+                  <InstagramLogo />
+                </a>
+                <a href="#" className="linkedin">
+                  <LinkedinLogo />
+                </a>
+              </div>
+              <div className="copyright">
+                <CopyRignt /> Copyright
+                <strong>
+                  <span>Devspace</span>
+                </strong>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div className="container">
-        <div className="copyright">
-          &copy; Copyright{" "}
-          <strong>
-            <span>Devspace</span>
-          </strong>
-          . {t("allRightsReserved")}
         </div>
       </div>
     </footer>

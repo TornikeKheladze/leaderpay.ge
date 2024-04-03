@@ -100,6 +100,11 @@ export const landingTranslations = {
     ru: "Свяжитесь с нами",
     ge: "დაგვიკავშირდით",
   },
+  follow_us: {
+    en: "Follow us",
+    ru: "Свяжитесь с нами",
+    ge: "გამოგვყევით",
+  },
   address: {
     en: "Address",
     ru: "Адрес",
