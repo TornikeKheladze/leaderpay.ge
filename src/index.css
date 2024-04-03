@@ -93,7 +93,7 @@ section {
 }
 
 .section-header h2 {
-  font-size: 28px;
+  font-size: 20px;
   letter-spacing: 1px;
   margin: 0;
   color: var(--primaryYellow);
@@ -216,13 +216,16 @@ section {
   transition: all 0.5s;
   z-index: 997;
   padding: 20px 0;
-  background-color: var(--bgLightGray);
+  background-color: var(--bgCard);
 }
 
 .header.header-scrolled {
   /* background: var(--bgCard); */
   padding: 15px 0;
-  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+  /* box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1); */
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.49);
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.49);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.49);
 }
 
 .header .logo {
@@ -293,7 +296,7 @@ section {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover > a {
-  color: var(--primaryYellowHover);
+  color: var(--primaryYellow);
 }
 
 .navbar .getstarted {
@@ -724,7 +727,7 @@ section {
 .values .box {
   /* padding: 30px; */
   height: 80px;
-  box-shadow: 0px 0 5px rgba(1, 41, 112, 0.08);
+  /* box-shadow: 0px 0 5px rgba(1, 41, 112, 0.08); */
   text-align: center;
   transition: 0.3s;
   border-radius: 12px;
@@ -741,6 +744,9 @@ section {
   gap: 10px;
   font-size: 21px;
   color: var(--textPrimary);
+}
+.values .box a h3 {
+  text-align: left;
 }
 
 .values .box a .imageWrapper {
@@ -760,9 +766,9 @@ section {
   color: var(--textPrimary);
 }
 
-.values .box:hover {
+/* .values .box:hover {
   box-shadow: 0px 0 30px rgba(1, 41, 112, 1);
-}
+} */
 
 .values .box:hover img {
   transform: scale(1);
@@ -1741,6 +1747,11 @@ section {
 
 .clients .clients-slider .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--primaryYellow);
+}
+
+.slick-arrows {
+  color: var(--primaryYellow);
+  background: white;
 }
 
 /*--------------------------------------------------------------

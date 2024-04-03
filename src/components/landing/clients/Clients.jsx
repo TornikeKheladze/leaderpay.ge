@@ -6,7 +6,8 @@ import { landingTranslations } from "../../../data/lang/landingTranslations";
 
 const Clients = ({ data = { data: [{ lang: {} }] } }) => {
   var settings = {
-    dots: true,
+    dots: false,
+    arrows: false,
     infinite: true,
     // speed: 500,
     slidesToShow: 6,
