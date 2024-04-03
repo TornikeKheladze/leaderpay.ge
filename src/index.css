@@ -1823,31 +1823,23 @@ section {
 --------------------------------------------------------------*/
 .contact .info-box {
   color: var(--textPrimary);
-  background: var(--bgLightGray);
-  border-radius: 6px;
-  padding: 30px;
+  background: var(--bgCard);
+  border-radius: 16px;
+  padding: 25px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  height: 200px;
+  gap: 25px;
+  height: 140px;
 }
 
-@media (max-width: 100px) {
-  .contact .info-box {
-    height: auto;
-  }
-}
-
-.contact .info-box i {
-  font-size: 38px;
-  line-height: 0;
-  color: var(--primaryYellow);
+.contact .info-box svg {
+  width: 26px;
 }
 
 .contact .info-box h3 {
-  font-size: 20px;
+  font-size: 17px;
   color: var(--primaryYellow);
-  font-weight: 700;
+  font-weight: 400;
   margin: 20px 0 10px 0;
 }
 
@@ -1859,8 +1851,8 @@ section {
 }
 
 .contact .php-email-form {
-  background: var(--bgLightGray);
-  border-radius: 6px;
+  background: var(--bgCard);
+  border-radius: 16px;
   padding: 30px;
   height: 100%;
 }
