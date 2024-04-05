@@ -108,8 +108,8 @@ const Footer = ({ data = { data: { data: {} } } }) => {
               </p>
             </div>
             <div className="footer-social ">
-              <h4>{t("follow_us")}</h4>
-              <div className="social-links mt-3">
+              <p>{t("follow_us")}</p>
+              <div className="social-links">
                 <a
                   href="https://twitter.com/Leaderpay1"
                   target="_blank"

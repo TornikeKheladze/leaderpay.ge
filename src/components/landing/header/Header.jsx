@@ -5,7 +5,7 @@ import { useTranslate } from "../../../hooks/useTranslate";
 import { landingTranslations } from "../../../data/lang/landingTranslations";
 import useHeader from "./useHeader";
 import "bootstrap/dist/css/bootstrap.min.css";
-import LeaderPayLogo from "../../../assets/icons/LeaderPayLogo";
+import lpLogo from "../../../assets/images/lpLogo.png";
 import GlobeIcon from "../../../assets/icons/GlobeIcon";
 import LoginIcon from "../../../assets/icons/LoginIcon";
 import DownArrow from "../../../assets/icons/DownArrow";
@@ -56,7 +56,8 @@ const Header = () => {
               borderRadius: "5px",
             }}
           >
-            <LeaderPayLogo />
+            {/* <LeaderPayLogo /> */}
+            <img alt="lpLogo" src={lpLogo} />
           </div>
         </a>
 
@@ -115,7 +116,7 @@ const Header = () => {
                   backgroundColor: "#3A3C49",
                 }}
               >
-                <li style={lang === "ge" ? { backgroundColor: yellow } : {}}>
+                <li>
                   <button
                     style={
                       lang === "ge" ? { color: black } : { color: "#FFFFFF" }
@@ -128,7 +129,7 @@ const Header = () => {
                     ქარ
                   </button>
                 </li>
-                <li style={lang === "en" ? { backgroundColor: yellow } : {}}>
+                <li>
                   <button
                     style={
                       lang === "en" ? { color: black } : { color: "#FFFFFF" }
@@ -141,7 +142,7 @@ const Header = () => {
                     Eng
                   </button>
                 </li>
-                <li style={lang === "ru" ? { backgroundColor: yellow } : {}}>
+                <li>
                   <button
                     style={
                       lang === "ru" ? { color: black } : { color: "#FFFFFF" }

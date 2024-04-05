@@ -71,44 +71,36 @@ const Values = ({
             ))
           )} */}
         </div>
-        <div className="row gy-4 counts">
-          <div className="col-lg-3 col-md-6">
-            <div className="count-box">
-              <CustomersIcon />
-              <div>
-                <Counter end={countsData.data.users} />
-                <p>{t("user")}</p>
-              </div>
+        <div className="counts">
+          <div className="count-box">
+            <CustomersIcon />
+            <div>
+              <Counter end={countsData.data.users} />
+              <p>{t("user")}</p>
             </div>
           </div>
 
-          <div className="col-lg-3 col-md-6">
-            <div className="count-box">
-              <TransactionIcon />
-              <div>
-                <Counter end={countsData.data.operations} />
-                <p>{t("transaction")}</p>
-              </div>
+          <div className="count-box">
+            <TransactionIcon />
+            <div>
+              <Counter end={countsData.data.operations} />
+              <p>{t("transaction")}</p>
             </div>
           </div>
 
-          <div className="col-lg-3 col-md-6">
-            <div className="count-box">
-              <ServiceIcon />
-              <div>
-                <Counter end={countsData.data.services} />
-                <p>{t("service")}</p>
-              </div>
+          <div className="count-box">
+            <ServiceIcon />
+            <div>
+              <Counter end={countsData.data.services} />
+              <p>{t("service")}</p>
             </div>
           </div>
 
-          <div className="col-lg-3 col-md-6">
-            <div className="count-box">
-              <CashDeskIcon />
-              <div>
-                <Counter end={countsData.data.cashdesks} />
-                <p>{t("cashdesk")}</p>
-              </div>
+          <div className="count-box">
+            <CashDeskIcon />
+            <div>
+              <Counter end={countsData.data.cashdesks} />
+              <p>{t("cashdesk")}</p>
             </div>
           </div>
         </div>
