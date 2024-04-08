@@ -316,6 +316,9 @@ section {
 .navbar .getstarted {
   color: var(--primaryYellow);
 }
+.navbar a svg {
+  margin-bottom: 4px;
+}
 
 .navbar .getstarted:hover,
 .navbar .getstarted:focus:hover {
@@ -605,8 +608,7 @@ section {
 
 .hero .btn-get-started {
   margin-top: 30px;
-  line-height: 0;
-  padding: 20px 40px 20px 40px;
+  padding: 12px 40px 10px 40px;
   border-radius: 4px;
   transition: 0.5s;
   color: var(--bgDefault);
@@ -1640,10 +1642,6 @@ section {
   background-color: var(--primaryYellow);
 }
 
-.testimonials .swiper-slide {
-  /* opacity: 0.3; */
-}
-
 @media (max-width: 1199px) {
   .testimonials .swiper-slide-active {
     opacity: 1;
@@ -1659,6 +1657,10 @@ section {
     opacity: 1;
     transform: scale(1.12);
   }
+}
+
+.swiper-slide {
+  width: 50px;
 }
 
 /*--------------------------------------------------------------
