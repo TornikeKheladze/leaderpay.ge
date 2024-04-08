@@ -3,9 +3,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @font-face {
+  font-family: "nino-mkhedruli";
+  src: local("nino-mkhedruli"),
+    url(./assets/fonts/bpg-nino-mkhedruli-webfont.ttf) format("truetype");
+}
+@font-face {
   font-family: "firago";
   src: local("firago"),
     url(./assets/fonts/firago-latin-400-normal.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "nino-mtavruli";
+  src: local("nino-mtavruli"),
+    url(./assets/fonts/bpg-nino-mtavruli-webfont.ttf) format("truetype");
 }
 
 /*--------------------------------------------------------------
@@ -29,7 +40,7 @@
 body {
   /* font-family: "Open Sans", sans-serif; */
   /* font-family: "Nunito"; */
-  font-family: "firago", sans-serif;
+  font-family: "nino-mkhedruli", "firago", sans-serif;
   color: #444444;
   background-color: var(--bgDefault);
 }
@@ -98,6 +109,7 @@ section {
   margin: 0;
   color: var(--primaryYellow);
   text-transform: uppercase;
+  font-family: "nino-mtavruli", "firago", monospace;
 }
 
 .section-header p {
@@ -217,6 +229,8 @@ section {
   z-index: 997;
   padding: 20px 0;
   background-color: var(--bgCard);
+  font-family: "nino-mtavruli", "firago", monospace;
+  text-transform: uppercase;
 }
 
 .header.header-scrolled {
@@ -282,6 +296,7 @@ section {
   color: var(--textPrimary);
   white-space: nowrap;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .navbar a i,
@@ -320,8 +335,8 @@ section {
   background: #fff;
   transition: 0.3s;
   border-radius: 16px;
-  width: 102px;
-  height: 92px;
+  width: 100px;
+  height: 94px;
 }
 
 .navbar .dropdown ul a {
@@ -332,7 +347,7 @@ section {
 }
 .navbar .dropdown ul li {
   font-size: 15px;
-  height: 30px;
+  height: 33%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -375,12 +390,30 @@ section {
   color: var(--primaryYellow);
 }
 
-.navbar .dropdown:hover > ul {
+/* .navbar .dropdown:hover > ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+  left: 20px;
+} */
+
+.navbar .dropdown a .rotate {
+  transition-duration: 300ms;
+  transform: rotate(180deg);
+}
+
+.navbar .dropdown a .unrotate {
+  transition-duration: 300ms;
+  transform: rotate(0deg);
+}
+
+.navbar .dropdown .visible {
   opacity: 1;
   top: 100%;
   visibility: visible;
   left: 20px;
 }
+
 .navbar .dropdown ul li:hover {
   background-color: #464956;
 }
@@ -587,6 +620,8 @@ section {
   background: var(--primaryYellow);
   /* box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4); */
   border: none;
+  font-family: "nino-mtavruli", "firago", monospace;
+  text-transform: uppercase;
 }
 
 .hero .btn-get-started span {
@@ -760,6 +795,7 @@ section {
 }
 .values .box a h3 {
   text-align: left;
+  font-size: 18px;
 }
 
 .values .box a .imageWrapper {
@@ -836,6 +872,12 @@ section {
   display: flex;
   gap: 14px;
   background-color: var(--bgCard);
+  flex-direction: row;
+}
+@media (max-width: 1100px) {
+  .counts {
+    flex-direction: column;
+  }
 }
 
 .counts .count-box {
@@ -1760,6 +1802,10 @@ section {
   /* border: 1px solid var(--primaryYellow); */
 }
 
+.clients .section-header {
+  padding-bottom: 60px;
+}
+
 .clients .clients-slider .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--primaryYellow);
 }
@@ -1852,6 +1898,10 @@ section {
   flex-shrink: 0;
 }
 
+.contact .section-header {
+  padding-bottom: 60px;
+}
+
 .contact .info-box h3 {
   font-size: 17px;
   color: var(--primaryYellow);
@@ -1876,6 +1926,12 @@ section {
   background-color: var(--textPrimary);
   border: 1px solid var(--bgDefault);
   border-radius: 6px;
+}
+.contact .php-email-form div div input::placeholder {
+  opacity: 70%;
+}
+.contact .php-email-form div div textarea::placeholder {
+  opacity: 70%;
 }
 .contact .php-email-form div div textarea {
   background-color: var(--textPrimary);
@@ -1952,6 +2008,7 @@ section {
   color: var(--bgDefault);
   transition: 0.4s;
   border-radius: 4px;
+  font-family: "nino-mtavruli", "firago", monospace;
 }
 
 .contact .php-email-form button[type="submit"]:hover {
@@ -2595,11 +2652,12 @@ section {
 }
 
 .footer .footer-top h4 {
-  font-size: 22px;
+  font-size: 18px;
   color: var(--primaryYellow);
   text-transform: uppercase;
   position: relative;
   padding-bottom: 12px;
+  font-family: "nino-mtavruli", "firago", monospace;
 }
 
 .footer .footer-top .footer-links {
@@ -2656,8 +2714,10 @@ section {
   height: 153px;
 }
 .footer .footer-social p {
-  font-size: 22px;
+  font-size: 18px;
   color: var(--primaryYellow);
+  font-family: "nino-mtavruli", "firago", monospace;
+  text-transform: uppercase;
   padding: 0;
 }
 

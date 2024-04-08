@@ -1,4 +1,4 @@
-const DownArrow = () => {
+const DownArrow = ({ className }) => {
   return (
     <svg
       width="11"
@@ -6,6 +6,7 @@ const DownArrow = () => {
       viewBox="0 0 11 6"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M1 1L5.03547 5L9.07094 1"
