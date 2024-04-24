@@ -66,7 +66,7 @@ const Contact = ({ data = { data: { data: {} } } }) => {
                   {/* <h3>{t("open_hours")}</h3> */}
                   <div>
                     <p>ორშაბათი-პარასკევი</p>
-                    <p>11:00AM-08:00PM</p>
+                    <p>11:00-20:00</p>
                   </div>
                 </div>
               </div>
