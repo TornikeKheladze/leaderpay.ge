@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import BootstrapLoader from "../../shared/loader/BootstrapLoader";
 import { useTranslate } from "../../../hooks/useTranslate";

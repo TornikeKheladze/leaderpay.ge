@@ -84,7 +84,7 @@ const Footer = ({ data = { data: { data: {} } } }) => {
                 </li>
                 <li>
                   <a
-                    href="https://dev.leaderpay.ge/pages/privacyAndSecurity"
+                    href="https://wallet.leaderpay.ge/pages/privacyAndSecurity"
                     target="_blank"
                   >
                     {t("privacyAndSecurity")}
