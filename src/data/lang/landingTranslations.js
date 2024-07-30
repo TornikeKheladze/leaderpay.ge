@@ -49,6 +49,11 @@ export const landingTranslations = {
     ru: "Конфиденциальность и безопасность",
     ge: "კონფიდენციალურობა და უსაფრთხოება",
   },
+  termsAndConditions: {
+    en: "Conditions of a contract",
+    ru: "Условия контракта",
+    ge: "ხელშეკრულების პირობები",
+  },
   home: {
     en: "Home",
     ru: "Домой",
